@@ -23,6 +23,7 @@ import javax.jcr.Repository;
 
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.seam.jcr.annotations.JcrRepository;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -41,6 +42,7 @@ public class RepositorySessionProducerTest
 {
 
    @Inject
+   @JcrRepository
    private Repository repository;
 
    @Deployment
