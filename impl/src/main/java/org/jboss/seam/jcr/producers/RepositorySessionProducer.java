@@ -49,7 +49,7 @@ public class RepositorySessionProducer {
 	 * @throws RepositoryException
 	 */
 	@Produces
-	@JcrRepository(name="org.apache.jackrabbit.repository.home",value="target")
+	@JcrRepository
 	public Repository produceJcrRepository(InjectionPoint ip) throws RepositoryException {
 		JcrRepository jcrRepo = ip.getAnnotated().getAnnotation(JcrRepository.class);
 		return findRepository(jcrRepo);

@@ -34,6 +34,9 @@ import org.junit.runner.RunWith;
 /**
  * Test case for {@link RepositorySessionProducer}
  * 
+ * NOTE: This test case works only with jackrabbit, so be sure to run with
+ * -Pjackrabbit
+ * 
  * @author George Gastaldi
  * 
  */
@@ -42,7 +45,7 @@ public class RepositorySessionProducerTest
 {
 
    @Inject
-   @JcrRepository
+   @JcrRepository(name = "org.apache.jackrabbit.repository.home", value = "target")
    private Repository repository;
 
    @Deployment
