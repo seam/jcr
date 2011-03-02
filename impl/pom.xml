@@ -37,16 +37,26 @@
 		<dependency>
 			<groupId>org.jboss.arquillian</groupId>
 			<artifactId>arquillian-junit</artifactId>
+			<scope>test</scope>
 		</dependency>
 
+<!-- 
 		<dependency>
-			<groupId>org.jboss.weld.arquillian.container</groupId>
+			<groupId>org.jboss.arquillian.container</groupId>
 			<artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
+			<scope>test</scope>
+		</dependency>
+ -->
+		<dependency>
+			<groupId>org.jboss.arquillian.container</groupId>
+			<artifactId>arquillian-weld-se-embedded-1</artifactId>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>

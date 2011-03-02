@@ -45,13 +45,6 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- Jackrabbit content repository -->
-			<dependency>
-				<groupId>org.apache.jackrabbit</groupId>
-				<artifactId>jackrabbit-core</artifactId>
-				<version>${jackrabbit.core.version}</version>
-			</dependency>
-
 			<dependency>
 				<groupId>org.jboss.seam</groupId>
 				<artifactId>seam-bom</artifactId>
@@ -83,6 +76,13 @@
 				<groupId>javax.jcr</groupId>
 				<artifactId>jcr</artifactId>
 				<version>${jcr.version}</version>
+			</dependency>
+
+			<!-- Jackrabbit content repository -->
+			<dependency>
+				<groupId>org.apache.jackrabbit</groupId>
+				<artifactId>jackrabbit-core</artifactId>
+				<version>${jackrabbit.core.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -165,10 +165,27 @@
 		</profile>
 	</profiles>
 
+	<issueManagement>
+		<system>JIRA</system>
+		<url>https://issues.jboss.org/browse/SEAMJCR</url>
+	</issueManagement>
+
 	<scm>
 		<connection>scm:git:git://github.com/seam/jcr.git</connection>
 		<developerConnection>scm:git:git@github.com:seam/jcr.git</developerConnection>
 		<url>http://github.com/seam/jcr</url>
 	</scm>
-
+	<developers>
+		<developer>
+			<id>johndament</id>
+			<name>John D. Ament</name>
+			<email>john.d.ament@gmail.com</email>
+		</developer>
+		<developer>
+			<id>gastaldi</id>
+			<name>George Gastaldi</name>
+			<email>gastaldi@apache.org</email>
+			<timezone>GMT-3</timezone>
+		</developer>
+	</developers>
 </project>
