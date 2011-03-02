@@ -19,10 +19,12 @@ package org.jboss.seam.jcr;
 
 import javax.enterprise.inject.spi.Extension;
 
-/**  I doubt this extension will be necessary, at least until we start more bootstrapping.
- *
+/**
+ * I doubt this extension will be necessary, at least until we start more
+ * bootstrapping.
+ * 
  * @author johnament
  */
-public class JcrExtension implements Extension{
+public class JcrExtension implements Extension {
 
 }
