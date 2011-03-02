@@ -30,6 +30,8 @@
 		<seam.version>3.0.0.CR1</seam.version>
 		<jboss.spec.version>1.0.0.CR1</jboss.spec.version>
                 <jcr.version>2.0</jcr.version>
+                <jackrabbit.version>2.2.4</jackrabbit.version>
+                <modeshape.version>2.4.0.Final</modeshape.version>
 	</properties>
 
 	<prerequisites>
@@ -140,6 +142,38 @@
 				</pluginRepository>
 			</pluginRepositories>
 		</profile>
+                <profile>
+                    <id>jackrabbit</id>
+                    <activation>
+                        <property>
+                            <name>jackrabbit</name>
+                        </property>
+                    </activation>
+                    <dependencies>
+                          <dependency>
+                            <groupId>org.apache.jackrabbit</groupId>
+                            <artifactId>jackrabbit-standalone</artifactId>
+                            <version>${jackrabbit.version}</version>
+                            <scope>test</scope>
+                          </dependency>
+                    </dependencies>
+                </profile>
+                <profile>
+                    <id>modeshape</id>
+                    <activation>
+                        <property>
+                            <name>modeshape</name>
+                        </property>
+                    </activation>
+                    <dependencies>
+                          <dependency>
+                            <groupId>org.modeshape</groupId>
+                            <artifactId>modeshape-jcr</artifactId>
+                            <version>${modeshape.version}</version>
+                            <scope>test</scope>
+                          </dependency>
+                    </dependencies>
+                </profile>
 	</profiles>
 
 	<scm>

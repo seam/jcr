@@ -34,6 +34,33 @@
    <url>${project.parent.url}</url>
 
    <dependencies>
+        <dependency>
+            <groupId>org.jboss.arquillian.container</groupId>
+            <artifactId>arquillian-weld-se-embedded-1</artifactId>
+            <version>1.0.0.Alpha4</version>
+        </dependency>
+
+      <dependency>
+         <groupId>org.jboss.weld</groupId>
+         <artifactId>weld-core</artifactId>
+         <version>1.0.1-SP1</version>
+         <scope>compile</scope>
+      </dependency>
+      
+        <dependency>
+            <groupId>org.jboss.weld</groupId>
+            <artifactId>weld-api</artifactId>
+            <version>1.0-SP1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>el-api</artifactId>
+        </dependency>
+
       <dependency>
          <groupId>org.jboss.seam.jcr</groupId>
          <artifactId>seam-jcr-api</artifactId>
@@ -42,11 +69,6 @@
       <dependency>
          <groupId>org.jboss.arquillian</groupId>
          <artifactId>arquillian-junit</artifactId>
-      </dependency>
-
-      <dependency>
-         <groupId>org.jboss.weld.arquillian.container</groupId>
-         <artifactId>arquillian-weld-ee-embedded-1.1</artifactId>
       </dependency>
 
       <dependency>
@@ -59,8 +81,23 @@
          <artifactId>seam-solder</artifactId>
       </dependency>
 
-   </dependencies>
+      <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-simple</artifactId>
+      </dependency>
 
+   </dependencies>
+ <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.weld</groupId>
+                <artifactId>weld-core-bom</artifactId>
+               <version>1.0.1-SP1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
    <profiles>
       <profile>
          <id>code-coverage</id>
