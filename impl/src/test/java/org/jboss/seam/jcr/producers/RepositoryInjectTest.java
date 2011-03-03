@@ -36,13 +36,13 @@ public class RepositoryInjectTest {
     @Inject @JcrRepository(name="org.modeshape.jcr.URL",value="file:///src/git/seam/jcr/impl/target/test-classes/modeshape.xml?repositoryName=CarRepo")
     Repository carRepo;
 
-    //@Inject @JcrRepository(name="org.modeshape.jcr.URL",value="classpath://modeshape.xml?repositoryName=CarRepo")
-    //Session carSession;
+    @Inject @JcrRepository(name="org.modeshape.jcr.URL",value="file:///src/git/seam/jcr/impl/target/test-classes/modeshape.xml?repositoryName=CarRepo")
+    Session carSession;
 
     @Test
     public void testInjectRepository() throws Exception {
         System.out.println(System.getProperty("java.class.path"));
         Assert.assertNotNull(carRepo);
-        //Assert.assertNotNull(carSession);
+        Assert.assertNotNull(carSession);
     }
 }
