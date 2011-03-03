@@ -29,6 +29,8 @@ import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.RepositoryFactory;
 import javax.jcr.Session;
+import javax.jcr.observation.EventListener;
+import javax.jcr.observation.ObservationManager;
 
 import org.jboss.logging.Logger;
 import org.jboss.seam.jcr.annotations.JcrEventListener;
@@ -78,14 +80,28 @@ public class RepositorySessionProducer
    public Session produceJcrRepositorySession(InjectionPoint ip, Instance<JcrCDIEventListener> eventListenerInstance) throws RepositoryException
    {
       JcrRepository jcrRepo = ip.getAnnotated().getAnnotation(JcrRepository.class);
-      JcrEventListener jcrEvt = ip.getAnnotated().getAnnotation(JcrEventListener.class);
       Repository repo = findRepository(jcrRepo);
       Session session = repo.login();
-      if (jcrEvt != null)
-      {
-         eventListenerInstance.get().register(jcrEvt, session.getWorkspace().getObservationManager());
-      }
+      // TODO: Find a better way of doing this
+      registerListener(ip, eventListenerInstance, session);
       return session;
+   }
+
+   /**
+    * Registers this {@link EventListener} into an {@link ObservationManager}
+    * using the supplied config
+    * 
+    * @param ann
+    * @param obsManager
+    * @throws RepositoryException
+    */
+   private void registerListener(InjectionPoint ip, Instance<JcrCDIEventListener> eventListenerInstance, Session session) throws RepositoryException
+   {
+      JcrEventListener ann = ip.getAnnotated().getAnnotation(JcrEventListener.class);
+      if (ann != null)
+      {
+         session.getWorkspace().getObservationManager().addEventListener(eventListenerInstance.get(), ann.eventTypes(), ann.absPath(), ann.deep(), ann.uuid(), ann.nodeTypeName(), ann.noLocal());
+      }
    }
 
    private Repository findRepository(JcrRepository jcrRepo) throws RepositoryException

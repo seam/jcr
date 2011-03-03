@@ -19,13 +19,9 @@ import java.lang.annotation.Annotation;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import javax.jcr.RepositoryException;
 import javax.jcr.observation.Event;
 import javax.jcr.observation.EventIterator;
 import javax.jcr.observation.EventListener;
-import javax.jcr.observation.ObservationManager;
-
-import org.jboss.seam.jcr.annotations.JcrEventListener;
 
 /**
  * JCR {@link EventListener} for CDI
@@ -58,20 +54,7 @@ public final class JcrCDIEventListener implements EventListener
    }
 
    /**
-    * Registers this {@link EventListener} into an {@link ObservationManager}
-    * using the supplied config
-    * 
-    * @param ann
-    * @param obsManager
-    * @throws RepositoryException
-    */
-   public void register(JcrEventListener ann, ObservationManager obsManager) throws RepositoryException
-   {
-      obsManager.addEventListener(this, ann.eventTypes(), ann.absPath(), ann.deep(), ann.uuid(), ann.nodeTypeName(), ann.noLocal());
-   }
-
-   /**
-    * Returns /** Returns
+    * Returns the qualifier by the event type
     * 
     * @param eventType
     * @return

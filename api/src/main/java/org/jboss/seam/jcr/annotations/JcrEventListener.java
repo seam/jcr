@@ -15,6 +15,16 @@
  */
 package org.jboss.seam.jcr.annotations;
 
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
 import javax.jcr.observation.Event;
 import javax.jcr.observation.ObservationManager;
 
@@ -24,19 +34,27 @@ import javax.jcr.observation.ObservationManager;
  * @see {@link ObservationManager#addEventListener(javax.jcr.observation.EventListener, int, String, boolean, String[], String[], boolean)}
  * 
  * @author george
- * 
  */
+
+// TODO: Review all default parameters
+
+@Target({ TYPE, METHOD, PARAMETER, FIELD })
+@Retention(RUNTIME)
+@Documented
 public @interface JcrEventListener
 {
+   /**
+    * Constant for all events
+    */
    public static final int ALL_EVENTS = Event.NODE_ADDED | Event.NODE_MOVED | Event.NODE_REMOVED | Event.PERSIST | Event.PROPERTY_ADDED | Event.PROPERTY_CHANGED | Event.PROPERTY_REMOVED;
 
-   String absPath();
+   String absPath() default "/";
 
-   boolean deep();
+   boolean deep() default false;
 
    int eventTypes() default ALL_EVENTS;
 
-   boolean noLocal();
+   boolean noLocal() default false;
 
    String[] nodeTypeName() default {};
 
