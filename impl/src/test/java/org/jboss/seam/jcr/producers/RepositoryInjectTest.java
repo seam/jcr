@@ -5,15 +5,19 @@
 
 package org.jboss.seam.jcr.producers;
 
+import java.net.URL;
 import javax.inject.Inject;
 import javax.jcr.Repository;
+import javax.jcr.Session;
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.seam.jcr.annotations.JcrRepository;
 import org.jboss.shrinkwrap.api.Archive;
+import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -24,19 +28,21 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class RepositoryInjectTest {
     @Deployment
-    public static Archive<?> createDeployment()
+   public static JavaArchive createArchive()
    {
-        JavaArchive archive = ShrinkWrap.create(JavaArchive.class, "test.jar")
-                .addClasses(RepositorySessionProducer.class,JcrRepository.class)
-                .addManifestResource(EmptyAsset.INSTANCE, "beans.xml");
-        return archive;
-    }
-
-    @Inject @JcrRepository(name="org.modeshape.jcr.URL",value="file:modeshape.xml?repositoryName=CarRepo")
+      return ShrinkWrap.create(JavaArchive.class).addPackage(RepositorySessionProducer.class.getPackage()).addManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
+   }
+   ///src/git/seam/jcr/impl/target/test-classes/
+    @Inject @JcrRepository(name="org.modeshape.jcr.URL",value="file:///src/git/seam/jcr/impl/target/test-classes/modeshape.xml?repositoryName=CarRepo")
     Repository carRepo;
 
-    @Test
-    public void testInjectRepository() {
+    //@Inject @JcrRepository(name="org.modeshape.jcr.URL",value="classpath://modeshape.xml?repositoryName=CarRepo")
+    //Session carSession;
 
+    @Test
+    public void testInjectRepository() throws Exception {
+        System.out.println(System.getProperty("java.class.path"));
+        Assert.assertNotNull(carRepo);
+        //Assert.assertNotNull(carSession);
     }
 }

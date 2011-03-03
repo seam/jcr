@@ -77,7 +77,9 @@ public class RepositorySessionProducer {
 	private Repository findRepository(JcrRepository jcrRepo) throws RepositoryException {
 		Map<String, String> parameters = Collections.singletonMap(jcrRepo.name(), jcrRepo.value());
 		Repository repository = null;
+                System.out.println(parameters);
 		for (RepositoryFactory factory : ServiceLoader.load(RepositoryFactory.class)) {
+                    System.out.println(factory.getClass().getCanonicalName());
 			repository = factory.getRepository(parameters);
 			if (repository != null)
 				break;
