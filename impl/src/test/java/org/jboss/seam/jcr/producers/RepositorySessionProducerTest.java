@@ -20,6 +20,7 @@ import static org.junit.Assert.assertNotNull;
 
 import javax.inject.Inject;
 import javax.jcr.Repository;
+import javax.jcr.Session;
 
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -48,6 +49,10 @@ public class RepositorySessionProducerTest
    @JcrRepository(name = "org.apache.jackrabbit.repository.home", value = "target")
    private Repository repository;
 
+   @Inject
+   @JcrRepository(name = "org.apache.jackrabbit.repository.home", value = "target")
+   private Session session;
+
    @Deployment
    public static JavaArchive createArchive()
    {
@@ -60,4 +65,9 @@ public class RepositorySessionProducerTest
       assertNotNull("JCR Repository should have been injected", repository);
    }
 
+   @Test
+   public void testProduceSession()
+   {
+      assertNotNull("JCR Session should have been injected", session);
+   }
 }
