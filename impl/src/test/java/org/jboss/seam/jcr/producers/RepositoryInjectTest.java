@@ -5,6 +5,7 @@
 
 package org.jboss.seam.jcr.producers;
 
+import java.io.File;
 import java.net.URL;
 import javax.inject.Inject;
 import javax.jcr.Repository;
@@ -33,15 +34,14 @@ public class RepositoryInjectTest {
       return ShrinkWrap.create(JavaArchive.class).addPackage(RepositorySessionProducer.class.getPackage()).addManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
    }
    ///src/git/seam/jcr/impl/target/test-classes/
-    @Inject @JcrRepository(name="org.modeshape.jcr.URL",value="file:///src/git/seam/jcr/impl/target/test-classes/modeshape.xml?repositoryName=CarRepo")
+    @Inject @JcrRepository(name="org.modeshape.jcr.URL",value="file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
     Repository carRepo;
 
-    @Inject @JcrRepository(name="org.modeshape.jcr.URL",value="file:///src/git/seam/jcr/impl/target/test-classes/modeshape.xml?repositoryName=CarRepo")
+    @Inject @JcrRepository(name="org.modeshape.jcr.URL",value="file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
     Session carSession;
 
     @Test
     public void testInjectRepository() throws Exception {
-        System.out.println(System.getProperty("java.class.path"));
         Assert.assertNotNull(carRepo);
         Assert.assertNotNull(carSession);
     }
