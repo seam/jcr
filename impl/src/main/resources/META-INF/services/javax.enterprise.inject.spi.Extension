@@ -1,2 +1,1 @@
-#org.jboss.seam.jcr.repository.RepositoryExtension
-#org.jboss.seam.jcr.JcrExtension
+org.jboss.seam.jcr.JcrExtension
