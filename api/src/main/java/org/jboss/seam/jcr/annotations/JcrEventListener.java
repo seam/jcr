@@ -16,9 +16,12 @@
 package org.jboss.seam.jcr.annotations;
 
 import javax.jcr.observation.Event;
+import javax.jcr.observation.ObservationManager;
 
 /**
  * Represents that an event listener will be bound with this repository
+ * 
+ * @see {@link ObservationManager#addEventListener(javax.jcr.observation.EventListener, int, String, boolean, String[], String[], boolean)}
  * 
  * @author george
  * 
