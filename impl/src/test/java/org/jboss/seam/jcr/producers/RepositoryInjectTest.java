@@ -16,12 +16,9 @@
  */
 package org.jboss.seam.jcr.producers;
 
-import static org.junit.Assert.assertNotNull;
-
 import javax.inject.Inject;
 import javax.jcr.Repository;
 import javax.jcr.Session;
-
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.seam.jcr.annotations.JcrRepository;
@@ -29,52 +26,31 @@ import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.After;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * Test case for {@link RepositorySessionProducer}
- * 
- * NOTE: This test case works only with jackrabbit, so be sure to run with
- * -Pjackrabbit
- * 
- * @author George Gastaldi
- * 
+ *
+ * @author johnament
  */
 @RunWith(Arquillian.class)
-public class RepositorySessionProducerTest
-{
-
-   @Inject
-   @JcrRepository(name = "org.apache.jackrabbit.repository.home", value = "target")
-   private Repository repository;
-
-   @Inject
-   @JcrRepository(name = "org.apache.jackrabbit.repository.home", value = "target")
-   private Session session;
-
-   @Deployment
+public class RepositoryInjectTest {
+    @Deployment
    public static JavaArchive createArchive()
    {
       return ShrinkWrap.create(JavaArchive.class).addPackage(RepositorySessionProducer.class.getPackage()).addManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
    }
-
-   @Test
-   public void testProduceJcrRepository()
-   {
-      assertNotNull("JCR Repository should have been injected", repository);
-   }
-
-   @Test
-   public void testProduceSession()
-   {
-      assertNotNull("JCR Session should have been injected", session);
-   }
    
-   @After
-   public void tearDown() {
-      session.logout();
-   }
+    @Inject @JcrRepository(name="org.modeshape.jcr.URL",value="file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
+    Repository carRepo;
 
+    @Inject @JcrRepository(name="org.modeshape.jcr.URL",value="file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
+    Session carSession;
+
+    @Test
+    public void testInjectRepository() throws Exception {
+        Assert.assertNotNull(carRepo);
+        Assert.assertNotNull(carSession);
+    }
 }

@@ -31,6 +31,7 @@
 		<jboss.spec.version>1.0.0.CR1</jboss.spec.version>
 		<jcr.version>2.0</jcr.version>
 		<jackrabbit.core.version>2.2.4</jackrabbit.core.version>
+		<modeshape.version>2.4.0.Final</modeshape.version>
 	</properties>
 
 	<prerequisites>
@@ -78,12 +79,6 @@
 				<version>${jcr.version}</version>
 			</dependency>
 
-			<!-- Jackrabbit content repository -->
-			<dependency>
-				<groupId>org.apache.jackrabbit</groupId>
-				<artifactId>jackrabbit-core</artifactId>
-				<version>${jackrabbit.core.version}</version>
-			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -154,7 +149,26 @@
 				<dependency>
 					<groupId>org.apache.jackrabbit</groupId>
 					<artifactId>jackrabbit-core</artifactId>
+                                        <version>${jackrabbit.core.version}</version>
+                                        <scope>test</scope>
 				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>modeshape</id>
+			<dependencies>
+				<dependency>
+					<groupId>org.modeshape</groupId>
+					<artifactId>modeshape-jcr</artifactId>
+                                        <version>${modeshape.version}</version>
+                                        <scope>test</scope>
+				</dependency>
+                                <dependency>
+                                    <groupId>org.apache.lucene</groupId>
+                                    <artifactId>lucene-core</artifactId>
+                                    <version>3.0.3</version>
+                                    <scope>test</scope>
+                                </dependency>
 			</dependencies>
 		</profile>
 	</profiles>
