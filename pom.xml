@@ -30,8 +30,6 @@
 		<seam.version>3.0.0.CR1</seam.version>
 		<jboss.spec.version>1.0.0.CR1</jboss.spec.version>
 		<jcr.version>2.0</jcr.version>
-		<jackrabbit.core.version>2.2.4</jackrabbit.core.version>
-		<modeshape.version>2.4.0.Final</modeshape.version>
 	</properties>
 
 	<prerequisites>
@@ -42,6 +40,7 @@
 		<module>api</module>
 		<module>impl</module>
 		<module>combined</module>
+		<module>tests</module>
 	</modules>
 
 	<dependencyManagement>
@@ -142,34 +141,6 @@
 					</snapshots>
 				</pluginRepository>
 			</pluginRepositories>
-		</profile>
-		<profile>
-			<id>jackrabbit</id>
-			<dependencies>
-				<dependency>
-					<groupId>org.apache.jackrabbit</groupId>
-					<artifactId>jackrabbit-core</artifactId>
-                                        <version>${jackrabbit.core.version}</version>
-                                        <scope>test</scope>
-				</dependency>
-			</dependencies>
-		</profile>
-		<profile>
-			<id>modeshape</id>
-			<dependencies>
-				<dependency>
-					<groupId>org.modeshape</groupId>
-					<artifactId>modeshape-jcr</artifactId>
-                                        <version>${modeshape.version}</version>
-                                        <scope>test</scope>
-				</dependency>
-                                <dependency>
-                                    <groupId>org.apache.lucene</groupId>
-                                    <artifactId>lucene-core</artifactId>
-                                    <version>3.0.3</version>
-                                    <scope>test</scope>
-                                </dependency>
-			</dependencies>
 		</profile>
 	</profiles>
 
