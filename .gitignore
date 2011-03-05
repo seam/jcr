@@ -1,3 +1,4 @@
 target
+tests/jackrabbit/derby.log
 /.project
 /.settings

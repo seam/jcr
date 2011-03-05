@@ -98,10 +98,13 @@ public class JcrCDIEventListenerTest
          // This is when the observers are fired
          session.logout();
       }
+      //ModeShape uses background threads for event firing and similar activities.
+      //let's give it 5 seconds to run, then check the bags.
       Thread.sleep(5000);
       // Check that node was added
       assertEquals(1, counter.getCountForType(Event.NODE_ADDED));
       // Properties jcr:primaryType and message added
+      // ModeShape adds a few extra properties.
       assertEquals(4, counter.getCountForType(Event.PROPERTY_ADDED));
    }
 
