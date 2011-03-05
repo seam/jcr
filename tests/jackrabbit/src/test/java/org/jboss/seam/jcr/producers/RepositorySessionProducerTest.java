@@ -71,17 +71,8 @@ public class RepositorySessionProducerTest
    {
       assertNotNull("JCR Session should have been injected", session);
    }
-<<<<<<< HEAD
    @After
    public void tearDown() {
        session.logout();
    }
-=======
-   
-   @After
-   public void tearDown() {
-      session.logout();
-   }
-
->>>>>>> 24a2f513117e1ccc4ce0b0b229fb0ce9362616eb
 }
