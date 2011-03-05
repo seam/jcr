@@ -29,6 +29,7 @@ import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -69,5 +70,9 @@ public class RepositorySessionProducerTest
    public void testProduceSession()
    {
       assertNotNull("JCR Session should have been injected", session);
+   }
+   @After
+   public void tearDown() {
+       session.logout();
    }
 }

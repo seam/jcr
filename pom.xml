@@ -146,12 +146,12 @@
 		<profile>
 			<id>jackrabbit</id>
 			<dependencies>
-				<dependency>
-					<groupId>org.apache.jackrabbit</groupId>
-					<artifactId>jackrabbit-core</artifactId>
-                                        <version>${jackrabbit.core.version}</version>
-                                        <scope>test</scope>
-				</dependency>
+                            <dependency>
+                                    <groupId>org.apache.jackrabbit</groupId>
+                                    <artifactId>jackrabbit-core</artifactId>
+                                    <version>${jackrabbit.core.version}</version>
+                                    <scope>test</scope>
+                            </dependency>
 			</dependencies>
 		</profile>
 		<profile>
@@ -163,12 +163,6 @@
                                         <version>${modeshape.version}</version>
                                         <scope>test</scope>
 				</dependency>
-                                <dependency>
-                                    <groupId>org.apache.lucene</groupId>
-                                    <artifactId>lucene-core</artifactId>
-                                    <version>3.0.3</version>
-                                    <scope>test</scope>
-                                </dependency>
 			</dependencies>
 		</profile>
 	</profiles>

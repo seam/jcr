@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  JBoss, Home of Professional Open Source
+  Copyright [2010], Red Hat, Inc., and individual contributors
+  by the @authors tag. See the copyright.txt in the distribution for a
+  full listing of individual contributors.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  http://www.apache.org/licenses/LICENSE-2.0
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+  -->
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<chapter id="jcr-jackrabbit">
+   <title>Seam JCR - JackRabbit Integration</title>
+
+<section id="jcr-jr-installation">
+       <title>JackRabbit Integration Installation</title>
+       <para>
+          In order to activate JackRabbit support within your application, you need to include JackRabbit on your classpath.  At a minimum, the following
+          maven dependency must be satisfied.
+       </para>
+       <programlisting role="XML"><![CDATA[<dependency>
+    <groupId>org.apache.jackrabbit</groupId>
+    <artifactId>jackrabbit-core</artifactId>
+    <version>${jackrabbit.version}</version>
+</dependency>]]>
+        </programlisting>
+        <tip>
+            <para>
+                Substitute ${jackrabbit.version} for the JackRabbit version you are running against.  Currently, Seam JCR tests against 2.2.4.  Please review JackRabbit documentation to determine any additional dependencies.
+            </para>
+        </tip>
+   </section>
+   <section id="jcr-jr-usage">
+       <title>Usage</title>
+       <para>
+           In order to use JackRabbit's Repository and Session objects in your application, you must define an injection point using the JcrRepository annotation based on JackRabbit's required configuration parameters.
+       </para>
+       <programlisting role="java"><![CDATA[
+    @Inject @JcrRepository(name="org.modeshape.jcr.URL",value="file:path/to/modeshape.xml?repositoryName=MyRepo")
+    Repository repository;
+
+    @Inject @JcrRepository(name="org.modeshape.jcr.URL",value="file:path/to/modeshape.xml?repositoryName=MyRepo")
+    Session session;]]></programlisting>
+   </section>
+
+   <!--
+   vim:et:ts=3:sw=3:tw=120
+   -->
+</chapter>

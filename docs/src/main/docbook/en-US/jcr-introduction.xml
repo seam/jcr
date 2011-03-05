@@ -17,13 +17,65 @@
   -->
 <!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
 <chapter id="jcr-introduction">
-   <title>Seam JCR - Introduction</title>
+    <title>Seam JCR - Introduction</title>
+    <section id="jcr-intro">
+        <title>Introduction</title>
+        <para>
+      The Seam JCR Module aims to simplify the integration points between JCR
+      implementations and CDI applications.
+        </para>
 
-   <para>
-      TO DO
-   </para>
-  
+        <para>
+       The Seam JCR module is compatible with JCR 2.0 implementations.  It strictly compiles against JCR 2.0.  However,
+       test cases are executed against both ModeShape and JackRabbit to ensure compatibility.  
+        </para>
+    </section>
 
+    <section id="maven-dependencies">
+        <title>Maven dependency configuration</title>
+        <para>
+	   	If you are using
+            <ulink url="http://maven.apache.org/">Maven</ulink> as your build tool, you can add the
+	   	following single dependency to your pom.xml file to include Seam JCR:
+        </para>
+        <programlisting role="XML"><![CDATA[<dependency>
+   <groupId>org.jboss.seam.jcr</groupId>
+   <artifactId>seam-jcr</artifactId>
+   <version>${seam.jcr.version}</version>
+</dependency>]]>
+        </programlisting>
+        <tip>
+            <para>
+            Substitute the expression ${seam.jcr.version} with the most recent or appropriate version of Seam JCR.
+            Alternatively, you can create a
+                <ulink
+            href="http://www.sonatype.com/books/mvnref-book/reference/resource-filtering-sect-properties.html#resource-filtering-sect-user-defined">Maven
+            user-defined property
+                </ulink> to satisfy this substitution so you can centrally manage the version.
+            </para>
+        </tip>
+        <para>
+         Alternatively, you can use the API at compile time and only include the implementation at runtime. This protects
+         you from inadvertantly depending on an implementation class.
+        </para>
+        <programlisting role="XML"><![CDATA[<dependency>
+   <groupId>org.jboss.seam.jcr</groupId>
+   <artifactId>seam-jcr-api</artifactId>
+   <version>${seam.jcr.version}</version>
+   <scope>compile</scope>
+</dependency>
+
+<dependency>
+   <groupId>org.jboss.seam.jcr</groupId>
+   <artifactId>seam-jcr-impl</artifactId>
+   <version>${seam.jcr.version}</version>
+   <scope>runtime</scope>
+</dependency>]]>
+        </programlisting>
+    </section>
+    <para>
+      In addition to your Seam JCR dependencies, you must also declare a dependency on a JCR Implementation.
+    </para>
    <!--
    vim:et:ts=3:sw=3:tw=120
    -->
