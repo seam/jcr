@@ -34,6 +34,7 @@ import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -54,14 +55,12 @@ public class JcrCDIEventListenerTest
 {
 
    @Inject
-   @JcrRepository(name = "org.apache.jackrabbit.repository.home", value = "target")
-   private Repository repository;
-
-   @Inject
    private EventCounterListener counter;
 
-   @Inject BeanManager beanManager;
+   @Inject @JcrRepository(name="org.modeshape.jcr.URL",value="file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
    private Session session;
+
+   @Inject BeanManager beanManager;
 
    @Deployment
    public static JavaArchive createArchive()
@@ -79,12 +78,12 @@ public class JcrCDIEventListenerTest
    @Before
    public void setUp() throws Exception
    {
-      session = repository.login(new SimpleCredentials("user", "pass".toCharArray()));
-      session.getWorkspace().getObservationManager().addEventListener(new JcrCDIEventListener(beanManager), 127, "/", true, null, null, false);
+       session.getWorkspace().getObservationManager().addEventListener(new JcrCDIEventListener(beanManager), 127, "/", true, null, null, false);
+       counter.resetBag();
    }
 
    @Test
-   public void testOnEventAdded() throws RepositoryException
+   public void testOnEventAdded() throws RepositoryException, InterruptedException
    {
       try
       {
@@ -99,10 +98,16 @@ public class JcrCDIEventListenerTest
          // This is when the observers are fired
          session.logout();
       }
-
+      Thread.sleep(5000);
       // Check that node was added
       assertEquals(1, counter.getCountForType(Event.NODE_ADDED));
       // Properties jcr:primaryType and message added
-      assertEquals(2, counter.getCountForType(Event.PROPERTY_ADDED));
+      assertEquals(4, counter.getCountForType(Event.PROPERTY_ADDED));
+   }
+
+   @After
+   public void cleanUp() throws Exception
+    {
+       counter.resetBag();
    }
 }

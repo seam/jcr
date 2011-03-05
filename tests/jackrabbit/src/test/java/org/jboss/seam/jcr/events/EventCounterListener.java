@@ -21,13 +21,6 @@ import javax.jcr.observation.Event;
 
 import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.bag.HashBag;
-import org.jboss.seam.jcr.annotations.events.NodeAdded;
-import org.jboss.seam.jcr.annotations.events.NodeMoved;
-import org.jboss.seam.jcr.annotations.events.NodeRemoved;
-import org.jboss.seam.jcr.annotations.events.Persist;
-import org.jboss.seam.jcr.annotations.events.PropertyAdded;
-import org.jboss.seam.jcr.annotations.events.PropertyChanged;
-import org.jboss.seam.jcr.annotations.events.PropertyRemoved;
 
 /**
  * Used on test cases
@@ -40,37 +33,7 @@ public class EventCounterListener
 {
    private Bag counter = new HashBag();
 
-   public void onNodeAdded(@Observes @NodeAdded Event event)
-   {
-      counter.add(event.getType());
-   }
-
-   public void onNodeRemoved(@Observes @NodeRemoved Event event)
-   {
-      counter.add(event.getType());
-   }
-
-   public void onNodeMoved(@Observes @NodeMoved Event event)
-   {
-      counter.add(event.getType());
-   }
-
-   public void onPersist(@Observes @Persist Event event)
-   {
-      counter.add(event.getType());
-   }
-
-   public void onPropertyAdded(@Observes @PropertyAdded Event event)
-   {
-      counter.add(event.getType());
-   }
-
-   public void onPropertyRemoved(@Observes @PropertyRemoved Event event)
-   {
-      counter.add(event.getType());
-   }
-
-   public void onPropertyChanged(@Observes @PropertyChanged Event event)
+   public void incrementTypedCounter(@Observes Event event)
    {
       counter.add(event.getType());
    }

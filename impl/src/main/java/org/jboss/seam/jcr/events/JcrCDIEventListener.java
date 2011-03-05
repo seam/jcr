@@ -16,12 +16,15 @@
 package org.jboss.seam.jcr.events;
 
 import java.lang.annotation.Annotation;
+import javax.enterprise.context.Dependent;
+import javax.enterprise.inject.spi.BeanManager;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 import javax.jcr.observation.Event;
 import javax.jcr.observation.EventIterator;
 import javax.jcr.observation.EventListener;
+import org.jboss.logging.Logger;
+import org.jboss.seam.solder.core.Veto;
 
 /**
  * JCR {@link EventListener} for CDI
@@ -29,15 +32,15 @@ import javax.jcr.observation.EventListener;
  * @author george
  * 
  */
-@Singleton
+@Veto
 public final class JcrCDIEventListener implements EventListener
 {
+    private BeanManager beanManager;
+    private Logger logger = Logger.getLogger(JcrCDIEventListener.class);
 
-   /**
-    * Producer of CDI Events
-    */
-   @Inject
-   private javax.enterprise.event.Event<javax.jcr.observation.Event> eventManager;
+    public JcrCDIEventListener(BeanManager beanManager) {
+        this.beanManager = beanManager;
+    }
 
    /**
     * Fired by the JCR spec
@@ -45,49 +48,13 @@ public final class JcrCDIEventListener implements EventListener
    @Override
    public void onEvent(EventIterator events)
    {
+       logger.debugf("Event iterator size: %s",events.getSize());
       while (events.hasNext())
       {
          Event event = events.nextEvent();
-         Annotation qualifier = getQualifierByEventType(event.getType());
-         eventManager.select(qualifier).fire(event);
+         logger.debugf("About to fire an event of type: %s",event.getType());
+         beanManager.fireEvent(event);
       }
    }
 
-   /**
-    * Returns the qualifier by the event type
-    * 
-    * @param eventType
-    * @return
-    */
-   Annotation getQualifierByEventType(int eventType)
-   {
-      Annotation qualifier;
-      switch (eventType)
-      {
-      case Event.NODE_ADDED:
-         qualifier = NodeAddedLiteral.INSTANCE;
-         break;
-      case Event.NODE_MOVED:
-         qualifier = NodeMovedLiteral.INSTANCE;
-         break;
-      case Event.NODE_REMOVED:
-         qualifier = NodeRemovedLiteral.INSTANCE;
-         break;
-      case Event.PERSIST:
-         qualifier = PersistLiteral.INSTANCE;
-         break;
-      case Event.PROPERTY_ADDED:
-         qualifier = PropertyAddedLiteral.INSTANCE;
-         break;
-      case Event.PROPERTY_CHANGED:
-         qualifier = PropertyChangedLiteral.INSTANCE;
-         break;
-      case Event.PROPERTY_REMOVED:
-         qualifier = PropertyRemovedLiteral.INSTANCE;
-         break;
-      default:
-         throw new IllegalArgumentException("Event type unrecognized: " + eventType);
-      }
-      return qualifier;
-   }
 }

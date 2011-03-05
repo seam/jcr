@@ -24,6 +24,7 @@ import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.Produces;
+import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
@@ -77,13 +78,13 @@ public class RepositorySessionProducer
     */
    @Produces
    @JcrRepository
-   public Session produceJcrRepositorySession(InjectionPoint ip, Instance<JcrCDIEventListener> eventListenerInstance) throws RepositoryException
+   public Session produceJcrRepositorySession(InjectionPoint ip, BeanManager beanManager) throws RepositoryException
    {
       JcrRepository jcrRepo = ip.getAnnotated().getAnnotation(JcrRepository.class);
       Repository repo = findRepository(jcrRepo);
       Session session = repo.login();
       // TODO: Find a better way of doing this
-      registerListener(ip, eventListenerInstance, session);
+      registerListener(ip, beanManager, session);
       return session;
    }
 
@@ -95,12 +96,12 @@ public class RepositorySessionProducer
     * @param obsManager
     * @throws RepositoryException
     */
-   private void registerListener(InjectionPoint ip, Instance<JcrCDIEventListener> eventListenerInstance, Session session) throws RepositoryException
+   private void registerListener(InjectionPoint ip, BeanManager beanManager, Session session) throws RepositoryException
    {
       JcrEventListener ann = ip.getAnnotated().getAnnotation(JcrEventListener.class);
       if (ann != null)
       {
-         session.getWorkspace().getObservationManager().addEventListener(eventListenerInstance.get(), ann.eventTypes(), ann.absPath(), ann.deep(), ann.uuid(), ann.nodeTypeName(), ann.noLocal());
+         session.getWorkspace().getObservationManager().addEventListener(new JcrCDIEventListener(beanManager), ann.eventTypes(), ann.absPath(), ann.deep(), ann.uuid(), ann.nodeTypeName(), ann.noLocal());
       }
    }
 
