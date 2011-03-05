@@ -48,7 +48,7 @@ import org.junit.runner.RunWith;
  * @author George Gastaldi
  * 
  */
-//@Ignore
+@Ignore
 @RunWith(Arquillian.class)
 public class JcrCDIEventListenerTest
 {
