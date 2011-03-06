@@ -18,6 +18,7 @@ package org.jboss.seam.jcr.events;
 import java.lang.annotation.Annotation;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.spi.BeanManager;
+import javax.enterprise.util.AnnotationLiteral;
 
 import javax.inject.Inject;
 import javax.jcr.observation.Event;
@@ -53,8 +54,45 @@ public final class JcrCDIEventListener implements EventListener
       {
          Event event = events.nextEvent();
          logger.debugf("About to fire an event of type: %s",event.getType());
-         beanManager.fireEvent(event);
+         beanManager.fireEvent(event,getQualifierByEvent(event));
       }
    }
 
+      /**
+    * Returns the qualifier by the event type
+    *
+    * @param eventType
+    * @return
+    */
+   Annotation getQualifierByEvent(Event event)
+   {
+      Annotation qualifier;
+      switch (event.getType())
+      {
+      case Event.NODE_ADDED:
+         qualifier = NodeAddedLiteral.INSTANCE;
+         break;
+      case Event.NODE_MOVED:
+         qualifier = NodeMovedLiteral.INSTANCE;
+         break;
+      case Event.NODE_REMOVED:
+         qualifier = NodeRemovedLiteral.INSTANCE;
+         break;
+      case Event.PERSIST:
+         qualifier = PersistLiteral.INSTANCE;
+         break;
+      case Event.PROPERTY_ADDED:
+         qualifier = PropertyAddedLiteral.INSTANCE;
+         break;
+      case Event.PROPERTY_CHANGED:
+         qualifier = PropertyChangedLiteral.INSTANCE;
+         break;
+      case Event.PROPERTY_REMOVED:
+         qualifier = PropertyRemovedLiteral.INSTANCE;
+         break;
+      default:
+         throw new IllegalArgumentException("Event type unrecognized: " + event);
+      }
+      return qualifier;
+   }
 }
