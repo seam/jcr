@@ -35,7 +35,7 @@ import javax.jcr.observation.ObservationManager;
 
 import org.jboss.logging.Logger;
 import org.jboss.seam.jcr.annotations.JcrEventListener;
-import org.jboss.seam.jcr.annotations.JcrRepository;
+import org.jboss.seam.jcr.annotations.JcrConfiguration;
 import org.jboss.seam.jcr.events.JcrCDIEventListener;
 
 /**
@@ -58,10 +58,10 @@ public class RepositorySessionProducer
     * @throws RepositoryException
     */
    @Produces
-   @JcrRepository
+   @JcrConfiguration
    public Repository produceJcrRepository(InjectionPoint ip) throws RepositoryException
    {
-      JcrRepository jcrRepo = ip.getAnnotated().getAnnotation(JcrRepository.class);
+      JcrConfiguration jcrRepo = ip.getAnnotated().getAnnotation(JcrConfiguration.class);
       return findRepository(jcrRepo);
    }
 
@@ -77,10 +77,10 @@ public class RepositorySessionProducer
     *            implementation occurs
     */
    @Produces
-   @JcrRepository
+   @JcrConfiguration
    public Session produceJcrRepositorySession(InjectionPoint ip, BeanManager beanManager) throws RepositoryException
    {
-      JcrRepository jcrRepo = ip.getAnnotated().getAnnotation(JcrRepository.class);
+      JcrConfiguration jcrRepo = ip.getAnnotated().getAnnotation(JcrConfiguration.class);
       Repository repo = findRepository(jcrRepo);
       Session session = repo.login();
       // TODO: Find a better way of doing this
@@ -105,7 +105,7 @@ public class RepositorySessionProducer
       }
    }
 
-   private Repository findRepository(JcrRepository jcrRepo) throws RepositoryException
+   private Repository findRepository(JcrConfiguration jcrRepo) throws RepositoryException
    {
       Map<String, String> parameters = Collections.singletonMap(jcrRepo.name(), jcrRepo.value());
       Repository repository = null;

@@ -28,7 +28,7 @@ import javax.jcr.observation.Event;
 
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.seam.jcr.annotations.JcrRepository;
+import org.jboss.seam.jcr.annotations.JcrConfiguration;
 import org.jboss.seam.jcr.producers.RepositorySessionProducer;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -56,7 +56,7 @@ public class JcrCDIEventListenerTest
 {
 
    @Inject
-   @JcrRepository(name = JACKRABBIT_REPOSITORY_HOME, value = "target")
+   @JcrConfiguration(name = JACKRABBIT_REPOSITORY_HOME, value = "target")
    private Repository repository;
 
    @Inject

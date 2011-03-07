@@ -24,8 +24,7 @@ import javax.jcr.Session;
 
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.seam.jcr.ConfigParams;
-import org.jboss.seam.jcr.annotations.JcrRepository;
+import org.jboss.seam.jcr.annotations.JcrConfiguration;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -39,8 +38,6 @@ import static org.jboss.seam.jcr.ConfigParams.*;
 /**
  * Test case for {@link RepositorySessionProducer}
  * 
- * NOTE: This test case works only with jackrabbit, so be sure to run with
- * -Pjackrabbit
  * 
  * @author George Gastaldi
  * 
@@ -50,11 +47,11 @@ public class RepositorySessionProducerTest
 {
 
    @Inject
-   @JcrRepository(name = JACKRABBIT_REPOSITORY_HOME, value = "target")
+   @JcrConfiguration(name = JACKRABBIT_REPOSITORY_HOME, value = "target")
    private Repository repository;
 
    @Inject
-   @JcrRepository(name = JACKRABBIT_REPOSITORY_HOME, value = "target")
+   @JcrConfiguration(name = JACKRABBIT_REPOSITORY_HOME, value = "target")
    private Session session;
 
    @Deployment

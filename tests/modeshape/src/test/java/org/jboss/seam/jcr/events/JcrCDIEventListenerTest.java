@@ -28,7 +28,7 @@ import javax.jcr.observation.Event;
 
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.seam.jcr.annotations.JcrRepository;
+import org.jboss.seam.jcr.annotations.JcrConfiguration;
 import org.jboss.seam.jcr.producers.RepositorySessionProducer;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -59,7 +59,7 @@ public class JcrCDIEventListenerTest
    @Inject
    private EventCounterListener counter;
 
-   @Inject @JcrRepository(name=MODESHAPE_URL,value="file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
+   @Inject @JcrConfiguration(name=MODESHAPE_URL,value="file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
    private Session session;
 
    @Inject BeanManager beanManager;

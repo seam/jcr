@@ -17,7 +17,6 @@ package org.jboss.seam.jcr.events;
 
 import javax.enterprise.context.Dependent;
 import javax.enterprise.event.Observes;
-import javax.inject.Singleton;
 import javax.jcr.observation.Event;
 
 import org.apache.commons.collections.Bag;

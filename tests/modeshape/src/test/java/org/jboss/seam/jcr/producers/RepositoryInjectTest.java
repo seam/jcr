@@ -21,7 +21,7 @@ import javax.jcr.Repository;
 import javax.jcr.Session;
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.seam.jcr.annotations.JcrRepository;
+import org.jboss.seam.jcr.annotations.JcrConfiguration;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -31,7 +31,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.jboss.seam.jcr.ConfigParams.*;
+
 /**
+ * Test case to verify running injection capabilities against ModeShape's JCR Implementation.
  *
  * @author johnament
  */
@@ -43,10 +45,10 @@ public class RepositoryInjectTest {
       return ShrinkWrap.create(JavaArchive.class).addPackage(RepositorySessionProducer.class.getPackage()).addManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
    }
    
-    @Inject @JcrRepository(name=MODESHAPE_URL,value="file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
+    @Inject @JcrConfiguration(name=MODESHAPE_URL,value="file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
     Repository carRepo;
 
-    @Inject @JcrRepository(name=MODESHAPE_URL,value="file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
+    @Inject @JcrConfiguration(name=MODESHAPE_URL,value="file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
     Session carSession;
 
     @Test
