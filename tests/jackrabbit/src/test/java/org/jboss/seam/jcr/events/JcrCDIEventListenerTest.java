@@ -39,6 +39,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.jboss.seam.jcr.ConfigParams.*;
+
 /**
  * Test case for {@link JcrCDIEventListener}
  * 
@@ -54,7 +56,7 @@ public class JcrCDIEventListenerTest
 {
 
    @Inject
-   @JcrRepository(name = "org.apache.jackrabbit.repository.home", value = "target")
+   @JcrRepository(name = JACKRABBIT_REPOSITORY_HOME, value = "target")
    private Repository repository;
 
    @Inject
