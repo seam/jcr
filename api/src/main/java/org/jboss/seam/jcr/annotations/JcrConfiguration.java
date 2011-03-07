@@ -28,7 +28,7 @@ import javax.enterprise.util.Nonbinding;
 
 import javax.inject.Qualifier;
 
-/**
+/** Describes a name/value pair for JcrConfiguration settings.
  *
  * @author johnament
  */
