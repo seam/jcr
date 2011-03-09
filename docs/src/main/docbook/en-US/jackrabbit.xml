@@ -43,10 +43,10 @@
            In order to use JackRabbit's Repository and Session objects in your application, you must define an injection point using the JcrRepository annotation based on JackRabbit's required configuration parameters.
        </para>
        <programlisting role="java"><![CDATA[
-    @Inject @JcrRepository(name="org.modeshape.jcr.URL",value="file:path/to/modeshape.xml?repositoryName=MyRepo")
+    @Inject @JcrRepository(name="org.apache.jackrabbit.repository.home",value="target")
     Repository repository;
 
-    @Inject @JcrRepository(name="org.modeshape.jcr.URL",value="file:path/to/modeshape.xml?repositoryName=MyRepo")
+    @Inject @JcrRepository(name="org.apache.jackrabbit.repository.home",value="target")
     Session session;]]></programlisting>
    </section>
 
