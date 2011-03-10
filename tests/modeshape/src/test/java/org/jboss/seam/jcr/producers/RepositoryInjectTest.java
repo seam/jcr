@@ -30,6 +30,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.jboss.seam.jcr.ConfigParams.*;
 /**
  *
  * @author johnament
@@ -42,10 +43,10 @@ public class RepositoryInjectTest {
       return ShrinkWrap.create(JavaArchive.class).addPackage(RepositorySessionProducer.class.getPackage()).addManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
    }
    
-    @Inject @JcrRepository(name="org.modeshape.jcr.URL",value="file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
+    @Inject @JcrRepository(name=MODESHAPE_URL,value="file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
     Repository carRepo;
 
-    @Inject @JcrRepository(name="org.modeshape.jcr.URL",value="file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
+    @Inject @JcrRepository(name=MODESHAPE_URL,value="file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
     Session carSession;
 
     @Test

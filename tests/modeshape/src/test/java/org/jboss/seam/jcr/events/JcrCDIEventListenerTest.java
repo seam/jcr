@@ -40,6 +40,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.jboss.seam.jcr.ConfigParams.*;
+
 /**
  * Test case for {@link JcrCDIEventListener}
  * 
@@ -57,7 +59,7 @@ public class JcrCDIEventListenerTest
    @Inject
    private EventCounterListener counter;
 
-   @Inject @JcrRepository(name="org.modeshape.jcr.URL",value="file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
+   @Inject @JcrRepository(name=MODESHAPE_URL,value="file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
    private Session session;
 
    @Inject BeanManager beanManager;
