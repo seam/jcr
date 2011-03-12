@@ -30,6 +30,7 @@
         <seam.version>3.0.0.CR1</seam.version>
         <jboss.spec.version>1.0.0.CR1</jboss.spec.version>
         <jcr.version>2.0</jcr.version>
+        <emma.version>2.0.5312</emma.version>
     </properties>
 
     <prerequisites>
@@ -147,6 +148,36 @@
                 </pluginRepository>
             </pluginRepositories>
         </profile>
+        <profile>
+         <id>code-coverage</id>
+         <dependencies>
+            <dependency>
+                <groupId>emma</groupId>
+                <artifactId>emma</artifactId>
+                <version>${emma.version}</version>
+            </dependency>
+         </dependencies>
+         <build>
+            <plugins>
+               <plugin>
+                  <artifactId>maven-clean-plugin</artifactId>
+                  <configuration>
+                     <filesets>
+                        <fileset>
+                           <directory>${basedir}/</directory>
+                           <includes>
+                              <include>**/*.ec</include>
+                              <include>**/*.em</include>
+                              <include>**/transaction.log</include>
+                           </includes>
+                           <followSymlinks>false</followSymlinks>
+                        </fileset>
+                     </filesets>
+                  </configuration>
+               </plugin>
+            </plugins>
+         </build>
+      </profile>
     </profiles>
 
     <issueManagement>
