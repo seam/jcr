@@ -78,12 +78,6 @@
                 <artifactId>jcr</artifactId>
                 <version>${jcr.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.hibernate.javax.persistence</groupId>
-                <artifactId>hibernate-jpa-2.0-api</artifactId>
-                <version>1.0.0.Final</version>
-                <scope>provided</scope>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -184,6 +178,11 @@
         <system>JIRA</system>
         <url>https://issues.jboss.org/browse/SEAMJCR</url>
     </issueManagement>
+
+   <ciManagement>
+      <system>Hudson</system>
+      <url>http://hudson.jboss.org/hudson/view/Seam/job/Seam-3.X-jcr-CI</url>
+   </ciManagement>
 
     <scm>
         <connection>scm:git:git://github.com/seam/jcr.git</connection>

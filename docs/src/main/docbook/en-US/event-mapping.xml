@@ -18,9 +18,24 @@
 <!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
 <chapter id="jcr-eventmapping">
    <title>Seam JCR - Event Mapping</title>
-
+   <section id="jcr-event-mapping-intro">
    <para>
-      TODO
+      Seam JCR provides functionality to fire CDI Events based on events found in JCR.  The rules of how events are
+      fired are based around the underlying implementation.
+   </para>
+   <tip>
+       You will not have an active JCR Session during the event firing,
+      a new one will need to be created.
+   </tip>
+   </section>
+   <section id="jcr-event-mapping-activation">
+       <programlisting role="Java">
+
+        </programlisting>
+   </section>
+   <para>
+        At the injection point for your javax.jcr.Session, you can add the JcrEventListener annotation.  It does not
+        qualify the injection point.  
    </para>
 
 

@@ -92,8 +92,9 @@ public class RepositorySessionProducer
     * Registers this {@link EventListener} into an {@link ObservationManager}
     * using the supplied config
     * 
-    * @param ann
-    * @param obsManager
+    * @param ip - the injection point.
+    * @param beanManager - the CDI bean manager.
+    * @param session - the session to be configured.
     * @throws RepositoryException
     */
    private void registerListener(InjectionPoint ip, BeanManager beanManager, Session session) throws RepositoryException
