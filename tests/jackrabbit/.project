@@ -7,25 +7,10 @@
   </projects>
   <buildSpec>
     <buildCommand>
-      <name>org.eclipse.wst.validation.validationbuilder</name>
-    </buildCommand>
-    <buildCommand>
       <name>org.eclipse.jdt.core.javabuilder</name>
-    </buildCommand>
-    <buildCommand>
-      <name>org.jboss.tools.jst.web.kb.kbbuilder</name>
-    </buildCommand>
-    <buildCommand>
-      <name>org.jboss.tools.cdi.core.cdibuilder</name>
-    </buildCommand>
-    <buildCommand>
-      <name>org.maven.ide.eclipse.maven2Builder</name>
     </buildCommand>
   </buildSpec>
   <natures>
     <nature>org.eclipse.jdt.core.javanature</nature>
-    <nature>org.maven.ide.eclipse.maven2Nature</nature>
-    <nature>org.jboss.tools.jst.web.kb.kbnature</nature>
-    <nature>org.jboss.tools.cdi.core.cdinature</nature>
   </natures>
 </projectDescription>

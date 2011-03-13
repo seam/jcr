@@ -18,6 +18,7 @@
   <classpathentry kind="var" path="M2_REPO/ch/qos/cal10n/cal10n-api/0.7.2/cal10n-api-0.7.2.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/google/collections/google-collections/1.0/google-collections-1.0.jar"/>
+  <classpathentry kind="var" path="M2_REPO/org/hibernate/javax/persistence/hibernate-jpa-2.0-api/1.0.0.Final/hibernate-jpa-2.0-api-1.0.0.Final.jar"/>
   <classpathentry kind="var" path="M2_REPO/jakarta-regexp/jakarta-regexp/1.4/jakarta-regexp-1.4.jar"/>
   <classpathentry kind="var" path="M2_REPO/javassist/javassist/3.11.0.GA/javassist-3.11.0.GA.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jboss/interceptor/jboss-interceptor/1.0.0-CR11/jboss-interceptor-1.0.0-CR11.jar"/>
