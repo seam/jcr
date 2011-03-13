@@ -40,13 +40,13 @@
    <section id="jcr-jr-usage">
        <title>Usage</title>
        <para>
-           In order to use JackRabbit's Repository and Session objects in your application, you must define an injection point using the JcrRepository annotation based on JackRabbit's required configuration parameters.
+           In order to use JackRabbit's Repository and Session objects in your application, you must define an injection point using the JcrConfiguration annotation based on JackRabbit's required configuration parameters.
        </para>
        <programlisting role="java"><![CDATA[
-    @Inject @JcrRepository(name="org.apache.jackrabbit.repository.home",value="target")
+    @Inject @JcrConfiguration(name="org.apache.jackrabbit.repository.home",value="target")
     Repository repository;
 
-    @Inject @JcrRepository(name="org.apache.jackrabbit.repository.home",value="target")
+    @Inject @JcrConfiguration(name="org.apache.jackrabbit.repository.home",value="target")
     Session session;]]></programlisting>
    </section>
 

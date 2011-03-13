@@ -22,7 +22,6 @@ import java.util.ServiceLoader;
 
 import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Disposes;
-import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.InjectionPoint;
@@ -34,8 +33,8 @@ import javax.jcr.observation.EventListener;
 import javax.jcr.observation.ObservationManager;
 
 import org.jboss.logging.Logger;
-import org.jboss.seam.jcr.annotations.JcrEventListener;
 import org.jboss.seam.jcr.annotations.JcrConfiguration;
+import org.jboss.seam.jcr.annotations.JcrEventListener;
 import org.jboss.seam.jcr.events.JcrCDIEventListener;
 
 /**
@@ -49,7 +48,7 @@ public class RepositorySessionProducer
    private final Logger logger = Logger.getLogger(RepositorySessionProducer.class);
 
    /**
-    * Produces a {@link Repository} based on {@link JcrRepository}
+    * Produces a {@link Repository} based on {@link JcrConfiguration}
     * 
     * TODO: we should add in support SeamManaged.
     * 
@@ -59,10 +58,11 @@ public class RepositorySessionProducer
     */
    @Produces
    @JcrConfiguration
-   public Repository produceJcrRepository(InjectionPoint ip) throws RepositoryException
+   public Repository produceRepository(InjectionPoint ip) throws RepositoryException
    {
       JcrConfiguration jcrRepo = ip.getAnnotated().getAnnotation(JcrConfiguration.class);
-      return findRepository(jcrRepo);
+      Map<String, String> parameters = Collections.singletonMap(jcrRepo.name(), jcrRepo.value());
+      return findRepository(parameters);
    }
 
    /**
@@ -78,10 +78,11 @@ public class RepositorySessionProducer
     */
    @Produces
    @JcrConfiguration
-   public Session produceJcrRepositorySession(InjectionPoint ip, BeanManager beanManager) throws RepositoryException
+   public Session produceRepositorySession(InjectionPoint ip, BeanManager beanManager) throws RepositoryException
    {
       JcrConfiguration jcrRepo = ip.getAnnotated().getAnnotation(JcrConfiguration.class);
-      Repository repo = findRepository(jcrRepo);
+      Map<String, String> parameters = Collections.singletonMap(jcrRepo.name(), jcrRepo.value());
+      Repository repo = findRepository(parameters);
       Session session = repo.login();
       // TODO: Find a better way of doing this
       registerListener(ip, beanManager, session);
@@ -106,9 +107,14 @@ public class RepositorySessionProducer
       }
    }
 
-   private Repository findRepository(JcrConfiguration jcrRepo) throws RepositoryException
+   /**
+    * JCR 2.0 Default code
+    * @param jcrRepo
+    * @return
+    * @throws RepositoryException
+    */
+   private Repository findRepository(Map<String, String> parameters) throws RepositoryException
    {
-      Map<String, String> parameters = Collections.singletonMap(jcrRepo.name(), jcrRepo.value());
       Repository repository = null;
       for (RepositoryFactory factory : ServiceLoader.load(RepositoryFactory.class))
       {

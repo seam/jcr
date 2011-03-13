@@ -45,13 +45,13 @@
    <section id="jcr-ms-usage">
        <title>Usage</title>
        <para>
-           In order to use ModeShape's Repository and Session objects in your application, you must define an injection point using the JcrRepository annotation based on ModeShape's required configuration parameters.  Please review the ModeShape getting started guide for further details.
+           In order to use ModeShape's Repository and Session objects in your application, you must define an injection point using the JcrConfiguration annotation based on ModeShape's required configuration parameters.  Please review the ModeShape getting started guide for further details.
        </para>
        <programlisting role="java"><![CDATA[
-    @Inject @JcrRepository(name="org.modeshape.jcr.URL",value="file:path/to/modeshape.xml?repositoryName=MyRepo")
+    @Inject @JcrConfiguration(name="org.modeshape.jcr.URL",value="file:path/to/modeshape.xml?repositoryName=MyRepo")
     Repository repository;
 
-    @Inject @JcrRepository(name="org.modeshape.jcr.URL",value="file:path/to/modeshape.xml?repositoryName=MyRepo")
+    @Inject @JcrConfiguration(name="org.modeshape.jcr.URL",value="file:path/to/modeshape.xml?repositoryName=MyRepo")
     Session session;]]></programlisting>
    </section>
    <!--
