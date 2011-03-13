@@ -16,14 +16,12 @@
 package org.jboss.seam.jcr.events;
 
 import java.lang.annotation.Annotation;
-import javax.enterprise.context.Dependent;
-import javax.enterprise.inject.spi.BeanManager;
-import javax.enterprise.util.AnnotationLiteral;
 
-import javax.inject.Inject;
+import javax.enterprise.inject.spi.BeanManager;
 import javax.jcr.observation.Event;
 import javax.jcr.observation.EventIterator;
 import javax.jcr.observation.EventListener;
+
 import org.jboss.logging.Logger;
 import org.jboss.seam.solder.core.Veto;
 
@@ -36,31 +34,34 @@ import org.jboss.seam.solder.core.Veto;
 @Veto
 public final class JcrCDIEventListener implements EventListener
 {
-    private BeanManager beanManager;
-    private Logger logger = Logger.getLogger(JcrCDIEventListener.class);
+   private BeanManager beanManager;
+   private Logger logger = Logger.getLogger(JcrCDIEventListener.class);
 
-    public JcrCDIEventListener(BeanManager beanManager) {
-        this.beanManager = beanManager;
-    }
+   public JcrCDIEventListener(BeanManager beanManager)
+   {
+      this.beanManager = beanManager;
+   }
 
    /**
     * Fired by the JCR spec
+    * 
+    * @see EventListener#onEvent(EventIterator)
     */
    @Override
    public void onEvent(EventIterator events)
    {
-       logger.debugf("Event iterator size: %s",events.getSize());
+      logger.debugf("Event iterator size: %s", events.getSize());
       while (events.hasNext())
       {
          Event event = events.nextEvent();
-         logger.debugf("About to fire an event of type: %s",event.getType());
-         beanManager.fireEvent(event,getQualifierByEvent(event));
+         logger.debugf("About to fire an event of type: %s", event.getType());
+         beanManager.fireEvent(event, getQualifierByEvent(event));
       }
    }
 
-      /**
+   /**
     * Returns the qualifier by the event type
-    *
+    * 
     * @param eventType
     * @return
     */
