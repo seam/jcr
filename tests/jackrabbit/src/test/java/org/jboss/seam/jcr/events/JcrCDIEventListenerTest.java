@@ -15,9 +15,10 @@
  */
 package org.jboss.seam.jcr.events;
 
-import javax.enterprise.inject.spi.BeanManager;
+import static org.jboss.seam.jcr.ConfigParams.JACKRABBIT_REPOSITORY_HOME;
 import static org.junit.Assert.assertEquals;
 
+import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
 import javax.jcr.Node;
 import javax.jcr.Repository;
@@ -35,22 +36,15 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.jboss.seam.jcr.ConfigParams.*;
 
 /**
  * Test case for {@link JcrCDIEventListener}
  * 
- * NOTE: This test case works only with jackrabbit, so be sure to run with
- * -Pjackrabbit
- * 
  * @author George Gastaldi
  * 
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class JcrCDIEventListenerTest
 {
