@@ -29,13 +29,9 @@ import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.RepositoryFactory;
 import javax.jcr.Session;
-import javax.jcr.observation.EventListener;
-import javax.jcr.observation.ObservationManager;
 
 import org.jboss.logging.Logger;
 import org.jboss.seam.jcr.annotations.JcrConfiguration;
-import org.jboss.seam.jcr.annotations.JcrEventListener;
-import org.jboss.seam.jcr.events.JcrCDIEventListener;
 
 /**
  * Produces {@link Repository} and {@link Session} objects
@@ -85,26 +81,8 @@ public class RepositorySessionProducer
       Repository repo = findRepository(parameters);
       Session session = repo.login();
       // TODO: Find a better way of doing this
-      registerListener(ip, beanManager, session);
+      // registerListener(ip, beanManager, session);
       return session;
-   }
-
-   /**
-    * Registers this {@link EventListener} into an {@link ObservationManager}
-    * using the supplied config
-    * 
-    * @param ip - the injection point.
-    * @param beanManager - the CDI bean manager.
-    * @param session - the session to be configured.
-    * @throws RepositoryException
-    */
-   private void registerListener(InjectionPoint ip, BeanManager beanManager, Session session) throws RepositoryException
-   {
-      JcrEventListener ann = ip.getAnnotated().getAnnotation(JcrEventListener.class);
-      if (ann != null)
-      {
-         session.getWorkspace().getObservationManager().addEventListener(new JcrCDIEventListener(beanManager), ann.eventTypes(), ann.absPath(), ann.deep(), ann.uuid(), ann.nodeTypeName(), ann.noLocal());
-      }
    }
 
    /**
