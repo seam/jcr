@@ -3,21 +3,24 @@ package org.jboss.seam.jcr;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
+import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.observation.EventListener;
 import javax.jcr.observation.ObservationManager;
 
+import org.jboss.seam.jcr.events.EventListenerConfig;
 import org.jboss.seam.jcr.events.JcrCDIEventListener;
-import org.jboss.seam.jcr.events.JcrEventConfig;
 
 public class JcrRepositoryInvocationHandler implements InvocationHandler
 {
    private JcrCDIEventListener eventListener;
-   private JcrEventConfig eventConfig;
+   private EventListenerConfig eventConfig;
+   private Repository delegatedRepository;
 
-   public JcrRepositoryInvocationHandler(JcrEventConfig eventConfig, JcrCDIEventListener eventListener)
+   public JcrRepositoryInvocationHandler(Repository delegatedRepository, EventListenerConfig eventConfig, JcrCDIEventListener eventListener)
    {
+      this.delegatedRepository = delegatedRepository;
       this.eventConfig = eventConfig;
       this.eventListener = eventListener;
    }
@@ -25,7 +28,7 @@ public class JcrRepositoryInvocationHandler implements InvocationHandler
    @Override
    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable
    {
-      Object obj = method.invoke(proxy, args);
+      Object obj = method.invoke(delegatedRepository, args);
       if (obj instanceof Session)
       {
          Session session = (Session) obj;

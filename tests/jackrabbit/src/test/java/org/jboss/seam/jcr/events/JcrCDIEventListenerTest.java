@@ -36,7 +36,6 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -46,7 +45,6 @@ import org.junit.runner.RunWith;
  * @author George Gastaldi
  * 
  */
-@Ignore
 @RunWith(Arquillian.class)
 public class JcrCDIEventListenerTest
 {
@@ -78,7 +76,6 @@ public class JcrCDIEventListenerTest
    public void setUp() throws Exception
    {
       session = repository.login(new SimpleCredentials("user", "pass".toCharArray()));
-      session.getWorkspace().getObservationManager().addEventListener(new JcrCDIEventListener(beanManager), 127, "/", true, null, null, false);
    }
 
    @Test

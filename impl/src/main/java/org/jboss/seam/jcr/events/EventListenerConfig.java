@@ -15,6 +15,8 @@
  */
 package org.jboss.seam.jcr.events;
 
+import java.io.Serializable;
+
 import javax.jcr.observation.Event;
 
 /**
@@ -23,8 +25,10 @@ import javax.jcr.observation.Event;
  * @author george
  * 
  */
-public final class JcrEventConfig
+public final class EventListenerConfig implements Serializable
 {
+   private static final long serialVersionUID = 1L;
+
    public static final int ALL_EVENTS = Event.NODE_ADDED | Event.NODE_MOVED | Event.NODE_REMOVED | Event.PERSIST | Event.PROPERTY_ADDED | Event.PROPERTY_CHANGED | Event.PROPERTY_REMOVED;
 
    private String absPath;
@@ -34,7 +38,12 @@ public final class JcrEventConfig
    private String[] nodeTypeName;
    private String[] uuid;
 
-   public JcrEventConfig(String absPath, boolean deep, int eventTypes, boolean noLocal, String[] nodeTypeName, String[] uuid)
+   /**
+    * Default config, if none is specified
+    */
+   public static final EventListenerConfig DEFAULT = new EventListenerConfig("/", true, ALL_EVENTS, false, null, null);
+
+   public EventListenerConfig(String absPath, boolean deep, int eventTypes, boolean noLocal, String[] nodeTypeName, String[] uuid)
    {
       super();
       this.absPath = absPath;

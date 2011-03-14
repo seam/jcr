@@ -16,6 +16,7 @@
  */
 package org.jboss.seam.jcr.producers;
 
+import java.lang.reflect.Proxy;
 import java.util.Collections;
 import java.util.Map;
 import java.util.ServiceLoader;
@@ -25,13 +26,17 @@ import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.InjectionPoint;
+import javax.inject.Inject;
 import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.RepositoryFactory;
 import javax.jcr.Session;
 
 import org.jboss.logging.Logger;
+import org.jboss.seam.jcr.JcrRepositoryInvocationHandler;
 import org.jboss.seam.jcr.annotations.JcrConfiguration;
+import org.jboss.seam.jcr.events.EventListenerConfig;
+import org.jboss.seam.jcr.events.JcrCDIEventListener;
 
 /**
  * Produces {@link Repository} and {@link Session} objects
@@ -42,6 +47,9 @@ public class RepositorySessionProducer
 {
 
    private final Logger logger = Logger.getLogger(RepositorySessionProducer.class);
+
+   @Inject
+   private BeanManager beanManager;
 
    /**
     * Produces a {@link Repository} based on {@link JcrConfiguration}
@@ -74,19 +82,18 @@ public class RepositorySessionProducer
     */
    @Produces
    @JcrConfiguration
-   public Session produceRepositorySession(InjectionPoint ip, BeanManager beanManager) throws RepositoryException
+   public Session produceRepositorySession(InjectionPoint ip) throws RepositoryException
    {
       JcrConfiguration jcrRepo = ip.getAnnotated().getAnnotation(JcrConfiguration.class);
       Map<String, String> parameters = Collections.singletonMap(jcrRepo.name(), jcrRepo.value());
       Repository repo = findRepository(parameters);
       Session session = repo.login();
-      // TODO: Find a better way of doing this
-      // registerListener(ip, beanManager, session);
       return session;
    }
 
    /**
     * JCR 2.0 Default code
+    * 
     * @param jcrRepo
     * @return
     * @throws RepositoryException
@@ -100,7 +107,27 @@ public class RepositorySessionProducer
          if (repository != null)
             break;
       }
-      return repository;
+      return createProxyForRepository(repository);
+   }
+
+   /**
+    * Creates a proxy for this repository object
+    * 
+    * @param repository
+    * @return
+    */
+   private Repository createProxyForRepository(Repository repository)
+   {
+      if (repository == null)
+      {
+         return null;
+      }
+      JcrCDIEventListener eventListener = new JcrCDIEventListener(beanManager);
+      // TODO: Allow the user to specify a listener configuration.
+      // Builder Pattern ?
+      EventListenerConfig config = EventListenerConfig.DEFAULT;
+      JcrRepositoryInvocationHandler handler = new JcrRepositoryInvocationHandler(repository, config, eventListener);
+      return (Repository) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class[] { Repository.class }, handler);
    }
 
    public void cleanSession(@Disposes @Any Session session)
