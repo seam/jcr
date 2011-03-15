@@ -16,7 +16,6 @@
  */
 package org.jboss.seam.jcr.producers;
 
-import java.lang.reflect.Proxy;
 import java.util.Collections;
 import java.util.Map;
 import java.util.ServiceLoader;
@@ -33,10 +32,10 @@ import javax.jcr.RepositoryFactory;
 import javax.jcr.Session;
 
 import org.jboss.logging.Logger;
-import org.jboss.seam.jcr.JcrRepositoryInvocationHandler;
 import org.jboss.seam.jcr.annotations.JcrConfiguration;
 import org.jboss.seam.jcr.events.EventListenerConfig;
 import org.jboss.seam.jcr.events.JcrCDIEventListener;
+import org.jboss.seam.jcr.events.SeamEventRepositoryImpl;
 
 /**
  * Produces {@link Repository} and {@link Session} objects
@@ -126,8 +125,7 @@ public class RepositorySessionProducer
       // TODO: Allow the user to specify a listener configuration.
       // Builder Pattern ?
       EventListenerConfig config = EventListenerConfig.DEFAULT;
-      JcrRepositoryInvocationHandler handler = new JcrRepositoryInvocationHandler(repository, config, eventListener);
-      return (Repository) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), new Class[] { Repository.class }, handler);
+      return new SeamEventRepositoryImpl(repository, config, eventListener);
    }
 
    public void cleanSession(@Disposes @Any Session session)
