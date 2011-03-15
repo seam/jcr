@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.seam.jcr.events;
+package org.jboss.seam.jcr.repository;
 
 import javax.jcr.Credentials;
 import javax.jcr.LoginException;
@@ -24,7 +24,8 @@ import javax.jcr.Session;
 import javax.jcr.observation.EventListener;
 import javax.jcr.observation.ObservationManager;
 
-import org.jboss.seam.jcr.AbstractSeamRepositoryImpl;
+import org.jboss.seam.jcr.events.EventListenerConfig;
+import org.jboss.seam.jcr.events.JcrCDIEventListener;
 
 /**
  * Implementation of {@link AbstractSeamRepositoryImpl} that register a CDI enabled

@@ -35,7 +35,7 @@ import org.jboss.logging.Logger;
 import org.jboss.seam.jcr.annotations.JcrConfiguration;
 import org.jboss.seam.jcr.events.EventListenerConfig;
 import org.jboss.seam.jcr.events.JcrCDIEventListener;
-import org.jboss.seam.jcr.events.SeamEventRepositoryImpl;
+import org.jboss.seam.jcr.repository.SeamEventRepositoryImpl;
 
 /**
  * Produces {@link Repository} and {@link Session} objects
