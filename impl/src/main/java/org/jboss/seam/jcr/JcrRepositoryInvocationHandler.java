@@ -32,7 +32,7 @@ public class JcrRepositoryInvocationHandler implements InvocationHandler
       if (obj instanceof Session)
       {
          Session session = (Session) obj;
-         registerListener(session);
+         registerListener(session.getWorkspace().getObservationManager());
       }
       return obj;
    }
@@ -41,16 +41,14 @@ public class JcrRepositoryInvocationHandler implements InvocationHandler
     * Registers this {@link EventListener} into an {@link ObservationManager}
     * using the supplied config
     * 
-    * @param ip - the injection point.
-    * @param beanManager - the CDI bean manager.
     * @param session - the session to be configured.
     * @throws RepositoryException
     */
-   private void registerListener(Session session) throws RepositoryException
+   private void registerListener(ObservationManager obsManager) throws RepositoryException
    {
       if (eventConfig != null)
       {
-         session.getWorkspace().getObservationManager().addEventListener(eventListener, eventConfig.getEventTypes(), eventConfig.getAbsPath(), eventConfig.isDeep(), eventConfig.getUuid(), eventConfig.getNodeTypeName(), eventConfig.isNoLocal());
+         obsManager.addEventListener(eventListener, eventConfig.getEventTypes(), eventConfig.getAbsPath(), eventConfig.isDeep(), eventConfig.getUuid(), eventConfig.getNodeTypeName(), eventConfig.isNoLocal());
       }
    }
 }
