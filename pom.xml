@@ -27,7 +27,7 @@
     <url>http://www.seamframework.org/Seam3/JCRModuleHome</url>
 
     <properties>
-        <seam.version>3.0.0.CR1</seam.version>
+        <seam.version>3.0.0.CR5</seam.version>
         <jboss.spec.version>1.0.0.CR1</jboss.spec.version>
         <jcr.version>2.0</jcr.version>
         <emma.version>2.0.5312</emma.version>
