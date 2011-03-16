@@ -15,15 +15,13 @@
  */
 package org.jboss.seam.jcr.events;
 
-import javax.enterprise.inject.spi.BeanManager;
+import static org.jboss.seam.jcr.ConfigParams.MODESHAPE_URL;
 import static org.junit.Assert.assertEquals;
 
 import javax.inject.Inject;
 import javax.jcr.Node;
-import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
-import javax.jcr.SimpleCredentials;
 import javax.jcr.observation.Event;
 
 import org.jboss.arquillian.api.Deployment;
@@ -35,23 +33,15 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.jboss.seam.jcr.ConfigParams.*;
 
 /**
  * Test case for {@link JcrCDIEventListener}
  * 
- * NOTE: This test case works only with jackrabbit, so be sure to run with
- * -Pjackrabbit
- * 
  * @author George Gastaldi
  * 
  */
-//@Ignore
 @RunWith(Arquillian.class)
 public class JcrCDIEventListenerTest
 {
@@ -59,29 +49,14 @@ public class JcrCDIEventListenerTest
    @Inject
    private EventCounterListener counter;
 
-   @Inject @JcrConfiguration(name=MODESHAPE_URL,value="file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
+   @Inject
+   @JcrConfiguration(name = MODESHAPE_URL, value = "file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
    private Session session;
-
-   @Inject BeanManager beanManager;
 
    @Deployment
    public static JavaArchive createArchive()
    {
       return ShrinkWrap.create(JavaArchive.class).addPackage(JcrCDIEventListener.class.getPackage()).addPackage(RepositorySessionProducer.class.getPackage()).addManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
-   }
-
-   /**
-    * Jackrabbit only allows save operations on authenticated users.
-    * 
-    * TODO:Refactor to be injected with credentials
-    * 
-    * @throws Exception
-    */
-   @Before
-   public void setUp() throws Exception
-   {
-       session.getWorkspace().getObservationManager().addEventListener(new JcrCDIEventListener(beanManager), 127, "/", true, null, null, false);
-       counter.resetBag();
    }
 
    @Test
@@ -100,8 +75,9 @@ public class JcrCDIEventListenerTest
          // This is when the observers are fired
          session.logout();
       }
-      //ModeShape uses background threads for event firing and similar activities.
-      //let's give it 5 seconds to run, then check the bags.
+      // ModeShape uses background threads for event firing and similar
+      // activities.
+      // let's give it 5 seconds to run, then check the bags.
       Thread.sleep(5000);
       // Check that node was added
       assertEquals(1, counter.getCountForType(Event.NODE_ADDED));
@@ -112,7 +88,7 @@ public class JcrCDIEventListenerTest
 
    @After
    public void cleanUp() throws Exception
-    {
-       counter.resetBag();
+   {
+      counter.resetBag();
    }
 }
