@@ -34,11 +34,23 @@
         </programlisting>
    </section>
    <para>
-        At the injection point for your javax.jcr.Session, you can add the JcrEventListener annotation.  It does not
-        qualify the injection point.  
+        To observe an event, use the @Observes and the additional qualifiers on 
+        seam-api module (Check package org.jboss.seam.jcr.annotations.events).
+
+        If you need to watch any JCR event, then avoid using any Qualifier at
+        all.
    </para>
 
-
+       <programlisting role="java"><![CDATA[
+    import javax.jcr.observation.Event;
+       
+    public void observeAdded(@Observes @NodeAdded Event evt) {
+    	// Called when a node is added
+    }
+    public void observeAll(@Observes javax.jcr.observation.Event evt) {
+    	// Called when any node event occurs 
+    }
+    ]]></programlisting>
    <!--
    vim:et:ts=3:sw=3:tw=120
    -->
