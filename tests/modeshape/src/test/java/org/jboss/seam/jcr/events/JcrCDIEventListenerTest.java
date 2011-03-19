@@ -20,6 +20,8 @@ import static org.junit.Assert.assertEquals;
 
 import javax.inject.Inject;
 import javax.jcr.Node;
+import javax.jcr.Property;
+import javax.jcr.PropertyIterator;
 import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
