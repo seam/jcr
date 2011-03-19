@@ -56,7 +56,8 @@ public class JcrCDIEventListenerTest
    @Inject
    private EventCounterListener counter;
 
-   @Inject BeanManager beanManager;
+   @Inject
+   BeanManager beanManager;
    private Session session;
 
    @Deployment
@@ -72,15 +73,10 @@ public class JcrCDIEventListenerTest
     * 
     * @throws Exception
     */
-   @Before
-   public void setUp() throws Exception
-   {
-      session = repository.login(new SimpleCredentials("user", "pass".toCharArray()));
-   }
-
    @Test
-   public void testOnEventAdded() throws RepositoryException
+   public void testOnEventAdded() throws RepositoryException, InterruptedException
    {
+      Session session = repository.login(new SimpleCredentials("user", "pass".toCharArray()));
       try
       {
          // Perform SUT
@@ -94,7 +90,8 @@ public class JcrCDIEventListenerTest
          // This is when the observers are fired
          session.logout();
       }
-
+      // let's give it 5 seconds to run, then check the bags.
+      Thread.sleep(5000);
       // Check that node was added
       assertEquals(1, counter.getCountForType(Event.NODE_ADDED));
       // Properties jcr:primaryType and message added
