@@ -42,7 +42,7 @@ public class RepositoryInjectTest {
     @Deployment
    public static JavaArchive createArchive()
    {
-      return ShrinkWrap.create(JavaArchive.class).addPackage(RepositorySessionProducer.class.getPackage()).addManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
+      return ShrinkWrap.create(JavaArchive.class).addPackage(RepositorySessionProducer.class.getPackage()).addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
    }
    
     @Inject @JcrConfiguration(name=MODESHAPE_URL,value="file:target/test-classes/modeshape.xml?repositoryName=CarRepo")

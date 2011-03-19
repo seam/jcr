@@ -35,7 +35,6 @@ import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -58,12 +57,11 @@ public class JcrCDIEventListenerTest
 
    @Inject
    BeanManager beanManager;
-   private Session session;
 
    @Deployment
    public static JavaArchive createArchive()
    {
-      return ShrinkWrap.create(JavaArchive.class).addPackage(JcrCDIEventListener.class.getPackage()).addPackage(RepositorySessionProducer.class.getPackage()).addManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
+      return ShrinkWrap.create(JavaArchive.class).addPackage(JcrCDIEventListener.class.getPackage()).addPackage(RepositorySessionProducer.class.getPackage()).addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
    }
 
    /**
