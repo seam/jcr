@@ -59,7 +59,7 @@ public class JcrCDIEventListenerTest
    @Deployment
    public static JavaArchive createArchive()
    {
-      return ShrinkWrap.create(JavaArchive.class).addPackage(JcrCDIEventListener.class.getPackage()).addPackage(RepositorySessionProducer.class.getPackage()).addManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
+      return ShrinkWrap.create(JavaArchive.class).addPackage(JcrCDIEventListener.class.getPackage()).addPackage(RepositorySessionProducer.class.getPackage()).addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
    }
 
    @Test
@@ -75,6 +75,7 @@ public class JcrCDIEventListenerTest
       }
       finally
       {
+         //logout
          // This is when the observers are fired
          session.logout();
       }

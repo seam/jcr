@@ -57,7 +57,7 @@ public class RepositorySessionProducerTest
    @Deployment
    public static JavaArchive createArchive()
    {
-      return ShrinkWrap.create(JavaArchive.class).addPackage(RepositorySessionProducer.class.getPackage()).addManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
+      return ShrinkWrap.create(JavaArchive.class).addPackage(RepositorySessionProducer.class.getPackage()).addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
    }
 
    @Test
