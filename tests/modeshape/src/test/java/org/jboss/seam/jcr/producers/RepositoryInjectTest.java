@@ -16,12 +16,16 @@
  */
 package org.jboss.seam.jcr.producers;
 
+import static org.jboss.seam.jcr.ConfigParams.MODESHAPE_URL;
+
 import javax.inject.Inject;
 import javax.jcr.Repository;
 import javax.jcr.Session;
+
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.seam.jcr.annotations.JcrConfiguration;
+import org.jboss.seam.jcr.resolver.RepositoryResolver;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -29,8 +33,6 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.jboss.seam.jcr.ConfigParams.*;
 
 /**
  * Test case to verify running injection capabilities against ModeShape's JCR Implementation.
@@ -42,7 +44,7 @@ public class RepositoryInjectTest {
     @Deployment
    public static JavaArchive createArchive()
    {
-      return ShrinkWrap.create(JavaArchive.class).addPackage(RepositorySessionProducer.class.getPackage()).addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
+      return ShrinkWrap.create(JavaArchive.class).addPackage(RepositoryResolver.class.getPackage()).addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
    }
    
     @Inject @JcrConfiguration(name=MODESHAPE_URL,value="file:target/test-classes/modeshape.xml?repositoryName=CarRepo")

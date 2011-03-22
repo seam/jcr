@@ -22,20 +22,18 @@ import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
-import javax.enterprise.util.Nonbinding;
-
-import javax.inject.Qualifier;
 
 /** Describes a name/value pair for JcrConfiguration settings.
  *
  * @author johnament
  */
-@Qualifier
+@Documented
 @Target( { FIELD, METHOD, TYPE, PARAMETER })
 @Retention(RUNTIME)
 public @interface JcrConfiguration {
-    @Nonbinding public String name() default "";
-    @Nonbinding public String value() default "";
+    public String name() default "";
+    public String value() default "";
 }

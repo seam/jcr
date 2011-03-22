@@ -16,6 +16,7 @@
  */
 package org.jboss.seam.jcr.producers;
 
+import static org.jboss.seam.jcr.ConfigParams.JACKRABBIT_REPOSITORY_HOME;
 import static org.junit.Assert.assertNotNull;
 
 import javax.inject.Inject;
@@ -25,6 +26,7 @@ import javax.jcr.Session;
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.seam.jcr.annotations.JcrConfiguration;
+import org.jboss.seam.jcr.resolver.RepositoryResolver;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -32,8 +34,6 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.jboss.seam.jcr.ConfigParams.*;
 
 /**
  * Test case for {@link RepositorySessionProducer}
@@ -57,7 +57,7 @@ public class RepositorySessionProducerTest
    @Deployment
    public static JavaArchive createArchive()
    {
-      return ShrinkWrap.create(JavaArchive.class).addPackage(RepositorySessionProducer.class.getPackage()).addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
+      return ShrinkWrap.create(JavaArchive.class).addPackage(RepositoryResolver.class.getPackage()).addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
    }
 
    @Test
