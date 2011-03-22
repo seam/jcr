@@ -36,7 +36,6 @@ import org.jboss.seam.jcr.annotations.JcrConfiguration;
 import org.jboss.seam.jcr.events.EventListenerConfig;
 import org.jboss.seam.jcr.events.JcrCDIEventListener;
 import org.jboss.seam.jcr.repository.SeamEventRepositoryImpl;
-import org.jboss.seam.solder.core.ExtensionManaged;
 
 /**
  * Produces {@link Repository} and {@link Session} objects
@@ -61,7 +60,6 @@ public class RepositorySessionProducer
     * @throws RepositoryException
     */
    @Produces
-   @ExtensionManaged
    @JcrConfiguration
    public Repository produceRepository(InjectionPoint ip) throws RepositoryException
    {
@@ -82,7 +80,6 @@ public class RepositorySessionProducer
     *            implementation occurs
     */
    @Produces
-   @ExtensionManaged
    @JcrConfiguration
    public Session produceRepositorySession(InjectionPoint ip) throws RepositoryException
    {
