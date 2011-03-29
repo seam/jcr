@@ -36,6 +36,7 @@ import org.jboss.seam.jcr.annotations.JcrConfiguration;
 import org.jboss.seam.jcr.events.EventListenerConfig;
 import org.jboss.seam.jcr.events.JcrCDIEventListener;
 import org.jboss.seam.jcr.repository.SeamEventRepositoryImpl;
+import org.jboss.seam.solder.core.ExtensionManaged;
 
 /**
  * Resolves Extension Managed {@link Repository} objects
@@ -50,7 +51,7 @@ public class RepositoryResolver
    @Inject
    private BeanManager beanManager;
 
-   @Produces
+   @Produces @ExtensionManaged
    public Repository produceRepository(InjectionPoint injectionPoint) throws RepositoryException
    {
       Repository repository = null;
@@ -63,7 +64,7 @@ public class RepositoryResolver
       return repository;
    }
 
-   @Produces
+   @Produces @ExtensionManaged
    public Session produceSession(InjectionPoint injectionPoint) throws RepositoryException
    {
       Repository repo = produceRepository(injectionPoint);
