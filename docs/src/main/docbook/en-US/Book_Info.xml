@@ -1,0 +1,23 @@
+<!DOCTYPE bookinfo PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN"
+"http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd" []>
+<bookinfo>
+
+   <productname>Seam JCR</productname>
+   <productnumber>3.0.0</productnumber>
+   <edition>1.0</edition>
+   <pubsnumber>1</pubsnumber>
+
+  <authorgroup>
+    <author>
+      <firstname>George</firstname>
+      <surname>Gastaldi</surname>
+     </author>
+     <author>
+       <firstname>John</firstname>
+       <surname>Ament</surname>
+     </author>
+  <!--
+  vim:et:ts=3:sw=3:tw=120
+  -->
+  </authorgroup>
+</bookinfo>
