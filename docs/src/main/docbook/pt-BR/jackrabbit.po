@@ -1,0 +1,64 @@
+# 
+# AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 0\n"
+"POT-Creation-Date: 2011-04-07T04:33:13\n"
+"PO-Revision-Date: 2011-04-07T04:33:13\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: None\n"
+"MIME-Version: 1.0\n"
+"Content-Type: application/x-publican; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Tag: title
+#, no-c-format
+msgid "Seam JCR - JackRabbit Integration"
+msgstr ""
+
+#. Tag: title
+#, no-c-format
+msgid "JackRabbit Integration Installation"
+msgstr ""
+
+#. Tag: para
+#, no-c-format
+msgid "In order to activate JackRabbit support within your application, you need to include JackRabbit on your classpath. At a minimum, the following maven dependency must be satisfied."
+msgstr ""
+
+#. Tag: programlisting
+#, no-c-format
+msgid "&lt;dependency&gt;\n"
+"    &lt;groupId&gt;org.apache.jackrabbit&lt;/groupId&gt;\n"
+"    &lt;artifactId&gt;jackrabbit-core&lt;/artifactId&gt;\n"
+"    &lt;version&gt;${jackrabbit.version}&lt;/version&gt;\n"
+"&lt;/dependency&gt;\n"
+"        "
+msgstr ""
+
+#. Tag: para
+#, no-c-format
+msgid "Substitute ${jackrabbit.version} for the JackRabbit version you are running against. Currently, Seam JCR tests against 2.2.4. Please review JackRabbit documentation to determine any additional dependencies."
+msgstr ""
+
+#. Tag: title
+#, no-c-format
+msgid "Usage"
+msgstr ""
+
+#. Tag: para
+#, no-c-format
+msgid "In order to use JackRabbit's Repository and Session objects in your application, you must define an injection point using the JcrConfiguration annotation based on JackRabbit's required configuration parameters."
+msgstr ""
+
+#. Tag: programlisting
+#, no-c-format
+msgid "\n"
+"    @Inject @JcrConfiguration(name=\"org.apache.jackrabbit.repository.home\",value=\"target\")\n"
+"    Repository repository;\n"
+"\n"
+"    @Inject @JcrConfiguration(name=\"org.apache.jackrabbit.repository.home\",value=\"target\")\n"
+"    Session session;"
+msgstr ""
+
