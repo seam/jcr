@@ -30,15 +30,13 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * Qualifier for {@link Event#NODE_REMOVED} events
- * 
+ *
  * @author george
- * 
  */
 @Qualifier
-@Target({ TYPE, METHOD, PARAMETER, FIELD })
+@Target({TYPE, METHOD, PARAMETER, FIELD})
 @Retention(RUNTIME)
 @Documented
-public @interface NodeRemoved
-{
+public @interface NodeRemoved {
 
 }

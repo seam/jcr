@@ -39,96 +39,82 @@ import org.jboss.seam.jcr.repository.SeamEventRepositoryImpl;
 
 /**
  * Resolves Extension Managed {@link Repository} objects
- * 
+ *
  * @author george
- * 
  */
-public class RepositoryResolver
-{
-   private final Logger logger = Logger.getLogger(RepositoryResolver.class);
+public class RepositoryResolver {
+    private final Logger logger = Logger.getLogger(RepositoryResolver.class);
 
-   @Inject
-   private BeanManager beanManager;
+    @Inject
+    private BeanManager beanManager;
 
-   @Produces
-   public Repository produceRepository(InjectionPoint injectionPoint) throws RepositoryException
-   {
-      Repository repository = null;
-      JcrConfiguration jcrRepo = injectionPoint.getAnnotated().getAnnotation(JcrConfiguration.class);
-      if (jcrRepo != null)
-      {
-         Map<String, String> parameters = Collections.singletonMap(jcrRepo.name(), jcrRepo.value());
-         repository = decorateRepository(createPlainRepository(parameters));
-      }
-      return repository;
-   }
+    @Produces
+    public Repository produceRepository(InjectionPoint injectionPoint) throws RepositoryException {
+        Repository repository = null;
+        JcrConfiguration jcrRepo = injectionPoint.getAnnotated().getAnnotation(JcrConfiguration.class);
+        if (jcrRepo != null) {
+            Map<String, String> parameters = Collections.singletonMap(jcrRepo.name(), jcrRepo.value());
+            repository = decorateRepository(createPlainRepository(parameters));
+        }
+        return repository;
+    }
 
-   @Produces
-   public Session produceSession(InjectionPoint injectionPoint) throws RepositoryException
-   {
-      Repository repo = produceRepository(injectionPoint);
-      Session session = repo.login();
-      return decorateSession(session);
-   }
+    @Produces
+    public Session produceSession(InjectionPoint injectionPoint) throws RepositoryException {
+        Repository repo = produceRepository(injectionPoint);
+        Session session = repo.login();
+        return decorateSession(session);
+    }
 
-   /**
-    * JCR 2.0 Default code
-    * 
-    * @param jcrRepo
-    * @return
-    * @throws RepositoryException
-    */
-   private Repository createPlainRepository(Map<String, String> parameters) throws RepositoryException
-   {
-      Repository repository = null;
-      for (RepositoryFactory factory : ServiceLoader.load(RepositoryFactory.class))
-      {
-         repository = factory.getRepository(parameters);
-         if (repository != null)
-            break;
-      }
-      return repository;
-   }
+    /**
+     * JCR 2.0 Default code
+     *
+     * @param jcrRepo
+     * @return
+     * @throws RepositoryException
+     */
+    private Repository createPlainRepository(Map<String, String> parameters) throws RepositoryException {
+        Repository repository = null;
+        for (RepositoryFactory factory : ServiceLoader.load(RepositoryFactory.class)) {
+            repository = factory.getRepository(parameters);
+            if (repository != null)
+                break;
+        }
+        return repository;
+    }
 
-   /**
-    * Decorates a plain {@link Session} object
-    * 
-    * @param session Plain {@link Session} instance
-    * @return Decorated {@link Session}
-    */
-   private Session decorateSession(Session session)
-   {
-      return session;
-   }
+    /**
+     * Decorates a plain {@link Session} object
+     *
+     * @param session Plain {@link Session} instance
+     * @return Decorated {@link Session}
+     */
+    private Session decorateSession(Session session) {
+        return session;
+    }
 
-   /**
-    * Decorates a plain {@link Repository} object
-    * 
-    * @param repository Plain {@link Repository} instance
-    * @return Decorated {@link Repository} instance
-    */
-   private Repository decorateRepository(Repository repository)
-   {
-      if (repository == null)
-      {
-         return null;
-      }
-      JcrCDIEventListener eventListener = new JcrCDIEventListener(beanManager);
-      EventListenerConfig config = EventListenerConfig.DEFAULT;
-      return new SeamEventRepositoryImpl(repository, config, eventListener);
-   }
+    /**
+     * Decorates a plain {@link Repository} object
+     *
+     * @param repository Plain {@link Repository} instance
+     * @return Decorated {@link Repository} instance
+     */
+    private Repository decorateRepository(Repository repository) {
+        if (repository == null) {
+            return null;
+        }
+        JcrCDIEventListener eventListener = new JcrCDIEventListener(beanManager);
+        EventListenerConfig config = EventListenerConfig.DEFAULT;
+        return new SeamEventRepositoryImpl(repository, config, eventListener);
+    }
 
-   public void cleanSession(@Disposes @Any Session session)
-   {
-      try
-      {
-         session.save();
-         session.logout();
-      }
-      catch (RepositoryException e)
-      {
-         logger.error("Error saving session", e);
-      }
-   }
+    public void cleanSession(@Disposes @Any Session session) {
+        try {
+            session.save();
+            session.logout();
+        } catch (RepositoryException e) {
+            logger.error("Error saving session", e);
+        }
+    }
 
 }

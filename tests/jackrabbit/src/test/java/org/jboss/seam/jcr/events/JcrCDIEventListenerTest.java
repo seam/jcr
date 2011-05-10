@@ -15,9 +15,6 @@
  */
 package org.jboss.seam.jcr.events;
 
-import static org.jboss.seam.jcr.ConfigParams.JACKRABBIT_REPOSITORY_HOME;
-import static org.junit.Assert.assertEquals;
-
 import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
 import javax.jcr.Node;
@@ -38,61 +35,57 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.jboss.seam.jcr.ConfigParams.JACKRABBIT_REPOSITORY_HOME;
+import static org.junit.Assert.assertEquals;
+
 /**
  * Test case for {@link JcrCDIEventListener}
- * 
+ *
  * @author George Gastaldi
- * 
  */
 @RunWith(Arquillian.class)
-public class JcrCDIEventListenerTest
-{
+public class JcrCDIEventListenerTest {
 
-   @Inject
-   @JcrConfiguration(name = JACKRABBIT_REPOSITORY_HOME, value = "target")
-   private Repository repository;
+    @Inject
+    @JcrConfiguration(name = JACKRABBIT_REPOSITORY_HOME, value = "target")
+    private Repository repository;
 
-   @Inject
-   private EventCounterListener counter;
+    @Inject
+    private EventCounterListener counter;
 
-   @Inject
-   BeanManager beanManager;
+    @Inject
+    BeanManager beanManager;
 
-   @Deployment
-   public static JavaArchive createArchive()
-   {
-      return ShrinkWrap.create(JavaArchive.class).addPackage(JcrCDIEventListener.class.getPackage()).addPackage(RepositoryResolver.class.getPackage()).addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
-   }
+    @Deployment
+    public static JavaArchive createArchive() {
+        return ShrinkWrap.create(JavaArchive.class).addPackage(JcrCDIEventListener.class.getPackage()).addPackage(RepositoryResolver.class.getPackage()).addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
+    }
 
-   /**
-    * Jackrabbit only allows save operations on authenticated users.
-    * 
-    * TODO:Refactor to be injected with credentials
-    * 
-    * @throws Exception
-    */
-   @Test
-   public void testOnEventAdded() throws RepositoryException, InterruptedException
-   {
-      Session session = repository.login(new SimpleCredentials("user", "pass".toCharArray()));
-      try
-      {
-         // Perform SUT
-         Node root = session.getRootNode();
-         Node hello = root.addNode("helloWorld");
-         hello.setProperty("message", "Hello, World!");
-         session.save();
-      }
-      finally
-      {
-         // This is when the observers are fired
-         session.logout();
-      }
-      // let's give it 5 seconds to run, then check the bags.
-      Thread.sleep(5000);
-      // Check that node was added
-      assertEquals(1, counter.getCountForType(Event.NODE_ADDED));
-      // Properties jcr:primaryType and message added
-      assertEquals(2, counter.getCountForType(Event.PROPERTY_ADDED));
-   }
+    /**
+     * Jackrabbit only allows save operations on authenticated users.
+     * <p/>
+     * TODO:Refactor to be injected with credentials
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testOnEventAdded() throws RepositoryException, InterruptedException {
+        Session session = repository.login(new SimpleCredentials("user", "pass".toCharArray()));
+        try {
+            // Perform SUT
+            Node root = session.getRootNode();
+            Node hello = root.addNode("helloWorld");
+            hello.setProperty("message", "Hello, World!");
+            session.save();
+        } finally {
+            // This is when the observers are fired
+            session.logout();
+        }
+        // let's give it 5 seconds to run, then check the bags.
+        Thread.sleep(5000);
+        // Check that node was added
+        assertEquals(1, counter.getCountForType(Event.NODE_ADDED));
+        // Properties jcr:primaryType and message added
+        assertEquals(2, counter.getCountForType(Event.PROPERTY_ADDED));
+    }
 }

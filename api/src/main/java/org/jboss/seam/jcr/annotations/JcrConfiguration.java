@@ -16,24 +16,26 @@
  */
 package org.jboss.seam.jcr.annotations;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+
 import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
-
-/** Describes a name/value pair for JcrConfiguration settings.
+/**
+ * Describes a name/value pair for JcrConfiguration settings.
  *
  * @author johnament
  */
 @Documented
-@Target( { FIELD, METHOD, TYPE, PARAMETER })
+@Target({FIELD, METHOD, TYPE, PARAMETER})
 @Retention(RUNTIME)
 public @interface JcrConfiguration {
     public String name() default "";
+
     public String value() default "";
 }

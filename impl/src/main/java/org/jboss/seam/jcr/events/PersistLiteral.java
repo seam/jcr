@@ -19,11 +19,10 @@ import javax.enterprise.util.AnnotationLiteral;
 
 import org.jboss.seam.jcr.annotations.events.Persist;
 
-public class PersistLiteral extends AnnotationLiteral<Persist> implements Persist
-{
+public class PersistLiteral extends AnnotationLiteral<Persist> implements Persist {
 
-   private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-   public static final Persist INSTANCE = new PersistLiteral();
+    public static final Persist INSTANCE = new PersistLiteral();
 
 }

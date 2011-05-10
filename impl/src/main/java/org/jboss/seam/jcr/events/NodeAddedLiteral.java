@@ -19,9 +19,8 @@ import javax.enterprise.util.AnnotationLiteral;
 
 import org.jboss.seam.jcr.annotations.events.NodeAdded;
 
-public class NodeAddedLiteral extends AnnotationLiteral<NodeAdded> implements NodeAdded
-{
+public class NodeAddedLiteral extends AnnotationLiteral<NodeAdded> implements NodeAdded {
 
-   public static final NodeAdded INSTANCE = new NodeAddedLiteral();
+    public static final NodeAdded INSTANCE = new NodeAddedLiteral();
 
 }

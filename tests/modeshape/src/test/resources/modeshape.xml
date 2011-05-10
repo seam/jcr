@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration xmlns:mode="http://www.modeshape.org/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0">
-      <mode:repositories>
-          <mode:repository jcr:name="CarRepo" mode:source="Cars">
-              <mode:options jcr:primaryType="mode:options">
+    <mode:repositories>
+        <mode:repository jcr:name="CarRepo" mode:source="Cars">
+            <mode:options jcr:primaryType="mode:options">
                 <systemSourceName jcr:primaryType="mode:option" mode:value="system@Cars"/>
-              </mode:options>
-          </mode:repository>
-      </mode:repositories>
+            </mode:options>
+        </mode:repository>
+    </mode:repositories>
     <mode:sources jcr:primaryType="nt:unstructured">
-        <mode:source jcr:name="Cars" 
-                    mode:classname="org.modeshape.graph.connector.inmemory.InMemoryRepositorySource" 
-                    mode:retryLimit="3" mode:defaultWorkspaceName="workspace1">
+        <mode:source jcr:name="Cars"
+                     mode:classname="org.modeshape.graph.connector.inmemory.InMemoryRepositorySource"
+                     mode:retryLimit="3" mode:defaultWorkspaceName="workspace1">
             <predefinedWorkspaceNames>system</predefinedWorkspaceNames>
         </mode:source>
     </mode:sources>

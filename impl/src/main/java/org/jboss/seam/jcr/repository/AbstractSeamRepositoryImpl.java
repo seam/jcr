@@ -25,72 +25,58 @@ import javax.jcr.Value;
 
 /**
  * Decorates a {@link Repository} object
- * 
+ *
  * @author george
- * 
  */
-public abstract class AbstractSeamRepositoryImpl implements Repository
-{
-   private Repository repository;
+public abstract class AbstractSeamRepositoryImpl implements Repository {
+    private Repository repository;
 
-   public AbstractSeamRepositoryImpl(Repository repository)
-   {
-      this.repository = repository;
-   }
+    public AbstractSeamRepositoryImpl(Repository repository) {
+        this.repository = repository;
+    }
 
-   protected Repository getRepository()
-   {
-      return repository;
-   }
+    protected Repository getRepository() {
+        return repository;
+    }
 
-   @Override
-   public String[] getDescriptorKeys()
-   {
-      return repository.getDescriptorKeys();
-   }
+    @Override
+    public String[] getDescriptorKeys() {
+        return repository.getDescriptorKeys();
+    }
 
-   public boolean isStandardDescriptor(String key)
-   {
-      return repository.isStandardDescriptor(key);
-   }
+    public boolean isStandardDescriptor(String key) {
+        return repository.isStandardDescriptor(key);
+    }
 
-   public boolean isSingleValueDescriptor(String key)
-   {
-      return repository.isSingleValueDescriptor(key);
-   }
+    public boolean isSingleValueDescriptor(String key) {
+        return repository.isSingleValueDescriptor(key);
+    }
 
-   public Value getDescriptorValue(String key)
-   {
-      return repository.getDescriptorValue(key);
-   }
+    public Value getDescriptorValue(String key) {
+        return repository.getDescriptorValue(key);
+    }
 
-   public Value[] getDescriptorValues(String key)
-   {
-      return repository.getDescriptorValues(key);
-   }
+    public Value[] getDescriptorValues(String key) {
+        return repository.getDescriptorValues(key);
+    }
 
-   public String getDescriptor(String key)
-   {
-      return repository.getDescriptor(key);
-   }
+    public String getDescriptor(String key) {
+        return repository.getDescriptor(key);
+    }
 
-   public Session login(Credentials credentials, String workspaceName) throws LoginException, NoSuchWorkspaceException, RepositoryException
-   {
-      return repository.login(credentials, workspaceName);
-   }
+    public Session login(Credentials credentials, String workspaceName) throws LoginException, NoSuchWorkspaceException, RepositoryException {
+        return repository.login(credentials, workspaceName);
+    }
 
-   public Session login(Credentials credentials) throws LoginException, RepositoryException
-   {
-      return repository.login(credentials);
-   }
+    public Session login(Credentials credentials) throws LoginException, RepositoryException {
+        return repository.login(credentials);
+    }
 
-   public Session login(String workspaceName) throws LoginException, NoSuchWorkspaceException, RepositoryException
-   {
-      return repository.login(workspaceName);
-   }
+    public Session login(String workspaceName) throws LoginException, NoSuchWorkspaceException, RepositoryException {
+        return repository.login(workspaceName);
+    }
 
-   public Session login() throws LoginException, RepositoryException
-   {
-      return repository.login();
-   }
+    public Session login() throws LoginException, RepositoryException {
+        return repository.login();
+    }
 }
