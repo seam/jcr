@@ -24,28 +24,26 @@ import org.apache.commons.collections.bag.HashBag;
 
 /**
  * Used on test cases
- * 
+ *
  * @author George Gastaldi
- * 
  */
 @Dependent
-public class EventCounterListener
-{
-   private static Bag counter = new HashBag();
+public class EventCounterListener {
+    private static Bag counter = new HashBag();
 
-   public void incrementTypedCounter(@Observes Event event)
-   {
-	try{
-      System.out.println("Event path: "+event.getPath());
-} catch (Exception e) { }
-      counter.add(event.getType());
-   }
-   public void resetBag()
-    {
-       counter.clear();
-   }
-   public int getCountForType(int type)
-   {
-      return counter.getCount(type);
-   }
+    public void incrementTypedCounter(@Observes Event event) {
+        try {
+            System.out.println("Event path: " + event.getPath());
+        } catch (Exception e) {
+        }
+        counter.add(event.getType());
+    }
+
+    public void resetBag() {
+        counter.clear();
+    }
+
+    public int getCountForType(int type) {
+        return counter.getCount(type);
+    }
 }

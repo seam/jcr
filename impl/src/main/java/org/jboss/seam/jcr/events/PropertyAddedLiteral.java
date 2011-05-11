@@ -19,9 +19,8 @@ import javax.enterprise.util.AnnotationLiteral;
 
 import org.jboss.seam.jcr.annotations.events.PropertyAdded;
 
-public class PropertyAddedLiteral extends AnnotationLiteral<PropertyAdded> implements PropertyAdded
-{
+public class PropertyAddedLiteral extends AnnotationLiteral<PropertyAdded> implements PropertyAdded {
 
-   public static final PropertyAdded INSTANCE = new PropertyAddedLiteral();
+    public static final PropertyAdded INSTANCE = new PropertyAddedLiteral();
 
 }

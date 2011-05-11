@@ -21,14 +21,12 @@ import org.jboss.seam.jcr.annotations.events.NodeRemoved;
 
 /**
  * @author george
- *
  */
-public class NodeRemovedLiteral extends AnnotationLiteral<NodeRemoved> implements NodeRemoved
-{
+public class NodeRemovedLiteral extends AnnotationLiteral<NodeRemoved> implements NodeRemoved {
 
-   /**
-    * 
-    */
-   public static final NodeRemoved INSTANCE = new NodeRemovedLiteral();
+    /**
+     *
+     */
+    public static final NodeRemoved INSTANCE = new NodeRemovedLiteral();
 
 }

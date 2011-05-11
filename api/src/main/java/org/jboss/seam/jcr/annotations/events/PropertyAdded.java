@@ -30,16 +30,14 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * Qualifier for {@link Event#PROPERTY_ADDED} events
- * 
+ *
  * @author george
- * 
  */
 
 @Qualifier
-@Target({ TYPE, METHOD, PARAMETER, FIELD })
+@Target({TYPE, METHOD, PARAMETER, FIELD})
 @Retention(RUNTIME)
 @Documented
-public @interface PropertyAdded
-{
+public @interface PropertyAdded {
 
 }

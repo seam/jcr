@@ -24,25 +24,22 @@ import org.apache.commons.collections.bag.HashBag;
 
 /**
  * Used on test cases
- * 
+ *
  * @author George Gastaldi
- * 
  */
 @Singleton
-public class EventCounterListener
-{
-   private Bag counter = new HashBag();
+public class EventCounterListener {
+    private Bag counter = new HashBag();
 
-   public void incrementTypedCounter(@Observes Event event)
-   {
-	try{
-      System.out.println("Event path: "+event.getPath());
-} catch (Exception e) { }
-      counter.add(event.getType());
-   }
+    public void incrementTypedCounter(@Observes Event event) {
+        try {
+            System.out.println("Event path: " + event.getPath());
+        } catch (Exception e) {
+        }
+        counter.add(event.getType());
+    }
 
-   public int getCountForType(int type)
-   {
-      return counter.getCount(type);
-   }
+    public int getCountForType(int type) {
+        return counter.getCount(type);
+    }
 }

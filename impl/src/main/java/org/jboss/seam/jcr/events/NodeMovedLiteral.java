@@ -21,14 +21,12 @@ import org.jboss.seam.jcr.annotations.events.NodeMoved;
 
 /**
  * @author george
- *
  */
-public class NodeMovedLiteral extends AnnotationLiteral<NodeMoved> implements NodeMoved
-{
+public class NodeMovedLiteral extends AnnotationLiteral<NodeMoved> implements NodeMoved {
 
-   /**
-    * 
-    */
-   public static final NodeMoved INSTANCE = new NodeMovedLiteral();
+    /**
+     *
+     */
+    public static final NodeMoved INSTANCE = new NodeMovedLiteral();
 
 }

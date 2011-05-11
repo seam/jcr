@@ -16,9 +16,6 @@
  */
 package org.jboss.seam.jcr.producers;
 
-import static org.jboss.seam.jcr.ConfigParams.JACKRABBIT_REPOSITORY_HOME;
-import static org.junit.Assert.assertNotNull;
-
 import javax.inject.Inject;
 import javax.jcr.Repository;
 import javax.jcr.Session;
@@ -35,44 +32,42 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static org.jboss.seam.jcr.ConfigParams.JACKRABBIT_REPOSITORY_HOME;
+import static org.junit.Assert.assertNotNull;
+
 /**
  * Test case for {@link RepositorySessionProducer}
- * 
- * 
+ *
  * @author George Gastaldi
- * 
  */
 @RunWith(Arquillian.class)
-public class RepositorySessionProducerTest
-{
+public class RepositorySessionProducerTest {
 
-   @Inject
-   @JcrConfiguration(name = JACKRABBIT_REPOSITORY_HOME, value = "target")
-   private Repository repository;
+    @Inject
+    @JcrConfiguration(name = JACKRABBIT_REPOSITORY_HOME, value = "target")
+    private Repository repository;
 
-   @Inject
-   @JcrConfiguration(name = JACKRABBIT_REPOSITORY_HOME, value = "target")
-   private Session session;
+    @Inject
+    @JcrConfiguration(name = JACKRABBIT_REPOSITORY_HOME, value = "target")
+    private Session session;
 
-   @Deployment
-   public static JavaArchive createArchive()
-   {
-      return ShrinkWrap.create(JavaArchive.class).addPackage(RepositoryResolver.class.getPackage()).addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
-   }
+    @Deployment
+    public static JavaArchive createArchive() {
+        return ShrinkWrap.create(JavaArchive.class).addPackage(RepositoryResolver.class.getPackage()).addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
+    }
 
-   @Test
-   public void testProduceJcrRepository()
-   {
-      assertNotNull("JCR Repository should have been injected", repository);
-   }
+    @Test
+    public void testProduceJcrRepository() {
+        assertNotNull("JCR Repository should have been injected", repository);
+    }
 
-   @Test
-   public void testProduceSession()
-   {
-      assertNotNull("JCR Session should have been injected", session);
-   }
-   @After
-   public void tearDown() {
-       session.logout();
-   }
+    @Test
+    public void testProduceSession() {
+        assertNotNull("JCR Session should have been injected", session);
+    }
+
+    @After
+    public void tearDown() {
+        session.logout();
+    }
 }

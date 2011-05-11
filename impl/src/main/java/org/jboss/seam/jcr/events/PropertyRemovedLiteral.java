@@ -19,9 +19,8 @@ import javax.enterprise.util.AnnotationLiteral;
 
 import org.jboss.seam.jcr.annotations.events.PropertyRemoved;
 
-public class PropertyRemovedLiteral extends AnnotationLiteral<PropertyRemoved> implements PropertyRemoved
-{
+public class PropertyRemovedLiteral extends AnnotationLiteral<PropertyRemoved> implements PropertyRemoved {
 
-   public static final PropertyRemoved INSTANCE = new PropertyRemovedLiteral();
+    public static final PropertyRemoved INSTANCE = new PropertyRemovedLiteral();
 
 }

@@ -19,9 +19,8 @@ import javax.enterprise.util.AnnotationLiteral;
 
 import org.jboss.seam.jcr.annotations.events.PropertyChanged;
 
-public class PropertyChangedLiteral extends AnnotationLiteral<PropertyChanged> implements PropertyChanged
-{
+public class PropertyChangedLiteral extends AnnotationLiteral<PropertyChanged> implements PropertyChanged {
 
-   public static final PropertyChanged INSTANCE = new PropertyChangedLiteral();
+    public static final PropertyChanged INSTANCE = new PropertyChangedLiteral();
 
 }

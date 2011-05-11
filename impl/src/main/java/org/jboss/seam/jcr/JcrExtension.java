@@ -22,7 +22,7 @@ import javax.enterprise.inject.spi.Extension;
 /**
  * I doubt this extension will be necessary, at least until we start more
  * bootstrapping.
- * 
+ *
  * @author johnament
  */
 public class JcrExtension implements Extension {

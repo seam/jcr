@@ -22,18 +22,19 @@ package org.jboss.seam.jcr;
  * @author johnament
  */
 public abstract class ConfigParams {
-    private ConfigParams() { }
+    private ConfigParams() {
+    }
 
-    /**Represents the Jackrabbit Repository Conf parameter in the settings.
-     *
+    /**
+     * Represents the Jackrabbit Repository Conf parameter in the settings.
      */
     public static final String JACKRABBIT_REPOSITORY_CONF = "org.apache.jackrabbit.repository.conf";
-    /**Represents the Jackrabbit Repository Home parameter.
-     * 
+    /**
+     * Represents the Jackrabbit Repository Home parameter.
      */
     public static final String JACKRABBIT_REPOSITORY_HOME = "org.apache.jackrabbit.repository.home";
-    /**Represents the ModeShape URL Parameter.
-     *
+    /**
+     * Represents the ModeShape URL Parameter.
      */
-    public static final String MODESHAPE_URL              = "org.modeshape.jcr.URL";
+    public static final String MODESHAPE_URL = "org.modeshape.jcr.URL";
 }
