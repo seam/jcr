@@ -1,5 +1,5 @@
 target
 tests/jackrabbit/derby.log
-**/.project
-**/.classpath
-**/.settings
+.project
+.classpath
+.settings
