@@ -16,22 +16,27 @@
  */
 package org.jboss.seam.jcr.resolver;
 
+import java.lang.annotation.Annotation;
 import java.util.Collections;
 import java.util.Map;
 import java.util.ServiceLoader;
 
 import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Disposes;
+import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.inject.Inject;
+import javax.inject.Named;
+import javax.jcr.Credentials;
 import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.RepositoryFactory;
 import javax.jcr.Session;
 
 import org.jboss.logging.Logger;
+import org.jboss.seam.jcr.ConfigParams;
 import org.jboss.seam.jcr.annotations.JcrConfiguration;
 import org.jboss.seam.jcr.events.EventListenerConfig;
 import org.jboss.seam.jcr.events.JcrCDIEventListener;
@@ -39,7 +44,7 @@ import org.jboss.seam.jcr.repository.SeamEventRepositoryImpl;
 
 /**
  * Resolves Extension Managed {@link Repository} objects
- *
+ * 
  * @author george
  */
 public class RepositoryResolver {
@@ -60,15 +65,18 @@ public class RepositoryResolver {
     }
 
     @Produces
-    public Session produceSession(InjectionPoint injectionPoint) throws RepositoryException {
+    public Session produceSession(InjectionPoint injectionPoint, Instance<Credentials> credentialsInstance,
+            @Named(ConfigParams.WORKSPACE_NAME) Instance<String> workspaceInstance) throws RepositoryException {
         Repository repo = produceRepository(injectionPoint);
-        Session session = repo.login();
-        return decorateSession(session);
+        Annotation[] qualifiers = injectionPoint.getQualifiers().toArray(new Annotation[0]);
+        Credentials c = credentialsInstance.isUnsatisfied() ? null : credentialsInstance.select(qualifiers).get();
+        String workspaceName = workspaceInstance.isUnsatisfied() ? null : workspaceInstance.select(qualifiers).get();
+        return repo.login(c,workspaceName);
     }
 
     /**
      * JCR 2.0 Default code
-     *
+     * 
      * @param jcrRepo
      * @return
      * @throws RepositoryException
@@ -84,18 +92,8 @@ public class RepositoryResolver {
     }
 
     /**
-     * Decorates a plain {@link Session} object
-     *
-     * @param session Plain {@link Session} instance
-     * @return Decorated {@link Session}
-     */
-    private Session decorateSession(Session session) {
-        return session;
-    }
-
-    /**
      * Decorates a plain {@link Repository} object
-     *
+     * 
      * @param repository Plain {@link Repository} instance
      * @return Decorated {@link Repository} instance
      */
