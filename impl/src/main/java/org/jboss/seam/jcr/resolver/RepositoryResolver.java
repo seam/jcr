@@ -16,8 +16,11 @@
  */
 package org.jboss.seam.jcr.resolver;
 
+
+import static org.jboss.seam.solder.reflection.AnnotationInspector.getAnnotation;
+
 import java.lang.annotation.Annotation;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
 
@@ -56,11 +59,18 @@ public class RepositoryResolver {
     @Produces
     public Repository produceRepository(InjectionPoint injectionPoint) throws RepositoryException {
         Repository repository = null;
-        JcrConfiguration jcrRepo = injectionPoint.getAnnotated().getAnnotation(JcrConfiguration.class);
+        JcrConfiguration jcrRepo = getAnnotation(injectionPoint.getAnnotated(),JcrConfiguration.class,beanManager);
+        JcrConfiguration.List jcrRepoList = getAnnotation(injectionPoint.getAnnotated(),JcrConfiguration.List.class,beanManager);
+        Map<String, String> parameters = new HashMap<String, String>();
         if (jcrRepo != null) {
-            Map<String, String> parameters = Collections.singletonMap(jcrRepo.name(), jcrRepo.value());
-            repository = decorateRepository(createPlainRepository(parameters));
+            parameters.put(jcrRepo.name(), jcrRepo.value());
         }
+        if (jcrRepoList != null) {
+            for (JcrConfiguration conf : jcrRepoList.value()) {
+                parameters.put(conf.name(), conf.value());
+            }
+        }
+        repository = decorateRepository(createPlainRepository(parameters));
         return repository;
     }
 
