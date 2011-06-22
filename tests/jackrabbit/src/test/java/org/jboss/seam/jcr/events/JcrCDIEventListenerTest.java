@@ -15,6 +15,9 @@
  */
 package org.jboss.seam.jcr.events;
 
+import static org.jboss.seam.jcr.ConfigParams.JACKRABBIT_REPOSITORY_HOME;
+import static org.junit.Assert.assertEquals;
+
 import javax.enterprise.inject.spi.BeanManager;
 import javax.inject.Inject;
 import javax.jcr.Node;
@@ -27,6 +30,7 @@ import javax.jcr.observation.Event;
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.seam.jcr.annotations.JcrConfiguration;
+import org.jboss.seam.jcr.annotations.JcrConfiguration.List;
 import org.jboss.seam.jcr.resolver.RepositoryResolver;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -34,9 +38,6 @@ import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.jboss.seam.jcr.ConfigParams.JACKRABBIT_REPOSITORY_HOME;
-import static org.junit.Assert.assertEquals;
 
 /**
  * Test case for {@link JcrCDIEventListener}
@@ -47,7 +48,9 @@ import static org.junit.Assert.assertEquals;
 public class JcrCDIEventListenerTest {
 
     @Inject
-    @JcrConfiguration(name = JACKRABBIT_REPOSITORY_HOME, value = "target")
+    @List({
+          @JcrConfiguration(name = JACKRABBIT_REPOSITORY_HOME, value = "target")
+    })
     private Repository repository;
 
     @Inject
