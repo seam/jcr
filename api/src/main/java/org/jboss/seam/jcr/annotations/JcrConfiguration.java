@@ -16,26 +16,37 @@
  */
 package org.jboss.seam.jcr.annotations;
 
+import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
+import static java.lang.annotation.ElementType.CONSTRUCTOR;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.PARAMETER;
-import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
 /**
  * Describes a name/value pair for JcrConfiguration settings.
- *
+ * 
  * @author johnament
  */
 @Documented
-@Target({FIELD, METHOD, TYPE, PARAMETER})
+@Target( { METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
 @Retention(RUNTIME)
 public @interface JcrConfiguration {
     public String name() default "";
 
     public String value() default "";
+
+    /**
+     * Defines several {@code @JcrConfiguration} annotations on the same element.
+     */
+    @Target( { METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
+    @Retention(RUNTIME)
+    @Documented
+    public @interface List {
+        JcrConfiguration[] value() default {};
+    }
 }

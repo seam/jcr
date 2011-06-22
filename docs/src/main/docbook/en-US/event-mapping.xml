@@ -13,25 +13,18 @@
 <chapter id="jcr-eventmapping">
 	<title>Seam JCR - Event Mapping</title>
 	<section id="jcr-event-mapping-intro">
-		<para>
-			Seam JCR provides functionality to fire CDI Events based on events found
-			in JCR. The rules of how events are
-			fired are based around the underlying implementation.
-   </para>
-		<tip>
-			You will not have an active JCR Session during the event firing,
-			a new one will need to be created.
-		</tip>
+		<para> Seam JCR provides functionality to fire CDI Events based on events found in JCR. The
+			rules of how events are fired are based around the underlying implementation. </para>
+		<tip> You will not have an active JCR Session during the event firing, a new one will need
+			to be created. </tip>
+		<tip> Some JCR implementations, like Modeshape fires events on a separate thread, so
+			probably you will get errors if your observer method is declared on a @RequestScoped
+			object, for example. </tip>
 	</section>
 	<section id="jcr-event-mapping-activation">
-		<para>
-			To observe an event, use the @Observes and the additional qualifiers on
-			seam-jcr-api module (Check package
-			org.jboss.seam.jcr.annotations.events).
-
-			If you need to watch any JCR event, then avoid using any Qualifier at
-			all.
-	   </para>
+		<para> To observe an event, use the @Observes and the additional qualifiers on seam-jcr-api
+			module (Check package org.jboss.seam.jcr.annotations.events). If you need to watch any
+			JCR event, then avoid using any Qualifier at all. </para>
 		<programlisting role="java"><![CDATA[
     import javax.jcr.observation.Event;
        
@@ -43,6 +36,5 @@
     }
     ]]></programlisting>
 	</section>
-
 	<!-- vim:et:ts=3:sw=3:tw=120 -->
 </chapter>
