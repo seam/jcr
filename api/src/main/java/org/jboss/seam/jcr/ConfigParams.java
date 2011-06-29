@@ -42,4 +42,10 @@ public abstract class ConfigParams {
      * Represents the current workspace name
      */
     public static final String WORKSPACE_NAME = "javax.jcr.Workspace";
+    
+    /**
+     * Represents the current configuration map for a repository
+     */
+    public static final String JCR_REPOSITORY_CONFIG_MAP = "jcrRepositoryConfigMap";
+
 }
