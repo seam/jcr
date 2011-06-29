@@ -17,15 +17,13 @@
   -->
 <!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
 <chapter id="jcr-modeshape">
-   <title>Seam JCR - JBoss ModeShape Integration</title>
-
-   <section id="jcr-ms-installation">
-       <title>ModeShape Integration Installation</title>
-       <para>
-          In order to activate ModeShape support within your application, you need to include ModeShape on your classpath.  At a minimum, the following
-          maven dependencies must be satisfied.  
-       </para>
-       <programlisting role="XML"><![CDATA[<dependency>
+    <title>Seam JCR - JBoss ModeShape Integration</title>
+    <section id="jcr-ms-installation">
+        <title>ModeShape Integration Installation</title>
+        <para> In order to activate ModeShape support within your application, you need to include
+            ModeShape on your classpath. At a minimum, the following maven dependencies must be
+            satisfied. </para>
+        <programlisting role="XML"><![CDATA[<dependency>
     <groupId>org.modeshape</groupId>
     <artifactId>modeshape-jcr</artifactId>
     <version>${modeshape.version}</version>
@@ -37,24 +35,26 @@
 </dependency>]]>
         </programlisting>
         <tip>
-            <para>
-                Substitute ${modeshape.version} for the ModeShape version you are running against.  Currently, Seam JCR tests against 2.4.0.Final.  In addition, Lucene is required to run ModeShape.  Please consult the ModeShape getting stated guide for exact versions.
-            </para>
+            <para> Substitute ${modeshape.version} for the ModeShape version you are running
+                against. Currently, Seam JCR tests against 2.5.0.Final. In addition, Lucene is
+                required to run ModeShape. Please consult the ModeShape getting stated guide for
+                exact versions. </para>
         </tip>
-   </section>
-   <section id="jcr-ms-usage">
-       <title>Usage</title>
-       <para>
-           In order to use ModeShape's Repository and Session objects in your application, you must define an injection point using the JcrConfiguration annotation based on ModeShape's required configuration parameters.  Please review the ModeShape getting started guide for further details.
-       </para>
-       <programlisting role="java"><![CDATA[
+    </section>
+    <section id="jcr-ms-usage">
+        <title>Usage</title>
+        <para> In order to use ModeShape's Repository and Session objects in your application, you
+            must define an injection point using the JcrConfiguration annotation based on
+            ModeShape's required configuration parameters. Please review the ModeShape getting
+            started guide for further details. </para>
+        <programlisting role="java"><![CDATA[
     @Inject @JcrConfiguration(name="org.modeshape.jcr.URL",value="file:path/to/modeshape.xml?repositoryName=MyRepo")
     Repository repository;
 
     @Inject @JcrConfiguration(name="org.modeshape.jcr.URL",value="file:path/to/modeshape.xml?repositoryName=MyRepo")
     Session session;]]></programlisting>
-   </section>
-   <!--
+    </section>
+    <!--
    vim:et:ts=3:sw=3:tw=120
    -->
 </chapter>
