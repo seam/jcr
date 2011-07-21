@@ -18,7 +18,7 @@ package org.jboss.seam.jcr;
 
 /**
  * A set of ConfigParams for both Jackrabbit and ModeShape to avoid duplicating the setting value.
- *
+ * 
  * @author johnament
  */
 public abstract class ConfigParams {
@@ -37,4 +37,15 @@ public abstract class ConfigParams {
      * Represents the ModeShape URL Parameter.
      */
     public static final String MODESHAPE_URL = "org.modeshape.jcr.URL";
+
+    /**
+     * Represents the current workspace name
+     */
+    public static final String WORKSPACE_NAME = "javax.jcr.Workspace";
+    
+    /**
+     * Represents the current configuration map for a repository
+     */
+    public static final String JCR_REPOSITORY_CONFIG_MAP = "jcrRepositoryConfigMap";
+
 }

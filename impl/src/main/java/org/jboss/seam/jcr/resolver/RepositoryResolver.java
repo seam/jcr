@@ -16,22 +16,29 @@
  */
 package org.jboss.seam.jcr.resolver;
 
-import java.util.Collections;
+import static org.jboss.seam.solder.reflection.AnnotationInspector.getAnnotation;
+
+import java.lang.annotation.Annotation;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.ServiceLoader;
 
 import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Disposes;
+import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.Produces;
 import javax.enterprise.inject.spi.BeanManager;
 import javax.enterprise.inject.spi.InjectionPoint;
 import javax.inject.Inject;
+import javax.inject.Named;
+import javax.jcr.Credentials;
 import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.RepositoryFactory;
 import javax.jcr.Session;
 
 import org.jboss.logging.Logger;
+import org.jboss.seam.jcr.ConfigParams;
 import org.jboss.seam.jcr.annotations.JcrConfiguration;
 import org.jboss.seam.jcr.events.EventListenerConfig;
 import org.jboss.seam.jcr.events.JcrCDIEventListener;
@@ -39,7 +46,7 @@ import org.jboss.seam.jcr.repository.SeamEventRepositoryImpl;
 
 /**
  * Resolves Extension Managed {@link Repository} objects
- *
+ * 
  * @author george
  */
 public class RepositoryResolver {
@@ -48,27 +55,66 @@ public class RepositoryResolver {
     @Inject
     private BeanManager beanManager;
 
+    @Inject @Named(ConfigParams.JCR_REPOSITORY_CONFIG_MAP)
+    private Instance<Map<String, String>> configParameters;
+
+    @Inject
+    private Instance<Credentials> credentialsInstance;
+
+    @Inject
+    private @Named(ConfigParams.WORKSPACE_NAME)
+    Instance<String> workspaceInstance;
+
+    /**
+     * Produces a repository based on the injection point.
+     * 
+     * If no Map was 
+     * @param injectionPoint
+     * @return
+     * @throws RepositoryException
+     */
     @Produces
-    public Repository produceRepository(InjectionPoint injectionPoint) throws RepositoryException {
+    public Repository produceRepository(final InjectionPoint injectionPoint) throws RepositoryException {
         Repository repository = null;
-        JcrConfiguration jcrRepo = injectionPoint.getAnnotated().getAnnotation(JcrConfiguration.class);
-        if (jcrRepo != null) {
-            Map<String, String> parameters = Collections.singletonMap(jcrRepo.name(), jcrRepo.value());
-            repository = decorateRepository(createPlainRepository(parameters));
+        Annotation[] qualifiers = getQualifiers(injectionPoint);
+        Map<String, String> parameters;
+        Instance<Map<String, String>> qualifiedParams = configParameters.select(qualifiers);
+        if (qualifiedParams.isUnsatisfied()) {
+            parameters = new HashMap<String, String>();
+            JcrConfiguration jcrRepo = getAnnotation(injectionPoint.getAnnotated(),JcrConfiguration.class,beanManager);
+            JcrConfiguration.List jcrRepoList = getAnnotation(injectionPoint.getAnnotated(),JcrConfiguration.List.class,beanManager);
+            if (jcrRepo != null) {
+                parameters.put(jcrRepo.name(), jcrRepo.value());
+            }
+            if (jcrRepoList != null) {
+                for (JcrConfiguration conf : jcrRepoList.value()) {
+                    parameters.put(conf.name(), conf.value());
+                }
+            }
+        } else {
+            parameters = qualifiedParams.get();
         }
+        repository = decorateRepository(createPlainRepository(parameters));
         return repository;
     }
 
     @Produces
     public Session produceSession(InjectionPoint injectionPoint) throws RepositoryException {
         Repository repo = produceRepository(injectionPoint);
-        Session session = repo.login();
-        return decorateSession(session);
+        Annotation[] qualifiers = getQualifiers(injectionPoint);
+        Credentials c = credentialsInstance.isUnsatisfied() ? null : credentialsInstance.select(qualifiers).get();
+        String workspaceName = workspaceInstance.isUnsatisfied() ? null : workspaceInstance.select(qualifiers).get();
+        return repo.login(c, workspaceName);
+    }
+
+    private Annotation[] getQualifiers(InjectionPoint injectionPoint) {
+        Annotation[] qualifiers = injectionPoint.getQualifiers().toArray(new Annotation[0]);
+        return qualifiers;
     }
 
     /**
      * JCR 2.0 Default code
-     *
+     * 
      * @param jcrRepo
      * @return
      * @throws RepositoryException
@@ -84,18 +130,8 @@ public class RepositoryResolver {
     }
 
     /**
-     * Decorates a plain {@link Session} object
-     *
-     * @param session Plain {@link Session} instance
-     * @return Decorated {@link Session}
-     */
-    private Session decorateSession(Session session) {
-        return session;
-    }
-
-    /**
      * Decorates a plain {@link Repository} object
-     *
+     * 
      * @param repository Plain {@link Repository} instance
      * @return Decorated {@link Repository} instance
      */
