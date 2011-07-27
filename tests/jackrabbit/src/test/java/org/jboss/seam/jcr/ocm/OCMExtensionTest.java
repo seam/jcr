@@ -15,6 +15,7 @@
  */
 package org.jboss.seam.jcr.ocm;
 
+import static org.jboss.seam.jcr.ConfigParams.JACKRABBIT_REPOSITORY_HOME;
 import static org.jboss.seam.jcr.ConfigParams.MODESHAPE_URL;
 
 import java.util.List;
@@ -22,7 +23,9 @@ import java.util.List;
 import javax.enterprise.inject.spi.Extension;
 import javax.inject.Inject;
 import javax.jcr.Node;
+import javax.jcr.Repository;
 import javax.jcr.Session;
+import javax.jcr.SimpleCredentials;
 
 import junit.framework.Assert;
 
@@ -42,9 +45,11 @@ import org.junit.runner.RunWith;
 public class OCMExtensionTest {
 	@Inject JcrOCMExtension extension;
 	
-    @Inject
-    @JcrConfiguration(name = MODESHAPE_URL, value = "file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
-    private Session session;
+	@Inject
+    @org.jboss.seam.jcr.annotations.JcrConfiguration.List({
+          @JcrConfiguration(name = JACKRABBIT_REPOSITORY_HOME, value = "target")
+    })
+    private Repository repository;
     
     @Inject NodeConverter nodeConverter;
 	
@@ -71,6 +76,7 @@ public class OCMExtensionTest {
     
     @Test
     public void testCreateNodeAndOCM() throws Exception {
+    	Session session = repository.login(new SimpleCredentials("user", "pass".toCharArray()));
     	try {
             // Perform SUT
             Node root = session.getRootNode();

@@ -33,8 +33,7 @@ public class JcrOCMExtension implements Extension {
 	private Logger logger = Logger.getLogger(JcrOCMExtension.class);
 	private OCMMappingStore ocmMappingStore = new OCMMappingStore();
 	
-	@Produces
-	public OCMMappingStore produceOCMMappingStore() {
+	public OCMMappingStore getOCMMappingStore() {
 		return ocmMappingStore;
 	}
 	
