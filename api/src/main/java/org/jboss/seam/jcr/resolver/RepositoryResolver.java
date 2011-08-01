@@ -39,9 +39,9 @@ import javax.jcr.Session;
 
 import org.jboss.logging.Logger;
 import org.jboss.seam.jcr.ConfigParams;
+import org.jboss.seam.jcr.EventListenerConfig;
+import org.jboss.seam.jcr.JcrCDIEventListener;
 import org.jboss.seam.jcr.annotations.JcrConfiguration;
-import org.jboss.seam.jcr.events.EventListenerConfig;
-import org.jboss.seam.jcr.events.JcrCDIEventListener;
 import org.jboss.seam.jcr.repository.SeamEventRepositoryImpl;
 
 /**
@@ -75,27 +75,40 @@ public class RepositoryResolver {
      */
     @Produces
     public Repository produceRepository(final InjectionPoint injectionPoint) throws RepositoryException {
-        Repository repository = null;
         Annotation[] qualifiers = getQualifiers(injectionPoint);
         Map<String, String> parameters;
         Instance<Map<String, String>> qualifiedParams = configParameters.select(qualifiers);
         if (qualifiedParams.isUnsatisfied()) {
-            parameters = new HashMap<String, String>();
             JcrConfiguration jcrRepo = getAnnotation(injectionPoint.getAnnotated(),JcrConfiguration.class,beanManager);
             JcrConfiguration.List jcrRepoList = getAnnotation(injectionPoint.getAnnotated(),JcrConfiguration.List.class,beanManager);
-            if (jcrRepo != null) {
-                parameters.put(jcrRepo.name(), jcrRepo.value());
-            }
-            if (jcrRepoList != null) {
-                for (JcrConfiguration conf : jcrRepoList.value()) {
-                    parameters.put(conf.name(), conf.value());
-                }
-            }
+            parameters = buildParameters(jcrRepo,jcrRepoList);
         } else {
             parameters = qualifiedParams.get();
         }
-        repository = decorateRepository(createPlainRepository(parameters));
-        return repository;
+        return decorateRepository(createPlainRepository(parameters));
+    }
+    
+    public Map<String,String> buildParameters(JcrConfiguration configuration,
+    		JcrConfiguration.List jcrRepoList) {
+    	Map<String, String> parameters = new HashMap<String, String>();
+    	if (configuration != null) {
+            parameters.put(configuration.name(), configuration.value());
+        }
+    	if (jcrRepoList != null) {
+            for (JcrConfiguration conf : jcrRepoList.value()) {
+                parameters.put(conf.name(), conf.value());
+            }
+        }
+    	return parameters;
+    }
+    
+    public Session createSessionFromParameters(JcrConfiguration configuration,
+    		JcrConfiguration.List jcrRepoList) throws RepositoryException {
+    	Map<String,String> parameters = buildParameters(configuration,jcrRepoList);
+    	Repository repository = decorateRepository(createPlainRepository(parameters));
+    	Credentials c = null;
+    	String workspaceName = null;
+    	return repository.login(c,workspaceName);
     }
 
     @Produces

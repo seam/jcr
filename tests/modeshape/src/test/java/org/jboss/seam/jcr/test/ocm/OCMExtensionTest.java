@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.seam.jcr.ocm;
+package org.jboss.seam.jcr.test.ocm;
 
 import static org.jboss.seam.jcr.ConfigParams.MODESHAPE_URL;
 
@@ -28,8 +28,12 @@ import junit.framework.Assert;
 
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.seam.jcr.JcrCDIEventListener;
 import org.jboss.seam.jcr.annotations.JcrConfiguration;
-import org.jboss.seam.jcr.events.JcrCDIEventListener;
+import org.jboss.seam.jcr.ocm.JcrOCMExtension;
+import org.jboss.seam.jcr.ocm.NodeConverter;
+import org.jboss.seam.jcr.ocm.OCMMapping;
+import org.jboss.seam.jcr.ocm.OCMMappingStore;
 import org.jboss.seam.jcr.resolver.RepositoryResolver;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;

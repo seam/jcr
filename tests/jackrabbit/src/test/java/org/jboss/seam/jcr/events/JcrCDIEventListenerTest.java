@@ -29,6 +29,7 @@ import javax.jcr.observation.Event;
 
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.seam.jcr.JcrCDIEventListener;
 import org.jboss.seam.jcr.annotations.JcrConfiguration;
 import org.jboss.seam.jcr.annotations.JcrConfiguration.List;
 import org.jboss.seam.jcr.resolver.RepositoryResolver;

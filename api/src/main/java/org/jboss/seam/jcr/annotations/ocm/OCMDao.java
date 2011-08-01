@@ -13,31 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.seam.jcr.ocm;
+package org.jboss.seam.jcr.annotations.ocm;
 
-import org.jboss.seam.jcr.annotations.ocm.JcrNode;
-import org.jboss.seam.jcr.annotations.ocm.JcrProperty;
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@JcrNode("nt:unstructured")
-public class BasicNode implements java.io.Serializable {
-	@JcrProperty("myvalue")
-	private String value;
-	private String uuid;
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 
-	public String getValue() {
-		return value;
-	}
+import org.jboss.seam.jcr.annotations.JcrConfiguration;
+import org.jboss.seam.jcr.ocm.OCMHandler;
+import org.jboss.seam.solder.serviceHandler.ServiceHandlerType;
 
-	public void setValue(String value) {
-		this.value = value;
-	}
-
-	public String getUuid() {
-		return uuid;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
-	
+@Target({TYPE})
+@Retention(RUNTIME)
+@Documented
+@ServiceHandlerType(OCMHandler.class)
+public @interface OCMDao {
+	public JcrConfiguration value();
 }
