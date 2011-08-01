@@ -34,7 +34,7 @@ import org.jboss.seam.jcr.ocm.JcrOCMExtension;
 import org.jboss.seam.jcr.ocm.NodeConverter;
 import org.jboss.seam.jcr.ocm.OCMMapping;
 import org.jboss.seam.jcr.ocm.OCMMappingStore;
-import org.jboss.seam.jcr.resolver.RepositoryResolver;
+import org.jboss.seam.jcr.repository.RepositoryResolverImpl;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -57,7 +57,7 @@ public class OCMExtensionTest {
         return ShrinkWrap.create(JavaArchive.class)
         .addClasses(BasicNode.class,OCMMappingStore.class,OCMMapping.class,NodeConverter.class)
         .addAsServiceProvider(Extension.class, JcrOCMExtension.class)
-        .addPackage(RepositoryResolver.class.getPackage())
+        .addPackage(RepositoryResolverImpl.class.getPackage())
         .addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
     }
     

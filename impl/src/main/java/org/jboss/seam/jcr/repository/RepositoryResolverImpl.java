@@ -14,7 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
  */
-package org.jboss.seam.jcr.resolver;
+package org.jboss.seam.jcr.repository;
 
 import static org.jboss.seam.solder.reflection.AnnotationInspector.getAnnotation;
 
@@ -42,15 +42,14 @@ import org.jboss.seam.jcr.ConfigParams;
 import org.jboss.seam.jcr.EventListenerConfig;
 import org.jboss.seam.jcr.JcrCDIEventListener;
 import org.jboss.seam.jcr.annotations.JcrConfiguration;
-import org.jboss.seam.jcr.repository.SeamEventRepositoryImpl;
 
 /**
  * Resolves Extension Managed {@link Repository} objects
  * 
  * @author george
  */
-public class RepositoryResolver {
-    private final Logger logger = Logger.getLogger(RepositoryResolver.class);
+public class RepositoryResolverImpl implements RepositoryResolver {
+    private final Logger logger = Logger.getLogger(RepositoryResolverImpl.class);
 
     @Inject
     private BeanManager beanManager;

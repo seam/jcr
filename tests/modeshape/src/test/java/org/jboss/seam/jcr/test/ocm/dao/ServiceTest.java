@@ -34,7 +34,7 @@ import org.jboss.seam.jcr.ocm.NodeConverter;
 import org.jboss.seam.jcr.ocm.OCMHandler;
 import org.jboss.seam.jcr.ocm.OCMMapping;
 import org.jboss.seam.jcr.ocm.OCMMappingStore;
-import org.jboss.seam.jcr.resolver.RepositoryResolver;
+import org.jboss.seam.jcr.repository.RepositoryResolverImpl;
 import org.jboss.seam.jcr.test.ocm.BasicNode;
 import org.jboss.seam.solder.serviceHandler.ServiceHandlerExtension;
 import org.jboss.shrinkwrap.api.ArchivePaths;
@@ -64,7 +64,7 @@ public class ServiceTest {
         .addClasses(BasicNodeDAO.class, JcrConfiguration.class)
         .addAsServiceProvider(Extension.class, JcrOCMExtension.class)
         //.addAsServiceProvider(Extension.class, ServiceHandlerExtension.class)
-        .addPackage(RepositoryResolver.class.getPackage())
+        .addPackage(RepositoryResolverImpl.class.getPackage())
         .addPackage(OCMDao.class.getPackage())
         .addPackage(ConvertToObjectEvent.class.getPackage())
         .addPackage(ServiceHandlerExtension.class.getPackage())
