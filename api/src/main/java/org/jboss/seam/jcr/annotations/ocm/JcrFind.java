@@ -20,8 +20,15 @@ import java.lang.annotation.Target;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.ElementType; 
 
+/**
+ * Represents the find based on identifier in JCR.
+ * Methods denoted JcrFind should have a single String param.
+ * 
+ * @author johnament
+ *
+ */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD})
-public @interface OCMFind {
+public @interface JcrFind {
 	
 }

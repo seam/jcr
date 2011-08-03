@@ -17,6 +17,8 @@ package org.jboss.seam.jcr.test.ocm.dao;
 
 import static org.jboss.seam.jcr.ConfigParams.MODESHAPE_URL;
 
+import java.util.List;
+
 import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.spi.Extension;
 import javax.inject.Inject;
@@ -27,8 +29,8 @@ import javax.jcr.Session;
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.seam.jcr.annotations.JcrConfiguration;
-import org.jboss.seam.jcr.annotations.ocm.OCMDao;
-import org.jboss.seam.jcr.ocm.ConvertToObjectEvent;
+import org.jboss.seam.jcr.annotations.ocm.JcrDao;
+import org.jboss.seam.jcr.ocm.ConvertToObject;
 import org.jboss.seam.jcr.ocm.JcrOCMExtension;
 import org.jboss.seam.jcr.ocm.NodeConverter;
 import org.jboss.seam.jcr.ocm.OCMHandler;
@@ -65,8 +67,8 @@ public class ServiceTest {
         .addAsServiceProvider(Extension.class, JcrOCMExtension.class)
         //.addAsServiceProvider(Extension.class, ServiceHandlerExtension.class)
         .addPackage(RepositoryResolverImpl.class.getPackage())
-        .addPackage(OCMDao.class.getPackage())
-        .addPackage(ConvertToObjectEvent.class.getPackage())
+        .addPackage(JcrDao.class.getPackage())
+        .addPackage(ConvertToObject.class.getPackage())
         .addPackage(ServiceHandlerExtension.class.getPackage())
         .addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
         return archive;
@@ -74,18 +76,17 @@ public class ServiceTest {
     
     @Test
     public void testNothing() throws RepositoryException {
+    	BasicNodeDAO basicDAO = basicDAOInstance.get();
     	BasicNode bn = new BasicNode();
     	bn.setValue("this is my node.");
-    	Node root = session.getRootNode();
-    	Node child = root.addNode("anypathone", "nt:unstructured");
-    	nodeConverter.objectToNode(bn, child);
-    	session.save();
-    	session.logout();
-    	String uuid = child.getIdentifier();
+    	String uuid = basicDAO.save("/anypathone",bn);
     	System.out.println("The UUID is: "+uuid);
-    	BasicNodeDAO basicDAO = basicDAOInstance.get();
     	BasicNode bn2 = basicDAO.findBasicNode(uuid);
     	Assert.assertNotNull(bn2);
     	Assert.assertEquals(bn.getValue(), bn2.getValue());
+    	List<BasicNode> nodes = basicDAO.findAllNodes();
+    	System.out.println(nodes);
     }
+    
+    
 }

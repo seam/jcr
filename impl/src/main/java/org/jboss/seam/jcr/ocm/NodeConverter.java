@@ -18,8 +18,12 @@ public class NodeConverter {
 	@Inject JcrOCMExtension ocmExtension;
 	private Logger logger = Logger.getLogger(NodeConverter.class);
 	
-	public void handleConvertToObjectRequest(@Observes ConvertToObjectEvent event) throws RepositoryException {
+	public void handleConvertToObjectRequest(@Observes ConvertToObject event) throws RepositoryException {
 		convertNodeToObject(event.getNode(),event.getClazz(),event.getObject());
+	}
+	
+	public void handleConvertToNode(@Observes ConvertToNode event) throws RepositoryException {
+		this.objectToNode(event.getObject(),event.getNode());
 	}
 	
 	public <T> T nodeToObject(javax.jcr.Node node, Class<T> nodeType) {

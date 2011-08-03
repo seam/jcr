@@ -30,6 +30,6 @@ import org.jboss.seam.solder.serviceHandler.ServiceHandlerType;
 @Retention(RUNTIME)
 @Documented
 @ServiceHandlerType(OCMHandler.class)
-public @interface OCMDao {
+public @interface JcrDao {
 	public JcrConfiguration value();
 }

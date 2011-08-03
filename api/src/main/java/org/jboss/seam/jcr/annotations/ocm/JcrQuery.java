@@ -13,26 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.seam.jcr.ocm;
+package org.jboss.seam.jcr.annotations.ocm;
 
-import javax.jcr.Node;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-public class ConvertToObjectEvent {
-	public ConvertToObjectEvent(Node node, Object object) {
-		this.node = node;
-		this.object = object;
-		this.clazz = object.getClass();
-	}
-	private Node node;
-	private Class<?> clazz;
-	private Object object;
-	public Node getNode() {
-		return node;
-	}
-	public Class<?> getClazz() {
-		return clazz;
-	}
-	public Object getObject() {
-		return object;
-	}
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD})
+public @interface JcrQuery {
+	public String query();
+	public String language();
+	public Class<?> resultClass();
 }
