@@ -67,7 +67,7 @@
 
 <dependency>
    <groupId>org.jboss.seam.jcr</groupId>
-   <artifactId>seam-jcr-impl</artifactId>
+   <artifactId>seam-jcr</artifactId>
    <version>${seam.jcr.version}</version>
    <scope>runtime</scope>
 </dependency>]]>

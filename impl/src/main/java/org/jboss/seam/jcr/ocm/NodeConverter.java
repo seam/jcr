@@ -64,7 +64,7 @@ public class NodeConverter {
 							value = property.getDouble();
 						} else if(fieldType.equals(BigDecimal.class)) {
 							value = property.getDecimal();
-						} else if(fieldType.equals(Long.class) || fieldType.equals(long.class)) {
+						} else if(fieldType.equals(Long.class) || fieldType.equals(Long.TYPE)) {
 							value = property.getLong();
 						} else if(fieldType.equals(String.class)) {
 							value = property.getString();
