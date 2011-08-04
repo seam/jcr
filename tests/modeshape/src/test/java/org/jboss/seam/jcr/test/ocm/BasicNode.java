@@ -23,6 +23,7 @@ public class BasicNode implements java.io.Serializable {
 	@JcrProperty("myvalue")
 	private String value;
 	private String uuid;
+	private String lordy;
 
 	public String getValue() {
 		return value;
@@ -38,6 +39,14 @@ public class BasicNode implements java.io.Serializable {
 
 	public void setUuid(String uuid) {
 		this.uuid = uuid;
+	}
+	@JcrProperty("notaproperty")
+	public String getLordy() {
+		return lordy;
+	}
+
+	public void setLordy(String lordy) {
+		this.lordy = lordy;
 	}
 	
 }

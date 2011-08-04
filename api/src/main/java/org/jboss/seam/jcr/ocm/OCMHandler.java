@@ -73,7 +73,7 @@ public class OCMHandler {
 				Object result = returnType.newInstance();
 				ConvertToObject event = new ConvertToObject(foundNode,result);
 				ctoEvent.fire(event);
-				System.out.println("Returning the result "+event);
+				logger.debug("Returning the result "+event);
 				return result;
 			} else if (method.isAnnotationPresent(JcrQuery.class)) {
 				JcrQuery jcrQuery = method.getAnnotation(JcrQuery.class);
@@ -127,8 +127,7 @@ public class OCMHandler {
 				}
 			}
 		} catch (Exception e) {
-			System.out.println("Unable to handle message");
-			e.printStackTrace();
+			logger.error("Unable to handle conversion request",e);
 		} finally {
 			if(session != null) {
 				try {
@@ -139,7 +138,7 @@ public class OCMHandler {
 				session.logout();
 			}
 		}
-		System.out.println("Returning null");
+		logger.debug("Returning null from OCMHandler.");
 		return null;
 	}
 }

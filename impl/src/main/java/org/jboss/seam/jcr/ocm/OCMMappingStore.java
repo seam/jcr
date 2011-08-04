@@ -16,7 +16,10 @@
 package org.jboss.seam.jcr.ocm;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.enterprise.inject.spi.AnnotatedType;
@@ -52,7 +55,15 @@ public class OCMMappingStore {
 		mapping.setNodeType(jcrNode.value());
 		Class<?> clazz = (Class<?>)annotatedType.getBaseType();
 		Field[] fields = clazz.getDeclaredFields();
+		Method[] methods = clazz.getMethods();
 		mapping.setNodeClass(clazz);
+		Map<String,JcrProperty> properties = new HashMap<String, JcrProperty>();
+		for(Method method : methods) {
+			if(method.isAnnotationPresent(JcrProperty.class)) {
+				String fieldName = getterToFieldName(method.getName());
+				properties.put(fieldName, method.getAnnotation(JcrProperty.class));
+			}
+		}
 		for(Field field : fields) {
 			logger.debugf("field name: %s",field.getName());
 			String fieldName = field.getName();
@@ -60,11 +71,18 @@ public class OCMMappingStore {
 			JcrProperty property = field.getAnnotation(JcrProperty.class);
 			if(property != null) {
 				prop = property.value();
+			} else if(properties.containsKey(prop)) {
+				prop = properties.get(prop).value();
 			}
 			logger.debugf("fieldName: %s prop: %s\n", fieldName,prop);
 			mapping.getPropertiesToFields().put(prop,field);
 			mapping.getFieldsToProperties().put(fieldName,prop);
 		}
 		addMapping(mapping);
+	}
+	
+	private static String getterToFieldName(String methodName) {
+		String fieldName = methodName.replace("get", "");
+		return fieldName.substring(0, 1).toLowerCase() + fieldName.substring(1);
 	}
 }

@@ -52,24 +52,28 @@ public class NodeConverter {
 			if(field != null && jcrProperty.equalsIgnoreCase("uuid")) {
 				value = node.getIdentifier();
 			} else {
-				Property property = node.getProperty(jcrProperty);
-				if(field != null && property != null) {
-					Class<?> fieldType = field.getType();
-					if(fieldType.equals(java.util.Calendar.class)) {
-						value = property.getDate();
-					} else if(fieldType.equals(boolean.class) || fieldType.equals(Boolean.class)) {
-						value = property.getBoolean();
-					} else if(fieldType.equals(double.class) || fieldType.equals(Double.class)) {
-						value = property.getDouble();
-					} else if(fieldType.equals(BigDecimal.class)) {
-						value = property.getDecimal();
-					} else if(fieldType.equals(Long.class) || fieldType.equals(long.class)) {
-						value = property.getLong();
-					} else if(fieldType.equals(String.class)) {
-						value = property.getString();
-					} else {
-						logger.warnf("invalid field type %s",field);
+				try{
+					Property property = node.getProperty(jcrProperty);
+					if(field != null && property != null) {
+						Class<?> fieldType = field.getType();
+						if(fieldType.equals(java.util.Calendar.class)) {
+							value = property.getDate();
+						} else if(fieldType.equals(boolean.class) || fieldType.equals(Boolean.class)) {
+							value = property.getBoolean();
+						} else if(fieldType.equals(double.class) || fieldType.equals(Double.class)) {
+							value = property.getDouble();
+						} else if(fieldType.equals(BigDecimal.class)) {
+							value = property.getDecimal();
+						} else if(fieldType.equals(Long.class) || fieldType.equals(long.class)) {
+							value = property.getLong();
+						} else if(fieldType.equals(String.class)) {
+							value = property.getString();
+						} else {
+							logger.warnf("invalid field type %s",field);
+						}
 					}
+				} catch (RepositoryException e) {
+					logger.debug("No property found "+jcrProperty,e);
 				}
 			}
 			if(value != null) {
@@ -84,10 +88,13 @@ public class NodeConverter {
 		Class<?> nodeType = object.getClass();
 		OCMMapping mapping = ocmExtension.getOCMMappingStore().findMapping(nodeType);
 		Set<String> jcrProperties = mapping.getPropertiesToFields().keySet();
+		logger.debug("The properties: "+jcrProperties);
 		for(String jcrProperty : jcrProperties) {
 			Field field = mapping.getPropertiesToFields().get(jcrProperty);
+			logger.debugf("Searched for property [%s] and retrieved field [%s]", jcrProperty, field);
 			String getterMethodName = "get"+field.getName().substring(0, 1).toUpperCase()+field.getName().substring(1);
 			Method method = Reflections.findDeclaredMethod(nodeType, getterMethodName);
+			logger.debug("Found method : "+method);
 			Object value = Reflections.invokeMethod(method, object);
 			if(field != null && jcrProperty.equalsIgnoreCase("uuid")) {
 				//don't set UUID
@@ -105,7 +112,7 @@ public class NodeConverter {
 					} else if(fieldType.equals(Long.class) || fieldType.equals(long.class)) {
 						node.setProperty(jcrProperty, (Long)value);
 					} else if(fieldType.equals(String.class)) {
-						node.setProperty(jcrProperty, value.toString());
+						node.setProperty(jcrProperty, (String)value);
 					} else {
 						logger.warnf("invalid field type %s",field);
 					}

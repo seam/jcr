@@ -66,11 +66,13 @@ public class OCMExtensionTest {
     	OCMMappingStore ocmMappingStore = extension.getOCMMappingStore();
     	OCMMapping mapping = ocmMappingStore.findMapping(BasicNode.class);
     	Assert.assertNotNull(mapping);
-    	Assert.assertEquals(2,mapping.getFieldsToProperties().size());
+    	Assert.assertEquals(3,mapping.getFieldsToProperties().size());
     	String result = mapping.getFieldsToProperties().get("value");
     	Assert.assertEquals("myvalue", result);
     	String uuid = mapping.getFieldsToProperties().get("uuid");
     	Assert.assertEquals("uuid", uuid);
+    	String notaproperty = mapping.getFieldsToProperties().get("lordy");
+    	Assert.assertEquals("notaproperty", notaproperty);
     }
     
     @Test
@@ -80,10 +82,12 @@ public class OCMExtensionTest {
             Node root = session.getRootNode();
             Node hello = root.addNode("ocmnode1","nt:unstructured");
             hello.setProperty("myvalue", "Hello, World!");
+            hello.setProperty("notaproperty", "this was saved.");
             
             Node hello2 = root.getNode("ocmnode1");
             BasicNode bn = nodeConverter.nodeToObject(hello2, BasicNode.class);
             Assert.assertEquals("Hello, World!", bn.getValue());
+            Assert.assertEquals("this was saved.", bn.getLordy());
             
             Node hello3 = root.addNode("ocmnode3", "nt:unstructured");
             session.save();
