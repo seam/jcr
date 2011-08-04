@@ -26,10 +26,11 @@ import org.jboss.seam.jcr.annotations.JcrConfiguration;
 import org.jboss.seam.jcr.ocm.OCMHandler;
 import org.jboss.seam.solder.serviceHandler.ServiceHandlerType;
 
-@Target({TYPE})
+@Target({ TYPE })
 @Retention(RUNTIME)
 @Documented
 @ServiceHandlerType(OCMHandler.class)
-public @interface JcrDao {
-	public JcrConfiguration value();
+public @interface JcrDao
+{
+   public JcrConfiguration value();
 }

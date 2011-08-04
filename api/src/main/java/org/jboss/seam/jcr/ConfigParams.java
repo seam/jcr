@@ -21,31 +21,33 @@ package org.jboss.seam.jcr;
  * 
  * @author johnament
  */
-public abstract class ConfigParams {
-    private ConfigParams() {
-    }
+public abstract class ConfigParams
+{
+   private ConfigParams()
+   {
+   }
 
-    /**
-     * Represents the Jackrabbit Repository Conf parameter in the settings.
-     */
-    public static final String JACKRABBIT_REPOSITORY_CONF = "org.apache.jackrabbit.repository.conf";
-    /**
-     * Represents the Jackrabbit Repository Home parameter.
-     */
-    public static final String JACKRABBIT_REPOSITORY_HOME = "org.apache.jackrabbit.repository.home";
-    /**
-     * Represents the ModeShape URL Parameter.
-     */
-    public static final String MODESHAPE_URL = "org.modeshape.jcr.URL";
+   /**
+    * Represents the Jackrabbit Repository Conf parameter in the settings.
+    */
+   public static final String JACKRABBIT_REPOSITORY_CONF = "org.apache.jackrabbit.repository.conf";
+   /**
+    * Represents the Jackrabbit Repository Home parameter.
+    */
+   public static final String JACKRABBIT_REPOSITORY_HOME = "org.apache.jackrabbit.repository.home";
+   /**
+    * Represents the ModeShape URL Parameter.
+    */
+   public static final String MODESHAPE_URL = "org.modeshape.jcr.URL";
 
-    /**
-     * Represents the current workspace name
-     */
-    public static final String WORKSPACE_NAME = "javax.jcr.Workspace";
-    
-    /**
-     * Represents the current configuration map for a repository
-     */
-    public static final String JCR_REPOSITORY_CONFIG_MAP = "jcrRepositoryConfigMap";
+   /**
+    * Represents the current workspace name
+    */
+   public static final String WORKSPACE_NAME = "javax.jcr.Workspace";
+
+   /**
+    * Represents the current configuration map for a repository
+    */
+   public static final String JCR_REPOSITORY_CONFIG_MAP = "jcrRepositoryConfigMap";
 
 }

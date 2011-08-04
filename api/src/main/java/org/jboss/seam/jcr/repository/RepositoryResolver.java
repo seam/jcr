@@ -5,7 +5,8 @@ import javax.jcr.Session;
 
 import org.jboss.seam.jcr.annotations.JcrConfiguration;
 
-public interface RepositoryResolver {
-	public Session createSessionFromParameters(JcrConfiguration configuration,
-    		JcrConfiguration.List jcrRepoList) throws RepositoryException;
+public interface RepositoryResolver
+{
+   public Session createSessionFromParameters(JcrConfiguration configuration,
+            JcrConfiguration.List jcrRepoList) throws RepositoryException;
 }

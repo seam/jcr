@@ -21,9 +21,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD})
-public @interface JcrQuery {
-	public String query();
-	public String language();
-	public Class<?> resultClass();
+@Target({ ElementType.METHOD })
+public @interface JcrQuery
+{
+   public String query();
+
+   public String language();
+
+   public Class<?> resultClass();
 }

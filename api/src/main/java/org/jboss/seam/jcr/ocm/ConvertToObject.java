@@ -17,22 +17,31 @@ package org.jboss.seam.jcr.ocm;
 
 import javax.jcr.Node;
 
-public class ConvertToObject {
-	public ConvertToObject(Node node, Object object) {
-		this.node = node;
-		this.object = object;
-		this.clazz = object.getClass();
-	}
-	private Node node;
-	private Class<?> clazz;
-	private Object object;
-	public Node getNode() {
-		return node;
-	}
-	public Class<?> getClazz() {
-		return clazz;
-	}
-	public Object getObject() {
-		return object;
-	}
+public class ConvertToObject
+{
+   public ConvertToObject(Node node, Object object)
+   {
+      this.node = node;
+      this.object = object;
+      this.clazz = object.getClass();
+   }
+
+   private Node node;
+   private Class<?> clazz;
+   private Object object;
+
+   public Node getNode()
+   {
+      return node;
+   }
+
+   public Class<?> getClazz()
+   {
+      return clazz;
+   }
+
+   public Object getObject()
+   {
+      return object;
+   }
 }

@@ -22,11 +22,13 @@ import java.lang.annotation.Target;
 
 /**
  * Represents a method used to save an object as content.
+ * 
  * @author johnament
- *
+ * 
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD})
-public @interface JcrSave {
+@Target({ ElementType.METHOD })
+public @interface JcrSave
+{
 
 }
