@@ -15,18 +15,20 @@
  */
 package org.jboss.seam.jcr.annotations.ocm;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
-import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.ElementType; 
 
-@Target({FIELD, METHOD})
-@Retention(RUNTIME)
-@Documented
-public @interface JcrProperty {
-	public String value();
+/**
+ * Represents the find based on identifier in JCR.
+ * Methods denoted JcrFind should have a single String param.
+ * 
+ * @author johnament
+ *
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD})
+public @interface JcrFind {
+	
 }

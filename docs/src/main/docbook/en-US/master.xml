@@ -28,6 +28,7 @@
    <xi:include href="modeshape.xml"/>
    <xi:include href="jackrabbit.xml"/>
    <xi:include href="event-mapping.xml"/>
+   <xi:include href="ocm.xml"/>
 <!--
  vim:et:ts=3:sw=3:tw=120
 --> 

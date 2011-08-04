@@ -15,18 +15,18 @@
  */
 package org.jboss.seam.jcr.annotations.ocm;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
-
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
-
-import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({FIELD, METHOD})
-@Retention(RUNTIME)
-@Documented
-public @interface JcrProperty {
-	public String value();
+/**
+ * Represents a method used to save an object as content.
+ * @author johnament
+ *
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD})
+public @interface JcrSave {
+
 }

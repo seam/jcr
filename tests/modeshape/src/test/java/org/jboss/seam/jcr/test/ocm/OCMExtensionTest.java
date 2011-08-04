@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.seam.jcr.ocm;
+package org.jboss.seam.jcr.test.ocm;
 
 import static org.jboss.seam.jcr.ConfigParams.MODESHAPE_URL;
 
@@ -28,9 +28,13 @@ import junit.framework.Assert;
 
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.seam.jcr.JcrCDIEventListener;
 import org.jboss.seam.jcr.annotations.JcrConfiguration;
-import org.jboss.seam.jcr.events.JcrCDIEventListener;
-import org.jboss.seam.jcr.resolver.RepositoryResolver;
+import org.jboss.seam.jcr.ocm.JcrOCMExtension;
+import org.jboss.seam.jcr.ocm.NodeConverter;
+import org.jboss.seam.jcr.ocm.OCMMapping;
+import org.jboss.seam.jcr.ocm.OCMMappingStore;
+import org.jboss.seam.jcr.repository.RepositoryResolverImpl;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -53,7 +57,7 @@ public class OCMExtensionTest {
         return ShrinkWrap.create(JavaArchive.class)
         .addClasses(BasicNode.class,OCMMappingStore.class,OCMMapping.class,NodeConverter.class)
         .addAsServiceProvider(Extension.class, JcrOCMExtension.class)
-        .addPackage(RepositoryResolver.class.getPackage())
+        .addPackage(RepositoryResolverImpl.class.getPackage())
         .addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
     }
     
@@ -62,11 +66,13 @@ public class OCMExtensionTest {
     	OCMMappingStore ocmMappingStore = extension.getOCMMappingStore();
     	OCMMapping mapping = ocmMappingStore.findMapping(BasicNode.class);
     	Assert.assertNotNull(mapping);
-    	Assert.assertEquals(2,mapping.getFieldsToProperties().size());
+    	Assert.assertEquals(3,mapping.getFieldsToProperties().size());
     	String result = mapping.getFieldsToProperties().get("value");
     	Assert.assertEquals("myvalue", result);
     	String uuid = mapping.getFieldsToProperties().get("uuid");
     	Assert.assertEquals("uuid", uuid);
+    	String notaproperty = mapping.getFieldsToProperties().get("lordy");
+    	Assert.assertEquals("notaproperty", notaproperty);
     }
     
     @Test
@@ -76,10 +82,12 @@ public class OCMExtensionTest {
             Node root = session.getRootNode();
             Node hello = root.addNode("ocmnode1","nt:unstructured");
             hello.setProperty("myvalue", "Hello, World!");
+            hello.setProperty("notaproperty", "this was saved.");
             
             Node hello2 = root.getNode("ocmnode1");
             BasicNode bn = nodeConverter.nodeToObject(hello2, BasicNode.class);
             Assert.assertEquals("Hello, World!", bn.getValue());
+            Assert.assertEquals("this was saved.", bn.getLordy());
             
             Node hello3 = root.addNode("ocmnode3", "nt:unstructured");
             session.save();

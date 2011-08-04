@@ -13,20 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.seam.jcr.annotations.ocm;
+package org.jboss.seam.jcr.test.ocm;
 
-import static java.lang.annotation.ElementType.FIELD;
-import static java.lang.annotation.ElementType.METHOD;
+import org.jboss.seam.jcr.annotations.ocm.JcrNode;
+import org.jboss.seam.jcr.annotations.ocm.JcrProperty;
 
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+@JcrNode("nt:unstructured")
+public class BasicNode implements java.io.Serializable {
+	@JcrProperty("myvalue")
+	private String value;
+	private String uuid;
+	private String lordy;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+	public String getValue() {
+		return value;
+	}
 
-@Target({FIELD, METHOD})
-@Retention(RUNTIME)
-@Documented
-public @interface JcrProperty {
-	public String value();
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+	@JcrProperty("notaproperty")
+	public String getLordy() {
+		return lordy;
+	}
+
+	public void setLordy(String lordy) {
+		this.lordy = lordy;
+	}
+	
 }

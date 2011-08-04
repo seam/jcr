@@ -24,8 +24,8 @@ import javax.jcr.Session;
 import javax.jcr.observation.EventListener;
 import javax.jcr.observation.ObservationManager;
 
-import org.jboss.seam.jcr.events.EventListenerConfig;
-import org.jboss.seam.jcr.events.JcrCDIEventListener;
+import org.jboss.seam.jcr.EventListenerConfig;
+import org.jboss.seam.jcr.JcrCDIEventListener;
 
 /**
  * Implementation of {@link AbstractSeamRepositoryImpl} that register a CDI enabled

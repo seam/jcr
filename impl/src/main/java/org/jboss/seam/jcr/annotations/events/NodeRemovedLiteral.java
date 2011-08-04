@@ -13,14 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.seam.jcr.events;
+package org.jboss.seam.jcr.annotations.events;
 
 import javax.enterprise.util.AnnotationLiteral;
 
-import org.jboss.seam.jcr.annotations.events.NodeAdded;
 
-public class NodeAddedLiteral extends AnnotationLiteral<NodeAdded> implements NodeAdded {
+/**
+ * @author george
+ */
+public class NodeRemovedLiteral extends AnnotationLiteral<NodeRemoved> implements NodeRemoved {
 
-    public static final NodeAdded INSTANCE = new NodeAddedLiteral();
+    /**
+     *
+     */
+    public static final NodeRemoved INSTANCE = new NodeRemovedLiteral();
 
 }
