@@ -17,11 +17,18 @@ package org.jboss.seam.jcr.annotations.events;
 
 import javax.enterprise.util.AnnotationLiteral;
 
+/**
+ * An {@link AnnotationLiteral} for {@link Persist} events
+ * 
+ * @author george
+ * 
+ */
+@SuppressWarnings("all")
+public class PersistLiteral extends AnnotationLiteral<Persist> implements Persist
+{
 
-public class PersistLiteral extends AnnotationLiteral<Persist> implements Persist {
+   private static final long serialVersionUID = 1L;
 
-    private static final long serialVersionUID = 1L;
-
-    public static final Persist INSTANCE = new PersistLiteral();
+   public static final Persist INSTANCE = new PersistLiteral();
 
 }

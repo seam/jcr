@@ -22,9 +22,10 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-@Target({TYPE})
+@Target({ TYPE })
 @Retention(RUNTIME)
 @Documented
-public @interface JcrNode {
-	public String value();
+public @interface JcrNode
+{
+   public String value();
 }

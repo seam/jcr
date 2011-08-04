@@ -15,20 +15,20 @@
  */
 package org.jboss.seam.jcr.annotations.ocm;
 
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
 import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.ElementType; 
-
+import java.lang.annotation.Target;
 
 /**
  * Represents a named parameter in a JCR Query.
  * 
  * @author johnament
- *
+ * 
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.PARAMETER})
-public @interface JcrParam {
-	public String value();
+@Target({ ElementType.PARAMETER })
+public @interface JcrParam
+{
+   public String value();
 }

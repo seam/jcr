@@ -21,58 +21,68 @@ import javax.jcr.observation.Event;
 
 /**
  * JCR Event listener configuration
- *
+ * 
  * @author george
  */
-public final class EventListenerConfig implements Serializable {
-    private static final long serialVersionUID = 1L;
+public final class EventListenerConfig implements Serializable
+{
+   private static final long serialVersionUID = 1L;
 
-    public static final int ALL_EVENTS = Event.NODE_ADDED | Event.NODE_MOVED | Event.NODE_REMOVED | Event.PERSIST | Event.PROPERTY_ADDED | Event.PROPERTY_CHANGED | Event.PROPERTY_REMOVED;
+   public static final int ALL_EVENTS = Event.NODE_ADDED | Event.NODE_MOVED | Event.NODE_REMOVED | Event.PERSIST
+            | Event.PROPERTY_ADDED | Event.PROPERTY_CHANGED | Event.PROPERTY_REMOVED;
 
-    private String absPath;
-    private boolean deep;
-    private int eventTypes;
-    private boolean noLocal;
-    private String[] nodeTypeName;
-    private String[] uuid;
+   private String absPath;
+   private boolean deep;
+   private int eventTypes;
+   private boolean noLocal;
+   private String[] nodeTypeName;
+   private String[] uuid;
 
-    /**
-     * Default config, if none is specified
-     */
-    public static final EventListenerConfig DEFAULT = new EventListenerConfig("/", true, ALL_EVENTS, false, null, null);
+   /**
+    * Default config, if none is specified
+    */
+   public static final EventListenerConfig DEFAULT = new EventListenerConfig("/", true, ALL_EVENTS, false, null, null);
 
-    public EventListenerConfig(String absPath, boolean deep, int eventTypes, boolean noLocal, String[] nodeTypeName, String[] uuid) {
-        super();
-        this.absPath = absPath;
-        this.deep = deep;
-        this.eventTypes = eventTypes;
-        this.noLocal = noLocal;
-        this.nodeTypeName = nodeTypeName;
-        this.uuid = uuid;
-    }
+   public EventListenerConfig(String absPath, boolean deep, int eventTypes, boolean noLocal, String[] nodeTypeName,
+            String[] uuid)
+   {
+      super();
+      this.absPath = absPath;
+      this.deep = deep;
+      this.eventTypes = eventTypes;
+      this.noLocal = noLocal;
+      this.nodeTypeName = nodeTypeName;
+      this.uuid = uuid;
+   }
 
-    public String getAbsPath() {
-        return absPath;
-    }
+   public String getAbsPath()
+   {
+      return absPath;
+   }
 
-    public boolean isDeep() {
-        return deep;
-    }
+   public boolean isDeep()
+   {
+      return deep;
+   }
 
-    public int getEventTypes() {
-        return eventTypes;
-    }
+   public int getEventTypes()
+   {
+      return eventTypes;
+   }
 
-    public boolean isNoLocal() {
-        return noLocal;
-    }
+   public boolean isNoLocal()
+   {
+      return noLocal;
+   }
 
-    public String[] getNodeTypeName() {
-        return nodeTypeName;
-    }
+   public String[] getNodeTypeName()
+   {
+      return nodeTypeName;
+   }
 
-    public String[] getUuid() {
-        return uuid;
-    }
+   public String[] getUuid()
+   {
+      return uuid;
+   }
 
 }

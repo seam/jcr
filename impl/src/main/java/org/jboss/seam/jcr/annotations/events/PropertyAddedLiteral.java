@@ -17,9 +17,17 @@ package org.jboss.seam.jcr.annotations.events;
 
 import javax.enterprise.util.AnnotationLiteral;
 
+/**
+ * An {@link AnnotationLiteral} for {@link PropertyAdded} events
+ * 
+ * @author george
+ * 
+ */
+@SuppressWarnings("all")
+public class PropertyAddedLiteral extends AnnotationLiteral<PropertyAdded> implements PropertyAdded
+{
 
-public class PropertyAddedLiteral extends AnnotationLiteral<PropertyAdded> implements PropertyAdded {
-
-    public static final PropertyAdded INSTANCE = new PropertyAddedLiteral();
+   private static final long serialVersionUID = 1L;
+   public static final PropertyAdded INSTANCE = new PropertyAddedLiteral();
 
 }
