@@ -17,9 +17,18 @@ package org.jboss.seam.jcr.annotations.events;
 
 import javax.enterprise.util.AnnotationLiteral;
 
+/**
+ * An {@link AnnotationLiteral} for {@link NodeAdded} events
+ * 
+ * @author george
+ * 
+ */
+@SuppressWarnings("all")
+public class NodeAddedLiteral extends AnnotationLiteral<NodeAdded> implements NodeAdded
+{
 
-public class NodeAddedLiteral extends AnnotationLiteral<NodeAdded> implements NodeAdded {
+   private static final long serialVersionUID = 1L;
 
-    public static final NodeAdded INSTANCE = new NodeAddedLiteral();
+   public static final NodeAdded INSTANCE = new NodeAddedLiteral();
 
 }

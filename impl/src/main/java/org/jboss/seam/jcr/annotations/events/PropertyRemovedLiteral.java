@@ -17,9 +17,17 @@ package org.jboss.seam.jcr.annotations.events;
 
 import javax.enterprise.util.AnnotationLiteral;
 
+/**
+ * An {@link AnnotationLiteral} for {@link PropertyRemoved} events
+ * 
+ * @author george
+ * 
+ */
+@SuppressWarnings("all")
+public class PropertyRemovedLiteral extends AnnotationLiteral<PropertyRemoved> implements PropertyRemoved
+{
 
-public class PropertyRemovedLiteral extends AnnotationLiteral<PropertyRemoved> implements PropertyRemoved {
-
-    public static final PropertyRemoved INSTANCE = new PropertyRemovedLiteral();
+   private static final long serialVersionUID = 1L;
+   public static final PropertyRemoved INSTANCE = new PropertyRemovedLiteral();
 
 }

@@ -17,15 +17,18 @@ package org.jboss.seam.jcr.annotations.events;
 
 import javax.enterprise.util.AnnotationLiteral;
 
-
 /**
+ * 
+ * An {@link AnnotationLiteral} for {@link NodeRemoved} events
+ * 
  * @author george
  */
-public class NodeRemovedLiteral extends AnnotationLiteral<NodeRemoved> implements NodeRemoved {
+@SuppressWarnings("all")
+public class NodeRemovedLiteral extends AnnotationLiteral<NodeRemoved> implements NodeRemoved
+{
 
-    /**
-     *
-     */
-    public static final NodeRemoved INSTANCE = new NodeRemovedLiteral();
+   private static final long serialVersionUID = 1L;
+
+   public static final NodeRemoved INSTANCE = new NodeRemovedLiteral();
 
 }

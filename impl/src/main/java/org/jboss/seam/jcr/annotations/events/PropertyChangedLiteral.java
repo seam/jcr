@@ -17,9 +17,17 @@ package org.jboss.seam.jcr.annotations.events;
 
 import javax.enterprise.util.AnnotationLiteral;
 
+/**
+ * An {@link AnnotationLiteral} for {@link PropertyChanged} events
+ * 
+ * @author george
+ * 
+ */
+@SuppressWarnings("all")
+public class PropertyChangedLiteral extends AnnotationLiteral<PropertyChanged> implements PropertyChanged
+{
 
-public class PropertyChangedLiteral extends AnnotationLiteral<PropertyChanged> implements PropertyChanged {
-
-    public static final PropertyChanged INSTANCE = new PropertyChangedLiteral();
+   private static final long serialVersionUID = 1L;
+   public static final PropertyChanged INSTANCE = new PropertyChangedLiteral();
 
 }

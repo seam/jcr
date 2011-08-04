@@ -48,121 +48,144 @@ import org.jboss.seam.jcr.annotations.JcrConfiguration;
  * 
  * @author george
  */
-public class RepositoryResolverImpl implements RepositoryResolver {
-    private final Logger logger = Logger.getLogger(RepositoryResolverImpl.class);
+public class RepositoryResolverImpl implements RepositoryResolver
+{
+   private final Logger logger = Logger.getLogger(RepositoryResolverImpl.class);
 
-    @Inject
-    private BeanManager beanManager;
+   @Inject
+   private BeanManager beanManager;
 
-    @Inject @Named(ConfigParams.JCR_REPOSITORY_CONFIG_MAP)
-    private Instance<Map<String, String>> configParameters;
+   @Inject
+   @Named(ConfigParams.JCR_REPOSITORY_CONFIG_MAP)
+   private Instance<Map<String, String>> configParameters;
 
-    @Inject
-    private Instance<Credentials> credentialsInstance;
+   @Inject
+   private Instance<Credentials> credentialsInstance;
 
-    @Inject
-    private @Named(ConfigParams.WORKSPACE_NAME)
-    Instance<String> workspaceInstance;
+   @Inject
+   private @Named(ConfigParams.WORKSPACE_NAME)
+   Instance<String> workspaceInstance;
 
-    /**
-     * Produces a repository based on the injection point.
-     * 
-     * If no Map was 
-     * @param injectionPoint
-     * @return
-     * @throws RepositoryException
-     */
-    @Produces
-    public Repository produceRepository(final InjectionPoint injectionPoint) throws RepositoryException {
-        Annotation[] qualifiers = getQualifiers(injectionPoint);
-        Map<String, String> parameters;
-        Instance<Map<String, String>> qualifiedParams = configParameters.select(qualifiers);
-        if (qualifiedParams.isUnsatisfied()) {
-            JcrConfiguration jcrRepo = getAnnotation(injectionPoint.getAnnotated(),JcrConfiguration.class,beanManager);
-            JcrConfiguration.List jcrRepoList = getAnnotation(injectionPoint.getAnnotated(),JcrConfiguration.List.class,beanManager);
-            parameters = buildParameters(jcrRepo,jcrRepoList);
-        } else {
-            parameters = qualifiedParams.get();
-        }
-        return decorateRepository(createPlainRepository(parameters));
-    }
-    
-    public Map<String,String> buildParameters(JcrConfiguration configuration,
-    		JcrConfiguration.List jcrRepoList) {
-    	Map<String, String> parameters = new HashMap<String, String>();
-    	if (configuration != null) {
-            parameters.put(configuration.name(), configuration.value());
-        }
-    	if (jcrRepoList != null) {
-            for (JcrConfiguration conf : jcrRepoList.value()) {
-                parameters.put(conf.name(), conf.value());
-            }
-        }
-    	return parameters;
-    }
-    
-    public Session createSessionFromParameters(JcrConfiguration configuration,
-    		JcrConfiguration.List jcrRepoList) throws RepositoryException {
-    	Map<String,String> parameters = buildParameters(configuration,jcrRepoList);
-    	Repository repository = decorateRepository(createPlainRepository(parameters));
-    	Credentials c = null;
-    	String workspaceName = null;
-    	return repository.login(c,workspaceName);
-    }
+   /**
+    * Produces a repository based on the injection point.
+    * 
+    * If no Map was
+    * 
+    * @param injectionPoint
+    * @return
+    * @throws RepositoryException
+    */
+   @Produces
+   public Repository produceRepository(final InjectionPoint injectionPoint) throws RepositoryException
+   {
+      Annotation[] qualifiers = getQualifiers(injectionPoint);
+      Map<String, String> parameters;
+      Instance<Map<String, String>> qualifiedParams = configParameters.select(qualifiers);
+      if (qualifiedParams.isUnsatisfied())
+      {
+         JcrConfiguration jcrRepo = getAnnotation(injectionPoint.getAnnotated(), JcrConfiguration.class, beanManager);
+         JcrConfiguration.List jcrRepoList = getAnnotation(injectionPoint.getAnnotated(), JcrConfiguration.List.class,
+                  beanManager);
+         parameters = buildParameters(jcrRepo, jcrRepoList);
+      }
+      else
+      {
+         parameters = qualifiedParams.get();
+      }
+      return decorateRepository(createPlainRepository(parameters));
+   }
 
-    @Produces
-    public Session produceSession(InjectionPoint injectionPoint) throws RepositoryException {
-        Repository repo = produceRepository(injectionPoint);
-        Annotation[] qualifiers = getQualifiers(injectionPoint);
-        Credentials c = credentialsInstance.isUnsatisfied() ? null : credentialsInstance.select(qualifiers).get();
-        String workspaceName = workspaceInstance.isUnsatisfied() ? null : workspaceInstance.select(qualifiers).get();
-        return repo.login(c, workspaceName);
-    }
+   public Map<String, String> buildParameters(JcrConfiguration configuration,
+            JcrConfiguration.List jcrRepoList)
+   {
+      Map<String, String> parameters = new HashMap<String, String>();
+      if (configuration != null)
+      {
+         parameters.put(configuration.name(), configuration.value());
+      }
+      if (jcrRepoList != null)
+      {
+         for (JcrConfiguration conf : jcrRepoList.value())
+         {
+            parameters.put(conf.name(), conf.value());
+         }
+      }
+      return parameters;
+   }
 
-    private Annotation[] getQualifiers(InjectionPoint injectionPoint) {
-        Annotation[] qualifiers = injectionPoint.getQualifiers().toArray(new Annotation[0]);
-        return qualifiers;
-    }
+   public Session createSessionFromParameters(JcrConfiguration configuration,
+            JcrConfiguration.List jcrRepoList) throws RepositoryException
+   {
+      Map<String, String> parameters = buildParameters(configuration, jcrRepoList);
+      Repository repository = decorateRepository(createPlainRepository(parameters));
+      Credentials c = null;
+      String workspaceName = null;
+      return repository.login(c, workspaceName);
+   }
 
-    /**
-     * JCR 2.0 Default code
-     * 
-     * @param jcrRepo
-     * @return
-     * @throws RepositoryException
-     */
-    private Repository createPlainRepository(Map<String, String> parameters) throws RepositoryException {
-        Repository repository = null;
-        for (RepositoryFactory factory : ServiceLoader.load(RepositoryFactory.class)) {
-            repository = factory.getRepository(parameters);
-            if (repository != null)
-                break;
-        }
-        return repository;
-    }
+   @Produces
+   public Session produceSession(InjectionPoint injectionPoint) throws RepositoryException
+   {
+      Repository repo = produceRepository(injectionPoint);
+      Annotation[] qualifiers = getQualifiers(injectionPoint);
+      Credentials c = credentialsInstance.isUnsatisfied() ? null : credentialsInstance.select(qualifiers).get();
+      String workspaceName = workspaceInstance.isUnsatisfied() ? null : workspaceInstance.select(qualifiers).get();
+      return repo.login(c, workspaceName);
+   }
 
-    /**
-     * Decorates a plain {@link Repository} object
-     * 
-     * @param repository Plain {@link Repository} instance
-     * @return Decorated {@link Repository} instance
-     */
-    private Repository decorateRepository(Repository repository) {
-        if (repository == null) {
-            return null;
-        }
-        JcrCDIEventListener eventListener = new JcrCDIEventListener(beanManager);
-        EventListenerConfig config = EventListenerConfig.DEFAULT;
-        return new SeamEventRepositoryImpl(repository, config, eventListener);
-    }
+   private Annotation[] getQualifiers(InjectionPoint injectionPoint)
+   {
+      Annotation[] qualifiers = injectionPoint.getQualifiers().toArray(new Annotation[0]);
+      return qualifiers;
+   }
 
-    public void cleanSession(@Disposes @Any Session session) {
-        try {
-            session.save();
-            session.logout();
-        } catch (RepositoryException e) {
-            logger.error("Error saving session", e);
-        }
-    }
+   /**
+    * JCR 2.0 Default code
+    * 
+    * @param jcrRepo
+    * @return
+    * @throws RepositoryException
+    */
+   private Repository createPlainRepository(Map<String, String> parameters) throws RepositoryException
+   {
+      Repository repository = null;
+      for (RepositoryFactory factory : ServiceLoader.load(RepositoryFactory.class))
+      {
+         repository = factory.getRepository(parameters);
+         if (repository != null)
+            break;
+      }
+      return repository;
+   }
+
+   /**
+    * Decorates a plain {@link Repository} object
+    * 
+    * @param repository Plain {@link Repository} instance
+    * @return Decorated {@link Repository} instance
+    */
+   private Repository decorateRepository(Repository repository)
+   {
+      if (repository == null)
+      {
+         return null;
+      }
+      JcrCDIEventListener eventListener = new JcrCDIEventListener(beanManager);
+      EventListenerConfig config = EventListenerConfig.DEFAULT;
+      return new SeamEventRepositoryImpl(repository, config, eventListener);
+   }
+
+   public void cleanSession(@Disposes @Any Session session)
+   {
+      try
+      {
+         session.save();
+         session.logout();
+      }
+      catch (RepositoryException e)
+      {
+         logger.error("Error saving session", e);
+      }
+   }
 
 }
