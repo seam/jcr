@@ -88,8 +88,4 @@ public class ServiceTest {
     	System.out.println(nodes);
     }
     
-    @Test
-    public void testLongs() {
-    	Assert.assertTrue(Long.TYPE.equals(Long.class));
-    }
 }
