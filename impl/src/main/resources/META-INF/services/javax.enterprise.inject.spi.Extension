@@ -1,1 +1,2 @@
 org.jboss.seam.jcr.JcrExtension
+org.jboss.seam.jcr.ocm.JcrOCMExtension
