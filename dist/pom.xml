@@ -44,12 +44,6 @@
 
       <dependency>
          <groupId>org.jboss.seam.jcr</groupId>
-         <artifactId>seam-jcr-impl</artifactId>
-         <optional>true</optional>
-      </dependency>
-
-      <dependency>
-         <groupId>org.jboss.seam.jcr</groupId>
          <artifactId>seam-jcr</artifactId>
          <optional>true</optional>
       </dependency>
@@ -64,7 +58,7 @@
 
       <dependency>
          <groupId>org.jboss.seam.jcr</groupId>
-         <artifactId>seam-jcr-impl</artifactId>
+         <artifactId>seam-jcr</artifactId>
          <version>${project.version}</version>
          <classifier>sources</classifier>
          <optional>true</optional>
