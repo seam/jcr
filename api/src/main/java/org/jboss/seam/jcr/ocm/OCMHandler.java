@@ -32,7 +32,7 @@ import javax.jcr.query.Query;
 import javax.jcr.query.QueryManager;
 import javax.jcr.query.QueryResult;
 
-import org.jboss.logging.Logger;
+import org.jboss.seam.solder.logging.Logger;
 import org.jboss.seam.jcr.annotations.JcrConfiguration;
 import org.jboss.seam.jcr.annotations.ocm.JcrDao;
 import org.jboss.seam.jcr.annotations.ocm.JcrFind;
