@@ -13,20 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.seam.jcr.events;
+package org.jboss.seam.jcr.annotations.events;
 
 import javax.enterprise.util.AnnotationLiteral;
 
-import org.jboss.seam.jcr.annotations.events.NodeRemoved;
-
 /**
+ * 
+ * An {@link AnnotationLiteral} for {@link NodeRemoved} events
+ * 
  * @author george
  */
-public class NodeRemovedLiteral extends AnnotationLiteral<NodeRemoved> implements NodeRemoved {
+@SuppressWarnings("all")
+public class NodeRemovedLiteral extends AnnotationLiteral<NodeRemoved> implements NodeRemoved
+{
 
-    /**
-     *
-     */
-    public static final NodeRemoved INSTANCE = new NodeRemovedLiteral();
+   private static final long serialVersionUID = 1L;
+
+   public static final NodeRemoved INSTANCE = new NodeRemovedLiteral();
 
 }

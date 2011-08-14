@@ -13,16 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.seam.jcr.events;
+package org.jboss.seam.jcr.annotations.events;
 
 import javax.enterprise.util.AnnotationLiteral;
 
-import org.jboss.seam.jcr.annotations.events.Persist;
+/**
+ * An {@link AnnotationLiteral} for {@link NodeMoved} events
+ * 
+ * @author george
+ */
+@SuppressWarnings("all")
+public class NodeMovedLiteral extends AnnotationLiteral<NodeMoved> implements NodeMoved
+{
 
-public class PersistLiteral extends AnnotationLiteral<Persist> implements Persist {
+   private static final long serialVersionUID = 1L;
 
-    private static final long serialVersionUID = 1L;
-
-    public static final Persist INSTANCE = new PersistLiteral();
+   public static final NodeMoved INSTANCE = new NodeMovedLiteral();
 
 }

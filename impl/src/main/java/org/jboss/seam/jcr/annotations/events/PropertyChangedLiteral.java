@@ -13,14 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.seam.jcr.events;
+package org.jboss.seam.jcr.annotations.events;
 
 import javax.enterprise.util.AnnotationLiteral;
 
-import org.jboss.seam.jcr.annotations.events.NodeAdded;
+/**
+ * An {@link AnnotationLiteral} for {@link PropertyChanged} events
+ * 
+ * @author george
+ * 
+ */
+@SuppressWarnings("all")
+public class PropertyChangedLiteral extends AnnotationLiteral<PropertyChanged> implements PropertyChanged
+{
 
-public class NodeAddedLiteral extends AnnotationLiteral<NodeAdded> implements NodeAdded {
-
-    public static final NodeAdded INSTANCE = new NodeAddedLiteral();
+   private static final long serialVersionUID = 1L;
+   public static final PropertyChanged INSTANCE = new PropertyChangedLiteral();
 
 }

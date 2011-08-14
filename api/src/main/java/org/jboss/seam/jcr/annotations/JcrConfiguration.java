@@ -33,20 +33,22 @@ import java.lang.annotation.Target;
  * @author johnament
  */
 @Documented
-@Target( { METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
+@Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
 @Retention(RUNTIME)
-public @interface JcrConfiguration {
-    public String name() default "";
+public @interface JcrConfiguration
+{
+   public String name() default "";
 
-    public String value() default "";
+   public String value() default "";
 
-    /**
-     * Defines several {@code @JcrConfiguration} annotations on the same element.
-     */
-    @Target( { METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
-    @Retention(RUNTIME)
-    @Documented
-    public @interface List {
-        JcrConfiguration[] value() default {};
-    }
+   /**
+    * Defines several {@code @JcrConfiguration} annotations on the same element.
+    */
+   @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER })
+   @Retention(RUNTIME)
+   @Documented
+   public @interface List
+   {
+      JcrConfiguration[] value() default {};
+   }
 }

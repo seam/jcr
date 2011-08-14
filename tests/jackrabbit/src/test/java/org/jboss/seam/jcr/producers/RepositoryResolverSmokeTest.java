@@ -23,7 +23,7 @@ import javax.jcr.Repository;
 
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.seam.jcr.resolver.RepositoryResolver;
+import org.jboss.seam.jcr.repository.RepositoryResolverImpl;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -44,7 +44,7 @@ public class RepositoryResolverSmokeTest {
 
     @Deployment
     public static JavaArchive createArchive() {
-        return ShrinkWrap.create(JavaArchive.class).addPackage(RepositoryResolver.class.getPackage())
+        return ShrinkWrap.create(JavaArchive.class).addPackage(RepositoryResolverImpl.class.getPackage())
                 .addClass(RepositoryResolverProducer.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
     }

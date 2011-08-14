@@ -24,65 +24,74 @@ import javax.jcr.Session;
 import javax.jcr.observation.EventListener;
 import javax.jcr.observation.ObservationManager;
 
-import org.jboss.seam.jcr.events.EventListenerConfig;
-import org.jboss.seam.jcr.events.JcrCDIEventListener;
+import org.jboss.seam.jcr.EventListenerConfig;
+import org.jboss.seam.jcr.JcrCDIEventListener;
 
 /**
- * Implementation of {@link AbstractSeamRepositoryImpl} that register a CDI enabled
- * {@link EventListener} on {@link Session} objects
- *
+ * Implementation of {@link AbstractSeamRepositoryImpl} that register a CDI enabled {@link EventListener} on
+ * {@link Session} objects
+ * 
  * @author george
  */
-public class SeamEventRepositoryImpl extends AbstractSeamRepositoryImpl {
-    private JcrCDIEventListener eventListener;
-    private EventListenerConfig eventConfig;
+public class SeamEventRepositoryImpl extends AbstractSeamRepositoryImpl
+{
+   private JcrCDIEventListener eventListener;
+   private EventListenerConfig eventConfig;
 
-    public SeamEventRepositoryImpl(Repository delegated, EventListenerConfig eventConfig, JcrCDIEventListener eventListener) {
-        super(delegated);
-        this.eventListener = eventListener;
-        this.eventConfig = eventConfig;
-    }
+   public SeamEventRepositoryImpl(Repository delegated, EventListenerConfig eventConfig,
+            JcrCDIEventListener eventListener)
+   {
+      super(delegated);
+      this.eventListener = eventListener;
+      this.eventConfig = eventConfig;
+   }
 
-    @Override
-    public Session login() throws LoginException, RepositoryException {
-        Session session = super.login();
-        registerListener(session.getWorkspace().getObservationManager());
-        return session;
-    }
+   @Override
+   public Session login() throws LoginException, RepositoryException
+   {
+      Session session = super.login();
+      registerListener(session.getWorkspace().getObservationManager());
+      return session;
+   }
 
-    @Override
-    public Session login(Credentials credentials) throws LoginException, RepositoryException {
-        Session session = super.login(credentials);
-        registerListener(session.getWorkspace().getObservationManager());
-        return session;
-    }
+   @Override
+   public Session login(Credentials credentials) throws LoginException, RepositoryException
+   {
+      Session session = super.login(credentials);
+      registerListener(session.getWorkspace().getObservationManager());
+      return session;
+   }
 
-    @Override
-    public Session login(String workspaceName) throws LoginException, NoSuchWorkspaceException, RepositoryException {
-        Session session = super.login(workspaceName);
-        registerListener(session.getWorkspace().getObservationManager());
-        return session;
-    }
+   @Override
+   public Session login(String workspaceName) throws LoginException, NoSuchWorkspaceException, RepositoryException
+   {
+      Session session = super.login(workspaceName);
+      registerListener(session.getWorkspace().getObservationManager());
+      return session;
+   }
 
-    @Override
-    public Session login(Credentials credentials, String workspaceName) throws LoginException, NoSuchWorkspaceException, RepositoryException {
-        Session session = super.login(credentials, workspaceName);
-        registerListener(session.getWorkspace().getObservationManager());
-        return session;
-    }
+   @Override
+   public Session login(Credentials credentials, String workspaceName) throws LoginException, NoSuchWorkspaceException,
+            RepositoryException
+   {
+      Session session = super.login(credentials, workspaceName);
+      registerListener(session.getWorkspace().getObservationManager());
+      return session;
+   }
 
-    /**
-     * Registers this {@link EventListener} into an {@link ObservationManager}
-     * using the supplied config
-     *
-     * @param obsManager - the {@link ObservationManager} object to be
-     *                   configured.
-     * @throws RepositoryException
-     */
-    private void registerListener(ObservationManager obsManager) throws RepositoryException {
-        if (eventConfig != null) {
-            obsManager.addEventListener(eventListener, eventConfig.getEventTypes(), eventConfig.getAbsPath(), eventConfig.isDeep(), eventConfig.getUuid(), eventConfig.getNodeTypeName(), eventConfig.isNoLocal());
-        }
-    }
+   /**
+    * Registers this {@link EventListener} into an {@link ObservationManager} using the supplied config
+    * 
+    * @param obsManager - the {@link ObservationManager} object to be configured.
+    * @throws RepositoryException
+    */
+   private void registerListener(ObservationManager obsManager) throws RepositoryException
+   {
+      if (eventConfig != null)
+      {
+         obsManager.addEventListener(eventListener, eventConfig.getEventTypes(), eventConfig.getAbsPath(),
+                  eventConfig.isDeep(), eventConfig.getUuid(), eventConfig.getNodeTypeName(), eventConfig.isNoLocal());
+      }
+   }
 
 }

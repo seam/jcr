@@ -45,6 +45,7 @@
          <outputDirectory>artifacts</outputDirectory>
          <useProjectArtifact>false</useProjectArtifact>
          <includes>
+            <include>org.jboss.seam.jcr:seam-jcr-api</include>
             <include>org.jboss.seam.jcr:seam-jcr</include>
          </includes>
          <excludes>
@@ -111,7 +112,7 @@
          <useProjectArtifact>false</useProjectArtifact>
          <includes>
             <include>org.jboss.seam.jcr:seam-jcr-api:*:sources</include>
-            <include>org.jboss.seam.jcr:seam-jcr-impl:*:sources</include>
+            <include>org.jboss.seam.jcr:seam-jcr:*:sources</include>
          </includes>
          <unpackOptions>
             <excludes>
