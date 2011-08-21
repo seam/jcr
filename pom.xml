@@ -41,7 +41,7 @@
         <module>impl</module>
 
         <!-- disabled until we sort out the new test structure -->
-        <!--module>tests</module-->
+        <module>tests</module>
     </modules>
 
     <dependencyManagement>
@@ -118,6 +118,11 @@
                         <enabled>false</enabled>
                         <updatePolicy>never</updatePolicy>
                     </snapshots>
+                </repository>
+                <repository>
+                    <id>jboss-staging-repository-group</id>
+                    <name>JBoss Staging Maven Repository Group</name>
+                    <url>https://repository.jboss.org/nexus/content/groups/staging/</url>
                 </repository>
             </repositories>
             <pluginRepositories>

@@ -21,7 +21,7 @@ import static org.junit.Assert.assertNotNull;
 import javax.inject.Inject;
 import javax.jcr.Repository;
 
-import org.jboss.arquillian.api.Deployment;
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.seam.jcr.repository.RepositoryResolverImpl;
 import org.jboss.shrinkwrap.api.ArchivePaths;
