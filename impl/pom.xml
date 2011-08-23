@@ -10,143 +10,138 @@
 	KIND, either express or implied. See the License for the specific language 
 	governing permissions and limitations under the License. -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>org.jboss.seam.jcr</groupId>
-		<artifactId>seam-jcr-parent</artifactId>
-		<version>3.1.0-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
-	</parent>
-	<artifactId>seam-jcr</artifactId>
-	<packaging>jar</packaging>
-	<properties>
-		<modeshape.version>2.6.0.Beta1</modeshape.version>
-		<jackrabbit.core.version>2.2.4</jackrabbit.core.version>
-		<el-api.version>2.2</el-api.version>
-	</properties>
-	<name>Seam JCR Implementation</name>
+    <parent>
+        <groupId>org.jboss.seam.jcr</groupId>
+        <artifactId>seam-jcr-parent</artifactId>
+        <version>3.1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <artifactId>seam-jcr</artifactId>
+    <packaging>jar</packaging>
+    <properties>
+        <modeshape.version>2.6.0.Beta1</modeshape.version>
+        <jackrabbit.core.version>2.2.4</jackrabbit.core.version>
+        <el-api.version>2.2</el-api.version>
+    </properties>
+    <name>Seam JCR Implementation</name>
 	<!-- url required for JAR Manifest -->
-	<url>${project.parent.url}</url>
+    <url>${project.parent.url}</url>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.jboss.seam.jcr</groupId>
-			<artifactId>seam-jcr-api</artifactId>
-		</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>org.jboss.seam.jcr</groupId>
+            <artifactId>seam-jcr-api</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>org.jboss.seam.solder</groupId>
-			<artifactId>seam-solder</artifactId>
-			<scope>compile</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.jboss.seam.solder</groupId>
+            <artifactId>seam-solder</artifactId>
+            <scope>compile</scope>
+        </dependency>
 <!-- Required by Arquillian -->
-		<dependency>
-			<groupId>javax.el</groupId>
-			<artifactId>el-api</artifactId>
-			<version>${el-api.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>el-api</artifactId>
+            <version>${el-api.version}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>org.jboss.arquillian.junit</groupId>
-			<artifactId>arquillian-junit-container</artifactId>
-			<version>1.0.0.CR2</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.junit</groupId>
+            <artifactId>arquillian-junit-container</artifactId>
+            <scope>test</scope>
+        </dependency>
 		
-		<dependency>
-			<groupId>org.jboss.arquillian.container</groupId>
-			<artifactId>arquillian-weld-se-embedded-1.1</artifactId>
-			<version>1.0.0.CR2</version>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.jboss.arquillian.container</groupId>
+            <artifactId>arquillian-weld-se-embedded-1.1</artifactId>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.jboss.weld</groupId>
-			<artifactId>weld-core</artifactId>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.jboss.weld</groupId>
+            <artifactId>weld-core</artifactId>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.jboss.weld</groupId>
-			<artifactId>weld-api</artifactId>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.jboss.weld</groupId>
+            <artifactId>weld-api</artifactId>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+                
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 	
-	<profiles>
-		<profile>
-			<id>code-coverage</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>emma-maven-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>instrumentation</id>
-								<phase>process-classes</phase>
-								<goals>
-									<goal>instrument</goal>
-								</goals>
-								<configuration>
-									<verbose>true</verbose>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-antrun-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>complete-classpath-for-tests</id>
-								<phase>process-classes</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<tasks>
-										<delete dir="${project.build.directory}/classes" />
-										<mkdir dir="${project.build.directory}/classes" />
-										<copy todir="${project.build.directory}/classes" overwrite="true">
-											<fileset dir="${project.build.directory}/generated-classes/emma/classes">
-												<include name="**/*" />
-											</fileset>
-										</copy>
-									</tasks>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
+    <profiles>
+        <profile>
+            <id>code-coverage</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>emma-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>instrumentation</id>
+                                <phase>process-classes</phase>
+                                <goals>
+                                    <goal>instrument</goal>
+                                </goals>
+                                <configuration>
+                                    <verbose>true</verbose>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>complete-classpath-for-tests</id>
+                                <phase>process-classes</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <tasks>
+                                        <delete dir="${project.build.directory}/classes" />
+                                        <mkdir dir="${project.build.directory}/classes" />
+                                        <copy todir="${project.build.directory}/classes" overwrite="true">
+                                            <fileset dir="${project.build.directory}/generated-classes/emma/classes">
+                                                <include name="**/*" />
+                                            </fileset>
+                                        </copy>
+                                    </tasks>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <profile>
             <id>seam-jcr-jackrabbit</id>
             <dependencies>
-                <dependency>
-                    <groupId>org.jboss.seam.jcr</groupId>
-                    <artifactId>seam-jcr</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>commons-collections</groupId>
-                    <artifactId>commons-collections</artifactId>
-			<version>3.2.1</version>
-			<scope>test</scope>
-                </dependency>
                 <dependency>
                     <groupId>org.apache.jackrabbit</groupId>
                     <artifactId>jackrabbit-core</artifactId>
@@ -172,16 +167,6 @@
             </activation>
             <dependencies>
                 <dependency>
-                    <groupId>org.jboss.seam.jcr</groupId>
-                    <artifactId>seam-jcr</artifactId>
-                </dependency>
-                <dependency>
-                    <groupId>commons-collections</groupId>
-                    <artifactId>commons-collections</artifactId>
-			<version>3.2.1</version>
-			<scope>test</scope>
-                </dependency>
-                <dependency>
                     <groupId>org.modeshape</groupId>
                     <artifactId>modeshape-jcr</artifactId>
                     <version>${modeshape.version}</version>
@@ -189,29 +174,28 @@
                 </dependency>
             </dependencies>
         </profile>
-	</profiles>
+    </profiles>
 
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<forkMode>once</forkMode>
-					<argLine>-Xmx512m</argLine>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.0.2</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <forkMode>once</forkMode>
+                    <argLine>-Xmx512m</argLine>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.0.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
