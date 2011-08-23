@@ -161,7 +161,6 @@ public class RepositoryResolverImpl implements RepositoryResolver
     */
    private Repository createPlainRepository(Map<String, String> parameters) throws RepositoryException
    {
-       System.out.println(parameters);
       Repository repository = null;
       for (RepositoryFactory factory : ServiceLoader.load(RepositoryFactory.class))
       {
