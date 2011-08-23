@@ -15,30 +15,31 @@
  */
 package org.jboss.seam.jcr.events;
 
-import static org.jboss.seam.jcr.ConfigParams.JACKRABBIT_REPOSITORY_HOME;
-import static org.junit.Assert.assertEquals;
-
-import javax.enterprise.inject.spi.BeanManager;
+import javax.jcr.Credentials;
+import javax.enterprise.inject.Instance;
+import javax.jcr.Repository;
+import org.jboss.seam.jcr.producers.RepositoryResolverProducer;
+import org.jboss.seam.jcr.test.CredentialProducer;
+import org.jboss.seam.jcr.test.Utils;
 import javax.inject.Inject;
 import javax.jcr.Node;
-import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
-import javax.jcr.SimpleCredentials;
 import javax.jcr.observation.Event;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.seam.jcr.JcrCDIEventListener;
-import org.jboss.seam.jcr.annotations.JcrConfiguration;
-import org.jboss.seam.jcr.annotations.JcrConfiguration.List;
 import org.jboss.seam.jcr.repository.RepositoryResolverImpl;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Test case for {@link JcrCDIEventListener}
@@ -49,32 +50,37 @@ import org.junit.runner.RunWith;
 public class JcrCDIEventListenerTest {
 
     @Inject
-    @List({
-          @JcrConfiguration(name = JACKRABBIT_REPOSITORY_HOME, value = "target")
-    })
-    private Repository repository;
-
-    @Inject
     private EventCounterListener counter;
 
     @Inject
-    BeanManager beanManager;
+    //@JcrConfiguration(name = MODESHAPE_URL, value = "file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
+    private Repository repository;
+    
+    @Inject
+    Instance<Credentials> credInst;
 
     @Deployment
     public static JavaArchive createArchive() {
-        return ShrinkWrap.create(JavaArchive.class).addPackage(JcrCDIEventListener.class.getPackage()).addPackage(RepositoryResolverImpl.class.getPackage()).addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
+        JavaArchive ja = ShrinkWrap.create(JavaArchive.class)
+        .addPackage(JcrCDIEventListener.class.getPackage())
+        .addClasses(EventCounterListener.class, RepositoryResolverProducer.class)
+        .addPackage(RepositoryResolverImpl.class.getPackage())
+        .addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
+        
+        if(Utils.isJackrabbit())
+            ja.addClass(CredentialProducer.class);
+        
+        return ja;
     }
 
-    /**
-     * Jackrabbit only allows save operations on authenticated users.
-     * <p/>
-     * TODO:Refactor to be injected with credentials
-     *
-     * @throws Exception
-     */
     @Test
     public void testOnEventAdded() throws RepositoryException, InterruptedException {
-        Session session = repository.login(new SimpleCredentials("user", "pass".toCharArray()));
+        Session session = null;
+        if(this.credInst.isUnsatisfied()) {
+            session = repository.login();
+        } else {
+            session = repository.login(credInst.get());
+        }
         try {
             // Perform SUT
             Node root = session.getRootNode();
@@ -82,14 +88,27 @@ public class JcrCDIEventListenerTest {
             hello.setProperty("message", "Hello, World!");
             session.save();
         } finally {
+            //logout
             // This is when the observers are fired
             session.logout();
         }
+        // ModeShape uses background threads for event firing and similar
+        // activities.
         // let's give it 5 seconds to run, then check the bags.
         Thread.sleep(5000);
         // Check that node was added
         assertEquals(1, counter.getCountForType(Event.NODE_ADDED));
         // Properties jcr:primaryType and message added
-        assertEquals(2, counter.getCountForType(Event.PROPERTY_ADDED));
+        // ModeShape adds a few extra properties.
+        if(Utils.isJackrabbit()) {
+            assertEquals(2, counter.getCountForType(Event.PROPERTY_ADDED));
+        } else {
+            assertEquals(4, counter.getCountForType(Event.PROPERTY_ADDED));
+        }
+    }
+
+    @After
+    public void cleanUp() throws Exception {
+        counter.resetBag();
     }
 }

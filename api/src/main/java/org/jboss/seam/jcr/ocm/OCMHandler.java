@@ -20,8 +20,11 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.Map;
 import javax.enterprise.event.Event;
+import javax.enterprise.inject.Instance;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import javax.jcr.Node;
@@ -32,6 +35,7 @@ import javax.jcr.query.Query;
 import javax.jcr.query.QueryManager;
 import javax.jcr.query.QueryResult;
 
+import org.jboss.seam.jcr.ConfigParams;
 import org.jboss.seam.solder.logging.Logger;
 import org.jboss.seam.jcr.annotations.JcrConfiguration;
 import org.jboss.seam.jcr.annotations.ocm.JcrDao;
@@ -49,6 +53,9 @@ public class OCMHandler
    public Event<ConvertToNode> ctnEvent;
    @Inject
    public RepositoryResolver resolver;
+   @Inject
+   @Named(ConfigParams.JCR_REPOSITORY_CONFIG_MAP)
+   public Instance<Map<String, String>> configParameters;
 
    private Logger logger = Logger.getLogger(OCMHandler.class);
 
@@ -62,7 +69,11 @@ public class OCMHandler
          Method method = ctx.getMethod();
          Object[] params = ctx.getParameters();
          JcrConfiguration sessionConfig = declaringClass.getAnnotation(JcrDao.class).value();
-         session = resolver.createSessionFromParameters(sessionConfig, null);
+         Map<String,String> defaults = null;
+         if(!configParameters.isUnsatisfied()) {
+             defaults = configParameters.get();
+         }
+         session = resolver.createSessionFromParameters(sessionConfig, null,defaults);
          Class<?> returnType = method.getReturnType();
          if (method.isAnnotationPresent(JcrFind.class))
          {

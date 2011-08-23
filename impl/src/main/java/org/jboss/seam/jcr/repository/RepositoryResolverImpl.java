@@ -99,7 +99,7 @@ public class RepositoryResolverImpl implements RepositoryResolver
             JcrConfiguration.List jcrRepoList)
    {
       Map<String, String> parameters = new HashMap<String, String>();
-      if (configuration != null)
+      if (configuration != null && configuration.name() != "")
       {
          parameters.put(configuration.name(), configuration.value());
       }
@@ -118,8 +118,21 @@ public class RepositoryResolverImpl implements RepositoryResolver
    {
       Map<String, String> parameters = buildParameters(configuration, jcrRepoList);
       Repository repository = decorateRepository(createPlainRepository(parameters));
-      Credentials c = null;
-      String workspaceName = null;
+      Credentials c = credentialsInstance.isUnsatisfied() ? null : credentialsInstance.get();
+      String workspaceName = workspaceInstance.isUnsatisfied() ? null : workspaceInstance.get();
+      return repository.login(c, workspaceName);
+   }
+   
+   public Session createSessionFromParameters(JcrConfiguration configuration,
+            JcrConfiguration.List jcrRepoList, Map<String,String> defaults) throws RepositoryException
+   {
+      Map<String, String> parameters = new HashMap<String,String>();
+      if(defaults != null)
+        parameters.putAll(defaults);
+      parameters.putAll(buildParameters(configuration, jcrRepoList));
+      Repository repository = decorateRepository(createPlainRepository(parameters));
+      Credentials c = credentialsInstance.isUnsatisfied() ? null : credentialsInstance.get();
+      String workspaceName = workspaceInstance.isUnsatisfied() ? null : workspaceInstance.get();
       return repository.login(c, workspaceName);
    }
 
@@ -148,6 +161,7 @@ public class RepositoryResolverImpl implements RepositoryResolver
     */
    private Repository createPlainRepository(Map<String, String> parameters) throws RepositoryException
    {
+       System.out.println(parameters);
       Repository repository = null;
       for (RepositoryFactory factory : ServiceLoader.load(RepositoryFactory.class))
       {
