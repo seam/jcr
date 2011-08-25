@@ -147,18 +147,7 @@
                     <artifactId>jackrabbit-core</artifactId>
                     <version>${jackrabbit.core.version}</version>
                 </dependency>
-            </dependencies>
-            <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <configuration>
-                            <excludes>
-                            </excludes>
-                        </configuration>
-                    </plugin>
-                </plugins> 
-            </build>                    
+            </dependencies>                
         </profile>
         <profile>
             <id>seam-jcr-modeshape</id>
@@ -175,8 +164,6 @@
             </dependencies>
         </profile>
     </profiles>
-
-
     <build>
         <plugins>
             <plugin>

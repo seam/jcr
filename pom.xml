@@ -39,10 +39,6 @@
     <modules>
         <module>api</module>
         <module>impl</module>
-
-        <!-- disabled until we sort out the new test structure 
-        <module>tests</module>
-	-->
     </modules>
 
     <dependencyManagement>
