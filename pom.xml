@@ -29,7 +29,6 @@
         <seam.version>3.1.0.Beta1</seam.version>
         <jboss.spec.version>1.0.0.CR1</jboss.spec.version>
         <jcr.version>2.0</jcr.version>
-        <emma.version>2.0.5312</emma.version>
     </properties>
 
     <prerequisites>
@@ -140,13 +139,6 @@
         </profile>
         <profile>
          <id>code-coverage</id>
-         <dependencies>
-            <dependency>
-                <groupId>emma</groupId>
-                <artifactId>emma</artifactId>
-                <version>${emma.version}</version>
-            </dependency>
-         </dependencies>
          <build>
             <plugins>
                <plugin>
