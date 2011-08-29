@@ -15,28 +15,28 @@
  */
 package org.jboss.seam.jcr.test.ocm.dao;
 
-import static org.jboss.seam.jcr.ConfigParams.MODESHAPE_URL;
 
 import java.util.List;
 
 import javax.enterprise.inject.Instance;
 import javax.enterprise.inject.spi.Extension;
 import javax.inject.Inject;
-import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 
-import org.jboss.arquillian.api.Deployment;
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.seam.jcr.annotations.JcrConfiguration;
 import org.jboss.seam.jcr.annotations.ocm.JcrDao;
 import org.jboss.seam.jcr.ocm.ConvertToObject;
 import org.jboss.seam.jcr.ocm.JcrOCMExtension;
 import org.jboss.seam.jcr.ocm.NodeConverter;
-import org.jboss.seam.jcr.ocm.OCMHandler;
 import org.jboss.seam.jcr.ocm.OCMMapping;
 import org.jboss.seam.jcr.ocm.OCMMappingStore;
+import org.jboss.seam.jcr.producers.RepositoryResolverProducer;
 import org.jboss.seam.jcr.repository.RepositoryResolverImpl;
+import org.jboss.seam.jcr.test.CredentialProducer;
+import org.jboss.seam.jcr.test.Utils;
 import org.jboss.seam.jcr.test.ocm.BasicNode;
 import org.jboss.seam.solder.serviceHandler.ServiceHandlerExtension;
 import org.jboss.shrinkwrap.api.ArchivePaths;
@@ -52,18 +52,14 @@ public class ServiceTest {
 	@Inject
 	Instance<BasicNodeDAO> basicDAOInstance;
 	
-	@Inject
-	@JcrConfiguration(name = MODESHAPE_URL, 
-			value = "file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
-	Session session;
-	
 	@Inject NodeConverter nodeConverter;
     
     @Deployment
     public static JavaArchive createArchive() {
         JavaArchive archive = ShrinkWrap.create(JavaArchive.class)
-        .addClasses(BasicNode.class,OCMMappingStore.class,OCMMapping.class,NodeConverter.class,JcrOCMExtension.class)
-        .addClasses(BasicNodeDAO.class, JcrConfiguration.class)
+        .addClasses(BasicNode.class,OCMMappingStore.class,OCMMapping.class,
+            NodeConverter.class,JcrOCMExtension.class,BasicNodeDAO.class, 
+            JcrConfiguration.class,RepositoryResolverProducer.class)
         .addAsServiceProvider(Extension.class, JcrOCMExtension.class)
         //.addAsServiceProvider(Extension.class, ServiceHandlerExtension.class)
         .addPackage(RepositoryResolverImpl.class.getPackage())
@@ -71,6 +67,10 @@ public class ServiceTest {
         .addPackage(ConvertToObject.class.getPackage())
         .addPackage(ServiceHandlerExtension.class.getPackage())
         .addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
+        
+        if(Utils.isJackrabbit())
+            archive.addClass(CredentialProducer.class);
+        
         return archive;
     }
     

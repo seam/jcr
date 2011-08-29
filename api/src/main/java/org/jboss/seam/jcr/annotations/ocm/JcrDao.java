@@ -32,5 +32,5 @@ import org.jboss.seam.solder.serviceHandler.ServiceHandlerType;
 @ServiceHandlerType(OCMHandler.class)
 public @interface JcrDao
 {
-   public JcrConfiguration value();
+   public JcrConfiguration value() default @JcrConfiguration;
 }

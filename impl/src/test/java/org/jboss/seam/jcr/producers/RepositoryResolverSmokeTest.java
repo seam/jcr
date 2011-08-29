@@ -14,14 +14,14 @@
   See the License for the specific language governing permissions and
   limitations under the License.
  */
-package org.jboss.seam.jcr.stereotypes;
+package org.jboss.seam.jcr.producers;
 
 import static org.junit.Assert.assertNotNull;
 
 import javax.inject.Inject;
 import javax.jcr.Repository;
 
-import org.jboss.arquillian.api.Deployment;
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.seam.jcr.repository.RepositoryResolverImpl;
 import org.jboss.shrinkwrap.api.ArchivePaths;
@@ -32,22 +32,20 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
- * Smoke test case when using stereotypes
+ * Test case for {@link RepositorySessionProducer}
  * 
  * @author George Gastaldi
  */
 @RunWith(Arquillian.class)
-public class StereotypeSmokeTest {
+public class RepositoryResolverSmokeTest {
 
-    /**
-     * Look ma ! No hard-coded configuration ! :)
-     */
-    @Inject @JBoss
+    @Inject
     private Repository repository;
 
     @Deployment
     public static JavaArchive createArchive() {
-        return ShrinkWrap.create(JavaArchive.class).addPackage(RepositoryResolverImpl.class.getPackage()).addClass(JBoss.class)
+        return ShrinkWrap.create(JavaArchive.class).addPackage(RepositoryResolverImpl.class.getPackage())
+                .addClass(RepositoryResolverProducer.class)
                 .addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
     }
 
@@ -55,4 +53,5 @@ public class StereotypeSmokeTest {
     public void testProduceJcrRepository() {
         assertNotNull("JCR Repository should have been injected", repository);
     }
+
 }

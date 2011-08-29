@@ -26,7 +26,7 @@ import javax.jcr.Session;
 
 import junit.framework.Assert;
 
-import org.jboss.arquillian.api.Deployment;
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.seam.jcr.JcrCDIEventListener;
 import org.jboss.seam.jcr.annotations.JcrConfiguration;
@@ -34,7 +34,10 @@ import org.jboss.seam.jcr.ocm.JcrOCMExtension;
 import org.jboss.seam.jcr.ocm.NodeConverter;
 import org.jboss.seam.jcr.ocm.OCMMapping;
 import org.jboss.seam.jcr.ocm.OCMMappingStore;
+import org.jboss.seam.jcr.producers.RepositoryResolverProducer;
 import org.jboss.seam.jcr.repository.RepositoryResolverImpl;
+import org.jboss.seam.jcr.test.CredentialProducer;
+import org.jboss.seam.jcr.test.Utils;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -47,18 +50,23 @@ public class OCMExtensionTest {
 	@Inject JcrOCMExtension extension;
 	
     @Inject
-    @JcrConfiguration(name = MODESHAPE_URL, value = "file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
+    //@JcrConfiguration(name = MODESHAPE_URL, value = "file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
     private Session session;
     
     @Inject NodeConverter nodeConverter;
 	
     @Deployment
     public static JavaArchive createArchive() {
-        return ShrinkWrap.create(JavaArchive.class)
-        .addClasses(BasicNode.class,OCMMappingStore.class,OCMMapping.class,NodeConverter.class)
+        JavaArchive ja = ShrinkWrap.create(JavaArchive.class)
+        .addClasses(BasicNode.class,OCMMappingStore.class,OCMMapping.class,NodeConverter.class, RepositoryResolverProducer.class)
         .addAsServiceProvider(Extension.class, JcrOCMExtension.class)
         .addPackage(RepositoryResolverImpl.class.getPackage())
         .addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
+        
+        if(Utils.isJackrabbit())
+            ja.addClass(CredentialProducer.class);
+        
+        return ja;
     }
     
     @Test

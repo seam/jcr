@@ -20,9 +20,8 @@ import javax.inject.Inject;
 import javax.jcr.Repository;
 import javax.jcr.Session;
 
-import org.jboss.arquillian.api.Deployment;
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.seam.jcr.annotations.JcrConfiguration;
 import org.jboss.seam.jcr.repository.RepositoryResolverImpl;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -32,7 +31,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.jboss.seam.jcr.ConfigParams.MODESHAPE_URL;
 
 /**
  * Test case to verify running injection capabilities against ModeShape's JCR Implementation.
@@ -43,20 +41,22 @@ import static org.jboss.seam.jcr.ConfigParams.MODESHAPE_URL;
 public class RepositoryInjectTest {
     @Deployment
     public static JavaArchive createArchive() {
-        return ShrinkWrap.create(JavaArchive.class).addPackage(RepositoryResolverImpl.class.getPackage()).addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
+        JavaArchive ja = ShrinkWrap.create(JavaArchive.class)
+                .addClass(RepositoryResolverProducer.class)
+                .addPackage(RepositoryResolverImpl.class.getPackage())
+                .addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
+        return ja;
     }
 
     @Inject
-    @JcrConfiguration(name = MODESHAPE_URL, value = "file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
-    Repository carRepo;
-
+    private Repository repository;
+    
     @Inject
-    @JcrConfiguration(name = MODESHAPE_URL, value = "file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
-    Session carSession;
+    private Session session;
 
     @Test
     public void testInjectRepository() throws Exception {
-        Assert.assertNotNull(carRepo);
-        Assert.assertNotNull(carSession);
+        Assert.assertNotNull(repository);
+        Assert.assertNotNull(session);
     }
 }

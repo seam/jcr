@@ -21,7 +21,6 @@ import static org.jboss.seam.solder.reflection.AnnotationInspector.getAnnotation
 import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ServiceLoader;
 
 import javax.enterprise.inject.Any;
 import javax.enterprise.inject.Disposes;
@@ -37,7 +36,8 @@ import javax.jcr.RepositoryException;
 import javax.jcr.RepositoryFactory;
 import javax.jcr.Session;
 
-import org.jboss.seam.solder.logging.Logger;
+import org.jboss.seam.logging.Logger;
+import org.jboss.seam.solder.util.service.ServiceLoader;
 import org.jboss.seam.jcr.ConfigParams;
 import org.jboss.seam.jcr.EventListenerConfig;
 import org.jboss.seam.jcr.JcrCDIEventListener;
@@ -99,7 +99,7 @@ public class RepositoryResolverImpl implements RepositoryResolver
             JcrConfiguration.List jcrRepoList)
    {
       Map<String, String> parameters = new HashMap<String, String>();
-      if (configuration != null)
+      if (configuration != null && configuration.name() != "")
       {
          parameters.put(configuration.name(), configuration.value());
       }
@@ -118,8 +118,21 @@ public class RepositoryResolverImpl implements RepositoryResolver
    {
       Map<String, String> parameters = buildParameters(configuration, jcrRepoList);
       Repository repository = decorateRepository(createPlainRepository(parameters));
-      Credentials c = null;
-      String workspaceName = null;
+      Credentials c = credentialsInstance.isUnsatisfied() ? null : credentialsInstance.get();
+      String workspaceName = workspaceInstance.isUnsatisfied() ? null : workspaceInstance.get();
+      return repository.login(c, workspaceName);
+   }
+   
+   public Session createSessionFromParameters(JcrConfiguration configuration,
+            JcrConfiguration.List jcrRepoList, Map<String,String> defaults) throws RepositoryException
+   {
+      Map<String, String> parameters = new HashMap<String,String>();
+      if(defaults != null)
+        parameters.putAll(defaults);
+      parameters.putAll(buildParameters(configuration, jcrRepoList));
+      Repository repository = decorateRepository(createPlainRepository(parameters));
+      Credentials c = credentialsInstance.isUnsatisfied() ? null : credentialsInstance.get();
+      String workspaceName = workspaceInstance.isUnsatisfied() ? null : workspaceInstance.get();
       return repository.login(c, workspaceName);
    }
 

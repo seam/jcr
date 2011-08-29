@@ -15,16 +15,21 @@
  */
 package org.jboss.seam.jcr.events;
 
+import javax.jcr.Credentials;
+import javax.enterprise.inject.Instance;
+import javax.jcr.Repository;
+import org.jboss.seam.jcr.producers.RepositoryResolverProducer;
+import org.jboss.seam.jcr.test.CredentialProducer;
+import org.jboss.seam.jcr.test.Utils;
 import javax.inject.Inject;
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.observation.Event;
 
-import org.jboss.arquillian.api.Deployment;
+import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.seam.jcr.JcrCDIEventListener;
-import org.jboss.seam.jcr.annotations.JcrConfiguration;
 import org.jboss.seam.jcr.repository.RepositoryResolverImpl;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -34,7 +39,6 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.jboss.seam.jcr.ConfigParams.MODESHAPE_URL;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -49,20 +53,34 @@ public class JcrCDIEventListenerTest {
     private EventCounterListener counter;
 
     @Inject
-    @JcrConfiguration(name = MODESHAPE_URL, value = "file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
-    private Session session;
+    //@JcrConfiguration(name = MODESHAPE_URL, value = "file:target/test-classes/modeshape.xml?repositoryName=CarRepo")
+    private Repository repository;
+    
+    @Inject
+    Instance<Credentials> credInst;
 
     @Deployment
     public static JavaArchive createArchive() {
-        return ShrinkWrap.create(JavaArchive.class)
+        JavaArchive ja = ShrinkWrap.create(JavaArchive.class)
         .addPackage(JcrCDIEventListener.class.getPackage())
-        .addClass(EventCounterListener.class)
+        .addClasses(EventCounterListener.class, RepositoryResolverProducer.class)
         .addPackage(RepositoryResolverImpl.class.getPackage())
         .addAsManifestResource(EmptyAsset.INSTANCE, ArchivePaths.create("beans.xml"));
+        
+        if(Utils.isJackrabbit())
+            ja.addClass(CredentialProducer.class);
+        
+        return ja;
     }
 
     @Test
     public void testOnEventAdded() throws RepositoryException, InterruptedException {
+        Session session = null;
+        if(this.credInst.isUnsatisfied()) {
+            session = repository.login();
+        } else {
+            session = repository.login(credInst.get());
+        }
         try {
             // Perform SUT
             Node root = session.getRootNode();
@@ -82,7 +100,11 @@ public class JcrCDIEventListenerTest {
         assertEquals(1, counter.getCountForType(Event.NODE_ADDED));
         // Properties jcr:primaryType and message added
         // ModeShape adds a few extra properties.
-        assertEquals(4, counter.getCountForType(Event.PROPERTY_ADDED));
+        if(Utils.isJackrabbit()) {
+            assertEquals(2, counter.getCountForType(Event.PROPERTY_ADDED));
+        } else {
+            assertEquals(4, counter.getCountForType(Event.PROPERTY_ADDED));
+        }
     }
 
     @After

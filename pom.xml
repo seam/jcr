@@ -15,7 +15,7 @@
     <parent>
         <artifactId>seam-parent</artifactId>
         <groupId>org.jboss.seam</groupId>
-        <version>12</version>
+        <version>14</version>
     </parent>
 
     <groupId>org.jboss.seam.jcr</groupId>
@@ -26,10 +26,9 @@
     <url>http://www.seamframework.org/Seam3/JCRModuleHome</url>
 
     <properties>
-        <seam.version>3.1.0.Beta1</seam.version>
+        <seam.version>3.1.0.Beta2</seam.version>
         <jboss.spec.version>1.0.0.CR1</jboss.spec.version>
         <jcr.version>2.0</jcr.version>
-        <emma.version>2.0.5312</emma.version>
     </properties>
 
     <prerequisites>
@@ -39,9 +38,6 @@
     <modules>
         <module>api</module>
         <module>impl</module>
-
-        <!-- disabled until we sort out the new test structure -->
-        <!--module>tests</module-->
     </modules>
 
     <dependencyManagement>
@@ -119,6 +115,11 @@
                         <updatePolicy>never</updatePolicy>
                     </snapshots>
                 </repository>
+                <repository>
+                    <id>jboss-staging-repository-group</id>
+                    <name>JBoss Staging Maven Repository Group</name>
+                    <url>https://repository.jboss.org/nexus/content/groups/staging/</url>
+                </repository>
             </repositories>
             <pluginRepositories>
                 <pluginRepository>
@@ -138,13 +139,6 @@
         </profile>
         <profile>
          <id>code-coverage</id>
-         <dependencies>
-            <dependency>
-                <groupId>emma</groupId>
-                <artifactId>emma</artifactId>
-                <version>${emma.version}</version>
-            </dependency>
-         </dependencies>
          <build>
             <plugins>
                <plugin>

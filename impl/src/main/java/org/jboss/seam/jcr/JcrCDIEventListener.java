@@ -22,7 +22,7 @@ import javax.jcr.observation.Event;
 import javax.jcr.observation.EventIterator;
 import javax.jcr.observation.EventListener;
 
-import org.jboss.seam.solder.logging.Logger;
+import org.jboss.seam.logging.Logger;
 import org.jboss.seam.jcr.annotations.events.NodeAddedLiteral;
 import org.jboss.seam.jcr.annotations.events.NodeMovedLiteral;
 import org.jboss.seam.jcr.annotations.events.NodeRemovedLiteral;
