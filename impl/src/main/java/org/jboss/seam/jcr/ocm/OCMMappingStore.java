@@ -22,7 +22,7 @@ import java.util.Map;
 
 import javax.enterprise.inject.spi.AnnotatedType;
 
-import org.jboss.seam.solder.logging.Logger;
+import org.jboss.seam.logging.Logger;
 import org.jboss.seam.jcr.annotations.ocm.JcrNode;
 import org.jboss.seam.jcr.annotations.ocm.JcrProperty;
 import org.jboss.seam.solder.core.Veto;

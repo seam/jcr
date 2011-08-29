@@ -36,7 +36,7 @@ import javax.jcr.RepositoryException;
 import javax.jcr.RepositoryFactory;
 import javax.jcr.Session;
 
-import org.jboss.seam.solder.logging.Logger;
+import org.jboss.seam.logging.Logger;
 import org.jboss.seam.solder.util.service.ServiceLoader;
 import org.jboss.seam.jcr.ConfigParams;
 import org.jboss.seam.jcr.EventListenerConfig;
