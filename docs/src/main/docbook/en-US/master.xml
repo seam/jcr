@@ -25,10 +25,10 @@
 
    <title>Seam JCR</title>
    <xi:include href="jcr-introduction.xml"/>
-   <xi:include href="modeshape.xml"/>
-   <xi:include href="jackrabbit.xml"/>
-   <xi:include href="event-mapping.xml"/>
-   <xi:include href="ocm.xml"/>
+   <xi:include href="jcr-modeshape.xml"/>
+   <xi:include href="jcr-jackrabbit.xml"/>
+   <xi:include href="jcr-event-mapping.xml"/>
+   <xi:include href="jcr-ocm.xml"/>
 <!--
  vim:et:ts=3:sw=3:tw=120
 --> 
