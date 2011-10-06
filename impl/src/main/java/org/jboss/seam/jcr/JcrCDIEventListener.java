@@ -22,7 +22,7 @@ import javax.jcr.observation.Event;
 import javax.jcr.observation.EventIterator;
 import javax.jcr.observation.EventListener;
 
-import org.jboss.seam.logging.Logger;
+import org.jboss.solder.logging.Logger;
 import org.jboss.seam.jcr.annotations.events.NodeAddedLiteral;
 import org.jboss.seam.jcr.annotations.events.NodeMovedLiteral;
 import org.jboss.seam.jcr.annotations.events.NodeRemovedLiteral;
@@ -30,7 +30,7 @@ import org.jboss.seam.jcr.annotations.events.PersistLiteral;
 import org.jboss.seam.jcr.annotations.events.PropertyAddedLiteral;
 import org.jboss.seam.jcr.annotations.events.PropertyChangedLiteral;
 import org.jboss.seam.jcr.annotations.events.PropertyRemovedLiteral;
-import org.jboss.seam.solder.core.Veto;
+import org.jboss.solder.core.Veto;
 
 /**
  * JCR {@link EventListener} for CDI

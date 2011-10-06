@@ -25,7 +25,7 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Named;
 
 import org.jboss.seam.jcr.ConfigParams;
-import org.jboss.seam.solder.core.ExtensionManaged;
+import org.jboss.solder.core.ExtensionManaged;
 
 
 /**

@@ -16,7 +16,7 @@
  */
 package org.jboss.seam.jcr.repository;
 
-import static org.jboss.seam.solder.reflection.AnnotationInspector.getAnnotation;
+import static org.jboss.solder.reflection.AnnotationInspector.getAnnotation;
 
 import java.lang.annotation.Annotation;
 import java.util.HashMap;
@@ -36,8 +36,8 @@ import javax.jcr.RepositoryException;
 import javax.jcr.RepositoryFactory;
 import javax.jcr.Session;
 
-import org.jboss.seam.logging.Logger;
-import org.jboss.seam.solder.util.service.ServiceLoader;
+import org.jboss.solder.logging.Logger;
+import org.jboss.solder.util.service.ServiceLoader;
 import org.jboss.seam.jcr.ConfigParams;
 import org.jboss.seam.jcr.EventListenerConfig;
 import org.jboss.seam.jcr.JcrCDIEventListener;

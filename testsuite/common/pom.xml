@@ -43,8 +43,8 @@
             <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.jboss.seam.solder</groupId>
-            <artifactId>seam-solder</artifactId>
+            <groupId>org.jboss.solder</groupId>
+            <artifactId>solder-impl</artifactId>
             <scope>compile</scope>
         </dependency>
         <dependency>

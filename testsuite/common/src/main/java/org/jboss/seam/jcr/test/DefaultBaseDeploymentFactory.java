@@ -41,7 +41,7 @@ public class DefaultBaseDeploymentFactory implements BaseDeploymentFactory {
             DependencyResolvers.use(MavenDependencyResolver.class)
             .loadReposFromPom("pom.xml")
             .artifact("javax.jcr:jcr")
-            .artifact("org.jboss.seam.solder:seam-solder")
+            .artifact("org.jboss.solder:solder-impl")
             .artifact("org.modeshape:modeshape-jcr")
             .resolveAs(JavaArchive.class))
         // Temporary workaround for SOLDER-119
@@ -65,7 +65,7 @@ public class DefaultBaseDeploymentFactory implements BaseDeploymentFactory {
             DependencyResolvers.use(MavenDependencyResolver.class)
             .loadReposFromPom("pom.xml")
             .artifact("javax.jcr:jcr")
-            .artifact("org.jboss.seam.solder:seam-solder")
+            .artifact("org.jboss.solder:solder-impl")
             .artifact("org.apache.jackrabbit:jackrabbit-core")
             .artifact("org.slf4j:slf4j-simple")
             .resolveAs(JavaArchive.class))

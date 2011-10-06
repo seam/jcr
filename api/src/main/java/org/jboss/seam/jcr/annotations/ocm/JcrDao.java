@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 
 import org.jboss.seam.jcr.annotations.JcrConfiguration;
 import org.jboss.seam.jcr.ocm.OCMHandler;
-import org.jboss.seam.solder.serviceHandler.ServiceHandlerType;
+import org.jboss.solder.serviceHandler.ServiceHandlerType;
 
 @Target({ TYPE })
 @Retention(RUNTIME)
