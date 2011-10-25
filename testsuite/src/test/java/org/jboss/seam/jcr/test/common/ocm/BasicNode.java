@@ -13,24 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.jboss.seam.jcr.annotations.ocm;
+package org.jboss.seam.jcr.test.common.ocm;
 
-import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import org.jboss.seam.jcr.annotations.ocm.JcrNode;
+import org.jboss.seam.jcr.annotations.ocm.JcrProperty;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+@JcrNode("nt:unstructured")
+public class BasicNode implements java.io.Serializable {
+	@JcrProperty("myvalue")
+	private String value;
+	private String uuid;
+	private String lordy;
 
-import org.jboss.seam.jcr.annotations.JcrConfiguration;
-import org.jboss.seam.jcr.ocm.OCMHandler;
-import org.jboss.solder.serviceHandler.ServiceHandlerType;
+	public String getValue() {
+		return value;
+	}
 
-@Target({ TYPE })
-@Retention(RUNTIME)
-@Documented
-@ServiceHandlerType(OCMHandler.class)
-public @interface JcrDao
-{
-   public JcrConfiguration value() default @JcrConfiguration;
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+	@JcrProperty("notaproperty")
+	public String getLordy() {
+		return lordy;
+	}
+
+	public void setLordy(String lordy) {
+		this.lordy = lordy;
+	}
+	
 }
