@@ -15,7 +15,7 @@
     <parent>
         <artifactId>seam-parent</artifactId>
         <groupId>org.jboss.seam</groupId>
-        <version>14</version>
+        <version>15</version>
     </parent>
 
     <groupId>org.jboss.seam.jcr</groupId>
@@ -26,9 +26,13 @@
     <url>http://www.seamframework.org/Seam3/JCRModuleHome</url>
 
     <properties>
-        <seam.version>3.1.0.Beta2</seam.version>
+        <seam.version>3.1.0.Beta3</seam.version>
         <jboss.spec.version>1.0.0.CR1</jboss.spec.version>
         <jcr.version>2.0</jcr.version>
+        <commons.collections.version>3.2.1</commons.collections.version>
+
+        <modeshape.version>2.6.0.Beta1</modeshape.version>
+        <jackrabbit.core.version>2.2.4</jackrabbit.core.version>
     </properties>
 
     <prerequisites>
@@ -38,6 +42,7 @@
     <modules>
         <module>api</module>
         <module>impl</module>
+        <module>testsuite</module>
     </modules>
 
     <dependencyManagement>
@@ -68,6 +73,27 @@
                 <artifactId>jcr</artifactId>
                 <version>${jcr.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>${commons.collections.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.modeshape</groupId>
+                <artifactId>modeshape-jcr</artifactId>
+                <version>${modeshape.version}</version>
+                <scope>test</scope>         
+            </dependency>                               
+            
+            <dependency>
+                <groupId>org.apache.jackrabbit</groupId>
+                <artifactId>jackrabbit-core</artifactId>
+                <version>${jackrabbit.core.version}</version>
+                <scope>test</scope>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -92,50 +118,6 @@
                 <module>docs</module>
                 <module>dist</module>
             </modules>
-        </profile>
-        <profile>
-            <id>jboss-public-repository</id>
-            <activation>
-                <property>
-                    <name>jboss-public-repository</name>
-                    <value>!false</value>
-                </property>
-            </activation>
-            <repositories>
-                <repository>
-                    <id>jboss-public-repository-group</id>
-                    <name>JBoss Public Maven Repository Group</name>
-                    <url>http://repository.jboss.org/nexus/content/groups/public</url>
-                    <releases>
-                        <enabled>true</enabled>
-                        <updatePolicy>never</updatePolicy>
-                    </releases>
-                    <snapshots>
-                        <enabled>false</enabled>
-                        <updatePolicy>never</updatePolicy>
-                    </snapshots>
-                </repository>
-                <repository>
-                    <id>jboss-staging-repository-group</id>
-                    <name>JBoss Staging Maven Repository Group</name>
-                    <url>https://repository.jboss.org/nexus/content/groups/staging/</url>
-                </repository>
-            </repositories>
-            <pluginRepositories>
-                <pluginRepository>
-                    <id>jboss-public-repository-group</id>
-                    <name>JBoss Public Maven Repository Group</name>
-                    <url>http://repository.jboss.org/nexus/content/groups/public</url>
-                    <releases>
-                        <enabled>true</enabled>
-                        <updatePolicy>never</updatePolicy>
-                    </releases>
-                    <snapshots>
-                        <enabled>false</enabled>
-                        <updatePolicy>never</updatePolicy>
-                    </snapshots>
-                </pluginRepository>
-            </pluginRepositories>
         </profile>
         <profile>
          <id>code-coverage</id>

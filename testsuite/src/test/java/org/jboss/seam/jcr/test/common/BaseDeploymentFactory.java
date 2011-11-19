@@ -1,7 +1,6 @@
-<?xml version='1.0' encoding="utf-8"?>
-<!--
+/*
   JBoss, Home of Professional Open Source
-  Copyright [2010], Red Hat, Inc., and individual contributors
+  Copyright [2011], Red Hat, Inc., and individual contributors
   by the @authors tag. See the copyright.txt in the distribution for a
   full listing of individual contributors.
 
@@ -14,22 +13,16 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
-  -->
-<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.35//EN"
-   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd"  [ ]>
-<book lang="en" xmlns:xi="http://www.w3.org/2001/XInclude">
+ */
+package org.jboss.seam.jcr.test.common;
 
-   <xi:include href="Book_Info.xml"/>
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 
-   <toc/>
-
-   <title>Seam JCR</title>
-   <xi:include href="jcr-introduction.xml"/>
-   <xi:include href="jcr-modeshape.xml"/>
-   <xi:include href="jcr-jackrabbit.xml"/>
-   <xi:include href="jcr-event-mapping.xml"/>
-   <xi:include href="jcr-ocm.xml"/>
-<!--
- vim:et:ts=3:sw=3:tw=120
---> 
-</book>
+/** 
+ * @author maschmid
+ *
+ */
+public interface BaseDeploymentFactory {
+    WebArchive baseModeshapeDeployment();
+    WebArchive baseJackrabbitDeployment();
+}

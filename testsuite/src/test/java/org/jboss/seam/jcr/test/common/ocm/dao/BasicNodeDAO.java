@@ -1,5 +1,4 @@
-<?xml version='1.0' encoding="utf-8"?>
-<!--
+/*
   JBoss, Home of Professional Open Source
   Copyright [2010], Red Hat, Inc., and individual contributors
   by the @authors tag. See the copyright.txt in the distribution for a
@@ -14,22 +13,23 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
-  -->
-<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.35//EN"
-   "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd"  [ ]>
-<book lang="en" xmlns:xi="http://www.w3.org/2001/XInclude">
+ */
+package org.jboss.seam.jcr.test.common.ocm.dao;
 
-   <xi:include href="Book_Info.xml"/>
+import java.util.List;
 
-   <toc/>
+import org.jboss.seam.jcr.annotations.ocm.JcrDao;
+import org.jboss.seam.jcr.annotations.ocm.JcrFind;
+import org.jboss.seam.jcr.annotations.ocm.JcrQuery;
+import org.jboss.seam.jcr.annotations.ocm.JcrSave;
+import org.jboss.seam.jcr.test.common.ocm.BasicNode;
 
-   <title>Seam JCR</title>
-   <xi:include href="jcr-introduction.xml"/>
-   <xi:include href="jcr-modeshape.xml"/>
-   <xi:include href="jcr-jackrabbit.xml"/>
-   <xi:include href="jcr-event-mapping.xml"/>
-   <xi:include href="jcr-ocm.xml"/>
-<!--
- vim:et:ts=3:sw=3:tw=120
---> 
-</book>
+@JcrDao
+public interface BasicNodeDAO {
+	@JcrFind
+	public BasicNode findBasicNode(String uuid);
+	@JcrQuery(query="select * from [nt:unstructured]",language="JCR-SQL2",resultClass=BasicNode.class)
+	public List<BasicNode> findAllNodes();
+	@JcrSave
+	public String save(String path, BasicNode basicNode);
+}

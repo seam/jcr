@@ -11,8 +11,8 @@ import javax.inject.Inject;
 import javax.jcr.Property;
 import javax.jcr.RepositoryException;
 
-import org.jboss.seam.logging.Logger;
-import org.jboss.seam.solder.reflection.Reflections;
+import org.jboss.solder.logging.Logger;
+import org.jboss.solder.reflection.Reflections;
 
 public class NodeConverter
 {

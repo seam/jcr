@@ -31,7 +31,7 @@
         </para>
     </section>
 
-    <section id="maven-dependencies">
+    <section id="jcr-maven-dependencies">
         <title>Maven dependency configuration</title>
         <para>
 	   	If you are using
